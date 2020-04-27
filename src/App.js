@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Route, Switch, BrowserRouter } from 'react-router-dom'
+import { createGlobalStyle } from 'styled-components'
+
+import Home from 'routes/Home'
+
+const GlobalStyle = createGlobalStyle`
+* {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+button, a {
+  cursor: pointer;
+  &:disabled{
+    cursor: not-allowed;
+  }
+}
+`
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <GlobalStyle />
+      <Switch>
+        <Route path='/' component={Home} />
+      </Switch>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
