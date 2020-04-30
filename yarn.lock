@@ -11258,6 +11258,7 @@ yeast@0.1.2:
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
 
+<<<<<<< HEAD
 yt-player@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/yt-player/-/yt-player-1.1.0.tgz#257192052ddb63eeef1ce1c2c8df9b0973fdf41f"
@@ -11265,6 +11266,8 @@ yt-player@1.1.0:
   dependencies:
     load-script "^1.0.0"
 
+=======
+>>>>>>> b7bee0d41d911963281cc239b26067eed77d9a67
 yup@^0.28.3:
   version "0.28.4"
   resolved "https://registry.yarnpkg.com/yup/-/yup-0.28.4.tgz#e8f0038df8260f26e90e2cf5c061eed193f94a74"
