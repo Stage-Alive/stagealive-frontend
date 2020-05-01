@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { subscribeToMessage, messageToServer, joinChat, leaveChat } from 'services/websocket'
 import styled from 'styled-components'
-import { getPublicGroups } from 'providers/fetchClient.js'
+import { getChats } from 'providers/fetchClient.js'
 
 const Chat = () => {
   const [messages, setMessage] = useState([])
   const [text, setText] = useState('')
   const [name, setName] = useState('')
   const [chat, setChat] = useState('0')
-  const [groups, setGroups] = useState([])
+  const [chats, setChats] = useState([])
 
   useEffect(() => {
     async function fetchData() {
-      const res = await getPublicGroups()
-      setGroups(res)
+      const res = await getChats()
+      setChats(res)
     }
     fetchData()
   }, [])
@@ -41,10 +41,10 @@ const Chat = () => {
           onChange={content => setName(content.target.value)}
         />
         <Chats>
-          {groups.map(group => {
+          {chats.map(chat => {
             return (
-              <Button value={group.groupName} onClick={content => changeChat(content.target.value)}>
-                {group.groupName}
+              <Button value={chat.id} onClick={content => changeChat(content.target.value)}>
+                {chat.id}
               </Button>
             )
           })}
@@ -68,7 +68,10 @@ const Chat = () => {
           onChange={content => setText(content.target.value)}
         ></Textarea>
         <br />
-        <Button id='send' className='btn' onClick={() => messageToServer({ name, text, chat })}>
+        <Button
+          id='send'
+          onClick={() => messageToServer({ name, text, chat, userId: '240e6fd9-85a7-4e16-9601-1a180933e107' })}
+        >
           Send
         </Button>
       </ChatView>

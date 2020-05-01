@@ -15,11 +15,12 @@ function subscribeToMessage(cb) {
   socket.emit('subscribeToMessage', 1000)
 }
 
-function messageToServer({ name, text, chat }) {
+function messageToServer({ name, text, chat, userId }) {
   socket.emit('msgToServer', {
     name,
     text,
-    chat
+    chat,
+    userId
   })
 }
 

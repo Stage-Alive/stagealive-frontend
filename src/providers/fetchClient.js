@@ -22,4 +22,15 @@ export const getPublicGroups = async () => {
   return groups
 }
 
+export const getChats = async () => {
+  const res = await instance.get('/chats')
+
+  const chats = res.data.data.items.map(chat => {
+    return {
+      id: chat.id
+    }
+  })
+  return chats
+}
+
 export default instance
