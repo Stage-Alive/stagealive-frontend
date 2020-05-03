@@ -1,8 +1,8 @@
 import React from 'react'
 import { Formik, Form, Field } from 'formik'
-
 import Row from 'components/Row'
 import Text from 'components/Text'
+import Link from 'components/Link'
 
 import { useAuth } from 'context/auth-context'
 
@@ -31,18 +31,21 @@ const Login = () => {
           handleReset
         } = props
         return (
-          <Form onSubmit={handleSubmit}>
-            <Text htmlFor='email' as='label' variant='big'>
-              Email
-            </Text>
-            <Row>
-              <Field id='email' placeholder='Enter your email' type='text' name='email' />
-              <Field id='password' placeholder='Enter your password' type='password' name='password' />
-              <button type='submit' disabled={isSubmitting}>
-                entrar
-              </button>
-            </Row>
-          </Form>
+          <>
+            <Form onSubmit={handleSubmit}>
+              <Text htmlFor='email' as='label' variant='big'>
+                Email
+              </Text>
+              <Row>
+                <Field id='email' placeholder='Enter your email' type='text' name='email' />
+                <Field id='password' placeholder='Enter your password' type='password' name='password' />
+                <button type='submit' disabled={isSubmitting}>
+                  entrar
+                </button>
+              </Row>
+            </Form>
+            <Link to='/register'>Cadastre-se aqui</Link>
+          </>
         )
       }}
     </Formik>
