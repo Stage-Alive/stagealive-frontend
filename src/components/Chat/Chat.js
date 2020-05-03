@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { subscribeToMessage, messageToServer, joinChat, leaveChat } from 'services/websocket'
 import styled from 'styled-components'
-import { getChats } from 'providers/fetchClient.js'
+import { getChats } from 'services/chats'
 
 const Chat = () => {
   const [messages, setMessage] = useState([])
@@ -41,13 +41,15 @@ const Chat = () => {
           onChange={content => setName(content.target.value)}
         />
         <Chats>
-          {chats.map(chat => {
-            return (
-              <Button value={chat.id} onClick={content => changeChat(content.target.value)}>
-                {chat.id}
-              </Button>
-            )
-          })}
+          {chats && chats.length
+            ? chats.map(chat => {
+                return (
+                  <Button value={chat.id} onClick={content => changeChat(content.target.value)}>
+                    {chat.id}
+                  </Button>
+                )
+              })
+            : null}
           <p>Current chat: {chat}</p>
         </Chats>
         <Box className='card'>

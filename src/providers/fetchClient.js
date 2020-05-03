@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { getToken } from 'helpers'
+
 export const __API__ = process.env.REACT_APP_API_URL
 
 const defaultOptions = {
@@ -8,29 +10,27 @@ const defaultOptions = {
 
 const instance = axios.create(defaultOptions)
 
-export const getPublicGroups = async () => {
-  const res = await instance.get('/publicgroups')
+instance.interceptors.request.use(config => {
+  const token = getToken()
 
-  const groups = res.data.data.items.map(group => {
-    return {
-      id: group.id,
-      regionId: group.regionId,
-      groupId: group.group.id,
-      groupName: group.group.name
+  return {
+    ...config,
+    headers: {
+      ...config.headers,
+      Authorization: token ? `Bearer ${token}` : ''
     }
-  })
-  return groups
-}
+  }
+})
 
-export const getChats = async () => {
-  const res = await instance.get('/chats')
-
-  const chats = res.data.data.items.map(chat => {
-    return {
-      id: chat.id
+instance.interceptors.response.use(
+  response => response.data,
+  error => {
+    // Adicionar rotas públicas em `['/login']`
+    if ((error && error.response && error.response.status !== 401) || ['/login'].includes(window.location.pathname)) {
+      return Promise.reject(error)
     }
-  })
-  return chats
-}
+    window.location.href = '/login'
+  }
+)
 
 export default instance
