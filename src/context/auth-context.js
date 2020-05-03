@@ -1,7 +1,7 @@
 import React, { createContext, useState, useLayoutEffect, useContext, useCallback } from 'react'
 import { useAsync } from 'react-async'
 
-import { login as authLogin } from 'services/auth'
+import { login as authLogin, register as authRegister } from 'services/auth'
 import { setToken, clearToken, bootstrapAppData } from 'helpers'
 
 import Loader from 'components/Loader'
@@ -33,6 +33,18 @@ const AuthProvider = props => {
     }
   }, [])
 
+  const register = useCallback(async data => {
+    try {
+      const user = await authRegister(data)
+      reload()
+
+      return { user }
+    } catch (error) {
+      console.log(error)
+      return Promise.reject(error)
+    }
+  }, [])
+
   const logout = useCallback(() => {
     clearToken()
     reload()
@@ -53,7 +65,7 @@ const AuthProvider = props => {
     }
   }
 
-  return <AuthContext.Provider value={{ data, login, logout }} {...props} />
+  return <AuthContext.Provider value={{ data, login, logout, register }} {...props} />
 }
 
 const useAuth = () => {
