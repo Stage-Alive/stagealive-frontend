@@ -1,8 +1,13 @@
-import React from 'react'
-import { Route, Switch, BrowserRouter } from 'react-router-dom'
+import React, { useEffect, Suspense, lazy } from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
+import { useUser } from 'context/user-context'
+import Loader from 'components/Loader'
+import Theme from 'theme'
 
-import Home from 'routes/Home'
+const loadAuthenticatedApp = () => import('./AuthenticatedApp')
+const AuthenticatedApp = lazy(loadAuthenticatedApp)
+const UnauthenticatedApp = lazy(() => import('./UnauthenticatedApp'))
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -21,14 +26,20 @@ button, a {
 }
 `
 
-function App() {
+const App = () => {
+  const { user } = useUser()
+
+  useEffect(() => {
+    loadAuthenticatedApp()
+  }, [])
+
   return (
-    <BrowserRouter>
+    <Theme>
       <GlobalStyle />
-      <Switch>
-        <Route path='/' component={Home} />
-      </Switch>
-    </BrowserRouter>
+      <Suspense fallback={<Loader />}>
+        <Router>{user ? <AuthenticatedApp /> : <UnauthenticatedApp />}</Router>
+      </Suspense>
+    </Theme>
   )
 }
 
