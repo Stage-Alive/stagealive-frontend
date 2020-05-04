@@ -20,35 +20,41 @@ const AuthProvider = props => {
     }
   }, [isSettled])
 
-  const login = useCallback(async data => {
-    try {
-      const auth = await authLogin(data)
-      setToken(auth.access_token)
-      reload()
+  const login = useCallback(
+    async data => {
+      try {
+        const auth = await authLogin(data)
+        setToken(auth.access_token)
+        reload()
 
-      return { auth }
-    } catch (error) {
-      console.log(error)
-      return Promise.reject(error)
-    }
-  }, [])
+        return { auth }
+      } catch (error) {
+        console.log(error)
+        return Promise.reject(error)
+      }
+    },
+    [reload]
+  )
 
-  const register = useCallback(async data => {
-    try {
-      const user = await authRegister(data)
-      reload()
+  const register = useCallback(
+    async data => {
+      try {
+        const user = await authRegister(data)
+        reload()
 
-      return { user }
-    } catch (error) {
-      console.log(error)
-      return Promise.reject(error)
-    }
-  }, [])
+        return { user }
+      } catch (error) {
+        console.log(error)
+        return Promise.reject(error)
+      }
+    },
+    [reload]
+  )
 
   const logout = useCallback(() => {
     clearToken()
     reload()
-  }, [])
+  }, [reload])
 
   if (!firstAttemptFinished) {
     if (isPending) {

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Container from 'components/Container'
-import Header from 'components/Header'
 import Footer from 'components/Footer'
 import Chat from 'components/Chat'
 import Section from 'components/Section'
@@ -10,7 +9,6 @@ const Home = () => {
   return (
     <>
       <Container>
-        {/* <Header /> */}
         <Section>
           <Title> Live</Title>
           <Iframe
