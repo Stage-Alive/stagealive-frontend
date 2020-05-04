@@ -14,7 +14,7 @@ function Facebook() {
     <FacebookLogin
       appId='1472202059626414'
       autoLoad={true}
-      fields='name,email,profile'
+      fields='name,email,picture'
       onClick={componentClicked}
       callback={responseFacebook}
     />
