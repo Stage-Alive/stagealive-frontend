@@ -34,7 +34,7 @@ const Login = () => {
                 </button>
               </Row>
             </Form>
-            <Facebook></Facebook>
+            <Facebook />
             <Link to='/register'>Cadastre-se aqui</Link>
           </>
         )
