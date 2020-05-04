@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik'
 import Row from 'components/Row'
 import Text from 'components/Text'
 import Link from 'components/Link'
-
+import Facebook from 'components/Facebook'
 import { useAuth } from 'context/auth-context'
 
 const Login = () => {
@@ -44,6 +44,7 @@ const Login = () => {
                 </button>
               </Row>
             </Form>
+            <Facebook></Facebook>
             <Link to='/register'>Cadastre-se aqui</Link>
           </>
         )
