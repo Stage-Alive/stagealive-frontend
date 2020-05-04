@@ -1,7 +1,7 @@
 import React, { createContext, useState, useLayoutEffect, useContext, useCallback } from 'react'
 import { useAsync } from 'react-async'
 
-import { login as authLogin, register as authRegister } from 'services/auth'
+import { login as authLogin, register as authRegister, facebookLogin as authFacebookLogin } from 'services/auth'
 import { setToken, clearToken, bootstrapAppData } from 'helpers'
 
 import Loader from 'components/Loader'
@@ -20,35 +20,57 @@ const AuthProvider = props => {
     }
   }, [isSettled])
 
-  const login = useCallback(async data => {
-    try {
-      const auth = await authLogin(data)
-      setToken(auth.access_token)
-      reload()
+  const login = useCallback(
+    async data => {
+      try {
+        const auth = await authLogin(data)
+        setToken(auth.access_token)
+        reload()
 
-      return { auth }
-    } catch (error) {
-      console.log(error)
-      return Promise.reject(error)
-    }
-  }, [])
+        return { auth }
+      } catch (error) {
+        console.log(error)
+        return Promise.reject(error)
+      }
+    },
+    [reload]
+  )
 
-  const register = useCallback(async data => {
-    try {
-      const user = await authRegister(data)
-      reload()
+  const facebookLogin = useCallback(
+    async data => {
+      try {
+        const auth = await authFacebookLogin(data)
+        setToken(auth.access_token)
+        reload()
 
-      return { user }
-    } catch (error) {
-      console.log(error)
-      return Promise.reject(error)
-    }
-  }, [])
+        return { auth }
+      } catch (error) {
+        console.log(error)
+        return Promise.reject(error)
+      }
+    },
+    [reload]
+  )
+
+  const register = useCallback(
+    async data => {
+      try {
+        const user = await authRegister(data)
+        reload()
+
+        return { user }
+      } catch (error) {
+        console.log(error)
+        return Promise.reject(error)
+      }
+    },
+    [reload]
+  )
 
   const logout = useCallback(() => {
     clearToken()
     reload()
-  }, [])
+  }, [reload])
 
   if (!firstAttemptFinished) {
     if (isPending) {
@@ -65,7 +87,7 @@ const AuthProvider = props => {
     }
   }
 
-  return <AuthContext.Provider value={{ data, login, logout, register }} {...props} />
+  return <AuthContext.Provider value={{ data, login, logout, register, facebookLogin }} {...props} />
 }
 
 const useAuth = () => {

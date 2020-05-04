@@ -19,17 +19,7 @@ const Login = () => {
       }}
     >
       {props => {
-        const {
-          values,
-          touched,
-          errors,
-          dirty,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          handleReset
-        } = props
+        const { isSubmitting, handleSubmit } = props
         return (
           <>
             <Form onSubmit={handleSubmit}>
