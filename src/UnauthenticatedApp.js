@@ -7,7 +7,7 @@ import Register from 'routes/Register'
 const UnauthenticatedApp = () => (
   <Switch>
     <Route path='/login' component={Login} />
-    <Route path='/register' component={Register} />
+    <Route path='/cadastro' component={Register} />
     <Redirect to='/login' />
   </Switch>
 )
