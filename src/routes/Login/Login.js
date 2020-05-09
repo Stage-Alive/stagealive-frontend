@@ -111,6 +111,7 @@ const FormStyled = styled.div`
 
 const LoginStyled = styled.div`
   min-height: 100%;
+  margin-top: 50px;
 `
 
 const Register = styled.div`

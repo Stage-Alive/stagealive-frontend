@@ -94,6 +94,7 @@ const RegisterStyled = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   width: 90%;
+  margin-top: 50px;
 `
 
 const FirstSection = styled.div`

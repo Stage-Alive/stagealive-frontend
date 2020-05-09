@@ -10,7 +10,7 @@ const Header = () => {
         </a>
         <Search placeholder='Encontre seus show favoritos...' type='search' results='0' />
         <Nav>
-          <A href='/login'>HOME</A>
+          <A href='/'>HOME</A>
           <A href='/contato'>CONTATO</A>
           <Span></Span>
           <LoginLink href='/login'>Entre</LoginLink>ou <RegisterLink href='/cadastro'>Faça seu Cadastro</RegisterLink>
@@ -50,7 +50,6 @@ const StyledHeader = styled.header`
   width: 100%;
   display: flex;
   flex-direction: row;
-  margin-bottom: 40px;
 `
 
 const HeaderContent = styled.div`
