@@ -26,38 +26,61 @@ const Register = () => {
           const { isSubmitting, handleSubmit } = props
           return (
             <RegisterStyled>
-              <FormContent>
-                <Form onSubmit={handleSubmit}>
-                  <FormTitle as='label' variant='big'>
-                    Cadastro
-                  </FormTitle>
-                  <Label>Nome</Label>
-                  <Input>
-                    <Field style={inputStyle} id='name' placeholder='Enter your name' type='text' name='name' />
-                  </Input>
-                  <Label>Email</Label>
-                  <Input>
-                    <Field style={inputStyle} id='email' placeholder='Enter your email' type='text' name='email' />
-                  </Input>
-                  <Label>Senha</Label>
-                  <Input>
-                    <Field
-                      style={inputStyle}
-                      id='password'
-                      placeholder='Enter your password'
-                      type='password'
-                      name='password'
-                    />
-                  </Input>
-                  <Button type='submit' disabled={isSubmitting}>
-                    Enviar
-                  </Button>
-                </Form>
-              </FormContent>
-              <Login>
-                <Subtitle>Já possui uma conta?</Subtitle>
-                <A href='/login'>Faça seu Login e assista as lives com seus amigos</A>
-              </Login>
+              <FirstSection>
+                <FormContent>
+                  <Form onSubmit={handleSubmit}>
+                    <FormTitle as='label' variant='big'>
+                      Cadastro
+                    </FormTitle>
+                    <Label>Nome</Label>
+                    <Input>
+                      <Field style={inputStyle} id='name' placeholder='Entre com seu nome' type='text' name='name' />
+                    </Input>
+                    <Label>Email</Label>
+                    <Input>
+                      <Field style={inputStyle} id='email' placeholder='Entre com seu email' type='text' name='email' />
+                    </Input>
+                    <Label>Senha</Label>
+                    <Input>
+                      <Field
+                        style={inputStyle}
+                        id='password'
+                        placeholder='Entre com sua senha'
+                        type='password'
+                        name='password'
+                      />
+                    </Input>
+                    <Label>Repetir senha</Label>
+                    <Input>
+                      <Field
+                        style={inputStyle}
+                        id='rewrite password'
+                        placeholder='Repita sua senha'
+                        type='password'
+                        name='password'
+                      />
+                    </Input>
+                  </Form>
+                </FormContent>
+                <Login>
+                  <Subtitle>Já possui uma conta?</Subtitle>
+                  <A href='/login'>Faça seu Login e assista as lives com seus amigos</A>
+                </Login>
+              </FirstSection>
+              <HorizontalLine />
+              <SecondSection>
+                <TermsTitle>Termos e Condições</TermsTitle>
+                <Terms>
+                  <Paragraph>
+                    Aenean sed lorem est. Sed quis neque ut nibh suscipit imperdiet ac non augue. Aenean ornare sit amet
+                    lectus non tristique. Nunc ut volutpat lectus. Nulla velit augue, pulvinar sed nisi sit amet,
+                    eleifend fermentum est. Quisque nibh justo, congue ut erat at, aliquet efficitur purus. Integer
+                    venenatis odio vitae orci efficitur mollis. Donec ultrices diam dictum dignissim vestibulum. Proin
+                    eleifend nunc nunc. Sed non arcu eget lorem viverra sodales.
+                  </Paragraph>
+                  <ButtonTerm>Aceitar e Cadastrar</ButtonTerm>
+                </Terms>
+              </SecondSection>
             </RegisterStyled>
           )
         }}
@@ -72,6 +95,55 @@ const RegisterStyled = styled.div`
   flex-wrap: wrap;
   width: 90%;
 `
+
+const FirstSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 90%;
+  opacity: 1;
+`
+
+const SecondSection = styled.div`
+  margin-top: 40px;
+  margin-bottom: 60px;
+`
+
+const HorizontalLine = styled.hr`
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-top: 1px solid #222730;
+  opacity: 1;
+`
+
+const Terms = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const ButtonTerm = styled.button`
+  font-size: 20px;
+  color: white;
+  background-color: #020916;
+  border: 2px solid white;
+  border-radius: 2px;
+  text-align: center;
+  display: block;
+  width: 40%;
+  margin-left: 60px;
+  margin-right: 60px;
+`
+
+const Paragraph = styled.p`
+  color: white;
+  font-size: 15px;
+`
+
+const TermsTitle = styled.h4`
+  color: white;
+`
+
 const FormContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -86,6 +158,7 @@ const Login = styled.div`
   flex: 1;
   margin-top: 30px;
   text-align: center;
+  align-items: center;
 `
 
 const A = styled.a`

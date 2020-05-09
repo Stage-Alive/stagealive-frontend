@@ -8,7 +8,7 @@ const Header = () => {
         <a href='/'>
           <Image src='/vlive.svg' alt='Stage Alive' />
         </a>
-        <Search placeholder='Encontre seus show favoritos...' type='search' />
+        <Search placeholder='Encontre seus show favoritos...' type='search' results='0' />
         <Nav>
           <List>
             <Item>HOME</Item>
