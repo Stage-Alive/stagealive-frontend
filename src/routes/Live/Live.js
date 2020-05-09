@@ -10,27 +10,19 @@ const Home = () => {
   return (
     <>
       <Container>
-        <Header />
-        <Section>
-          <Title> Stage Live</Title>
-          {/* <iframe
-            width="800"
-            height="315"
-            src="https://www.youtube.com/embed/yJFme_74VCc"
-            allowfullscreen
-          >
-          </iframe> */}
-        </Section>
-        <Footer />
+        <LivePage>
+          <Live>
+            <iframe width='100%' height='100%' src='https://www.youtube.com/embed/yJFme_74VCc' allowfullscreen></iframe>
+          </Live>
+          <Chat></Chat>
+        </LivePage>
       </Container>
     </>
   )
 }
 
-const Title = styled.h1`
-  font-family: 'Ubuntu';
-  font-size: 2.5em;
-  font-weight: 100;
-`
+const LivePage = styled.div``
+const Live = styled.div``
+const Chat = styled.div``
 
 export default Home

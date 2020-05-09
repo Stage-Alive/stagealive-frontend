@@ -1,13 +1,15 @@
 import React from 'react'
 import { Formik, Form, Field } from 'formik'
 import styled from 'styled-components'
-import Link from 'components/Link'
-import Facebook from 'components/Facebook'
 import { useAuth } from 'context/auth-context'
 import Container from 'components/Container'
+import FormTitle from 'components/FormTitle'
+import Label from 'components/Label'
+import Facebook from 'components/Facebook'
 
 const Login = () => {
   const { login } = useAuth()
+  const inputStyle = { fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
 
   return (
     <Container>
@@ -26,16 +28,22 @@ const Login = () => {
               <FormStyled>
                 <FormContent>
                   <Form onSubmit={handleSubmit}>
-                    <Title>Entre com sua conta</Title>
-                    <Text>Email</Text>
+                    <FormTitle>Entre com sua conta</FormTitle>
+                    <Label>Email</Label>
                     <Input>
-                      <Field id='email' placeholder='Enter your email' type='text' name='email' />
+                      <Field style={inputStyle} id='email' placeholder='Entre com seu email' type='text' name='email' />
                     </Input>
-                    <Text>Senha</Text>
+                    <Label>Senha</Label>
                     <Input>
-                      <Field id='password' placeholder='Enter your password' type='password' name='password' />
+                      <Field
+                        style={inputStyle}
+                        id='password'
+                        placeholder='Entre com sua senha'
+                        type='password'
+                        name='password'
+                      />
                     </Input>
-                    <Button type='submit' disabled={isSubmitting}>
+                    <Button style={inputStyle} type='submit' disabled={isSubmitting}>
                       Entrar
                     </Button>
                   </Form>
@@ -48,7 +56,7 @@ const Login = () => {
         </Formik>
         <Register>
           <Subtitle>Não possui uma conta?</Subtitle>
-          <A>Cadastre-se já e assista as lives com seus amigos</A>
+          <A href='/cadastro'>Cadastre-se já e assista as lives com seus amigos</A>
         </Register>
       </LoginStyled>
     </Container>
@@ -74,19 +82,6 @@ const Button = styled.button`
   margin: 30px 0;
   padding: 10px;
   width: 100%;
-`
-
-const Text = styled.p`
-  color: white;
-  font-size: 24px;
-  padding-bottom: 5px;
-  margin-top: 20px;
-`
-
-const Title = styled.h2`
-  color: white;
-  font-size: 40px;
-  padding-bottom: 10px;
 `
 
 const Subtitle = styled.h3`
@@ -116,11 +111,13 @@ const FormStyled = styled.div`
 
 const LoginStyled = styled.div`
   min-height: 100%;
+  margin-top: 50px;
 `
 
 const Register = styled.div`
   width: 100%;
-  padding: 20px;
+  margin-top: 40px;
+  margin-bottom: 100px;
 `
 
 const A = styled.a`

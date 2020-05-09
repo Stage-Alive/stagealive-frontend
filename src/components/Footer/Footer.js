@@ -43,12 +43,13 @@ const Footer = () => {
 }
 
 const StyledFooter = styled.footer`
+  position: absolute;
+  bottom: 0;
   width: 100%;
   background-color: #182131;
   color: white;
   text-align: center;
   height: 180px;
-  margin-top: 40px;
 `
 
 const FooterContent = styled.div`
@@ -77,7 +78,7 @@ const Contact = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  margin: 20px;
+  margin: 20px 0 0 0;
 `
 
 const Social = styled.div``

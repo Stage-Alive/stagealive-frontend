@@ -15,6 +15,10 @@ const ContainerComponent = ({ children, ...props }) => (
 const Container = styled.div`
   height: 100%;
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
   background-color: #020916;
 `
 
