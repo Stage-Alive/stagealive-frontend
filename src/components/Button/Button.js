@@ -1,15 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { space, layout, typography, color } from 'styled-system'
 
-const ButtonComponent = ({ children, ...props }) => <Button {...props}>{children}</Button>
+const Button = styled.button`
+  color: white;
+  background-color: #151f2e;
+  border: 2px solid white;
+  border-radius: 2px;
+  text-align: center;
+  display: block;
+  margin: 30px 0;
+  padding: 10px;
+  width: 100%;
+`
 
-const Button = styled.button(space, layout, typography, color)
-
-ButtonComponent.propTypes = {
-  type: PropTypes.string,
-  disabled: PropTypes.bool
-}
-
-export default ButtonComponent
+export default Button
