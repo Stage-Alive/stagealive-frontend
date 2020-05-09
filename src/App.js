@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
   margin: 0;
   box-sizing: border-box;
   outline: none;
+  font-family: 'Open Sans', sans-serif;
 }
 
 button, a {
