@@ -6,7 +6,7 @@ const Header = () => {
     <StyledHeader>
       <HeaderContent>
         <a href='/'>
-          <Image src='/logo192.png' alt='Stage Alive' />
+          <Image src='/vlive.svg' alt='Stage Alive' />
         </a>
       </HeaderContent>
     </StyledHeader>
@@ -14,15 +14,17 @@ const Header = () => {
 }
 
 const StyledHeader = styled.header`
-  background: #86afd1;
+  background: #182131;
+  height: 90px;
   width: 100%;
-  padding: 30px;
   display: flex;
   flex-direction: row;
+  margin-bottom: 40px;
 `
 
 const HeaderContent = styled.div`
-  width: 75%;
+  background: #182131;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -31,7 +33,6 @@ const HeaderContent = styled.div`
 `
 
 const Image = styled.img`
-  filter: invert(100%);
 `
 
 export default Header
