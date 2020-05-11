@@ -23,32 +23,34 @@ const Contact = () => {
           {props => {
             const { isSubmitting, handleSubmit } = props
             return (
-              <Form onSubmit={handleSubmit}>
-                <FormTitle>Deixe suas dúvidas e sugetões!</FormTitle>
-                <Subtitle>Informações Pessoais</Subtitle>
-                <Label>Name</Label>
-                <Input>
-                  <Field style={inputStyle} id='text' placeholder='Entre com seu nome' type='text' name='name' />
-                </Input>
-                <Label>Email</Label>
-                <Input>
-                  <Field style={inputStyle} id='email' placeholder='Entre com seu email' type='text' name='email' />
-                </Input>
-                <Label>Mensagem</Label>
-                <Input>
-                  <Field
-                    as='textarea'
-                    style={inputStyle}
-                    id='mensagem'
-                    placeholder='Entre com sua mensagem'
-                    type='textarea'
-                    name='mensagem'
-                  />
-                </Input>
-                <Button style={inputStyle} type='submit' disabled={isSubmitting}>
-                  Enviar
-                </Button>
-              </Form>
+              <>
+                <Form onSubmit={handleSubmit}>
+                  <FormTitle>Deixe suas dúvidas e sugetões!</FormTitle>
+                  <Subtitle>Informações Pessoais</Subtitle>
+                  <Label>Name</Label>
+                  <Input>
+                    <Field style={inputStyle} id='text' placeholder='Entre com seu nome' type='text' name='name' />
+                  </Input>
+                  <Label>Email</Label>
+                  <Input>
+                    <Field style={inputStyle} id='email' placeholder='Entre com seu email' type='text' name='email' />
+                  </Input>
+                  <Label>Mensagem</Label>
+                  <Input>
+                    <Field
+                      as='textarea'
+                      style={inputStyle}
+                      id='mensagem'
+                      placeholder='Entre com sua mensagem'
+                      type='textarea'
+                      name='mensagem'
+                    />
+                  </Input>
+                  <Button style={inputStyle} type='submit' disabled={isSubmitting}>
+                    Enviar
+                  </Button>
+                </Form>
+              </>
             )
           }}
         </Formik>
@@ -74,11 +76,13 @@ const Subtitle = styled.h3`
   padding-bottom: 10px;
 `
 const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
   color: white;
   border: 2px solid white;
   border-radius: 2px;
   text-align: center;
-  margin: 30px 0;
   padding: 10px;
 `
 

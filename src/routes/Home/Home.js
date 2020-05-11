@@ -2,26 +2,27 @@ import React from 'react'
 import styled from 'styled-components'
 import Container from 'components/Container'
 import Footer from 'components/Footer'
-import Chat from 'components/Chat'
 import NextLives from 'components/NextLives'
 
 const Home = () => {
   return (
     <>
       <Container>
-        {/* <Iframe
-            width='800'
-            height='400'
-            src='https://www.youtube.com/embed/QxamVP2dJCA'
-            frameborder='0'
-            allowfullscreen
-          /> */}
-        {/* <Chat /> */}
+        <HomeStyled>
+          <NextLives maxChildren='6' />
+        </HomeStyled>
         <Footer />
       </Container>
     </>
   )
 }
+
+const HomeStyled = styled.div`
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+`
 
 const Iframe = styled.iframe`
   display: block;

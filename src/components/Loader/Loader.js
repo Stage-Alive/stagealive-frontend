@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const Loader = ({ children = 'Carregando' }) => <LoaderStyle>{children}</LoaderStyle>
+const Loader = ({ children = 'Carregando' }) => <LoaderStyle />
 
 const LoaderStyle = styled.div`
   background-color: #020916;
