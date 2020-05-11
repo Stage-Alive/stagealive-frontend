@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useUser } from 'context/user-context'
+import { useAuth } from 'context/auth-context'
 
 const Header = () => {
+  const { user } = useUser()
+  const { logout } = useAuth()
+
   return (
     <StyledHeader>
       <HeaderContent>
@@ -13,12 +18,82 @@ const Header = () => {
           <A href='/'>HOME</A>
           <A href='/contato'>CONTATO</A>
           <Span></Span>
-          <LoginLink href='/login'>Entre</LoginLink>ou <RegisterLink href='/cadastro'>Faça seu Cadastro</RegisterLink>
+          {user ? (
+            <Dropdown>
+              <DropdownButton>
+                Olá, {user && user.name}
+                <Icon src='chevron-down-solid.svg'></Icon>
+              </DropdownButton>
+              <DropdownOptions>
+                <DropdownLink href='/perfil'>Meu Perfil</DropdownLink>
+                <DropdownLink onClick={logout}>Sair</DropdownLink>
+              </DropdownOptions>
+            </Dropdown>
+          ) : (
+            <>
+              <LoginLink href='/login'>Entre</LoginLink>ou{' '}
+              <RegisterLink href='/cadastro'>Faça seu Cadastro</RegisterLink>
+            </>
+          )}
         </Nav>
       </HeaderContent>
     </StyledHeader>
   )
 }
+
+const DropdownOptions = styled.div`
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+`
+const DropdownButton = styled.button`
+  padding: 35px 20px 35px 20px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #182131;
+  &:hover {
+    background-color: #38404d;
+  }
+`
+
+const Dropdown = styled.div`
+  max-height: 90px;
+  float: left;
+  overflow: hidden;
+  color: white;
+  &:hover {
+    ${DropdownOptions} {
+      display: block;
+    }
+  }
+`
+
+const DropdownLink = styled.a`
+  float: none;
+  color: white;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  background-color: #182131;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  &:hover {
+    background-color: #38404d;
+  }
+`
+
+const Icon = styled.img`
+  filter: invert();
+  margin-left: 10px;
+  opacity: 1;
+  width: 10px;
+`
 
 const Nav = styled.nav`
   display: flex;
@@ -40,7 +115,8 @@ const Search = styled.input`
 `
 
 const Span = styled.span`
-  border: 1px solid #707070;
+  height: 60px;
+  border: 0.5px solid #707070;
   opacity: 1;
 `
 

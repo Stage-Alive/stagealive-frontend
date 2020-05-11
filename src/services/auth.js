@@ -6,4 +6,6 @@ export const login = data => client.post('/auth/login', data)
 
 export const register = data => client.post('/users', data)
 
+export const updateUser = (data, id) => client.patch(`users/${id}`, data)
+
 export const facebookLogin = data => client.post('/auth/login/facebook', data)
