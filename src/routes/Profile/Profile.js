@@ -1,22 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Formik, Form, Field } from 'formik'
-import { createContact } from 'services/contact'
 import Container from 'components/Container'
 import Label from 'components/Label'
 import Input from 'components/Input'
+import { useUser } from 'context/user-context'
+import { updateUser } from 'services/auth'
 
-const Contact = () => {
+const Profile = () => {
+  const { user } = useUser()
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
 
   return (
     <Container>
-      <ContactStyled>
+      <ProfileStyled>
         <Formik
-          initialValues={{ name: '', email: '', message: '' }}
+          initialValues={{ name: user.name, email: user.email }}
           onSubmit={async (values, { setSubmitting }) => {
             console.log(values)
-            const response = await createContact(values)
+            const response = await updateUser(values, user.id)
             console.log(response)
             window.location.reload()
           }}
@@ -26,9 +28,8 @@ const Contact = () => {
             return (
               <>
                 <Form onSubmit={handleSubmit}>
-                  <FormTitle>Deixe suas dúvidas e sugetões!</FormTitle>
-                  <Subtitle>Informações Pessoais</Subtitle>
-                  <Label>Name</Label>
+                  <FormTitle>Perfil</FormTitle>
+                  <Label>Nome</Label>
                   <Input>
                     <Field style={inputStyle} id='text' placeholder='Entre com seu nome' type='text' name='name' />
                   </Input>
@@ -36,31 +37,20 @@ const Contact = () => {
                   <Input>
                     <Field style={inputStyle} id='email' placeholder='Entre com seu email' type='text' name='email' />
                   </Input>
-                  <Label>Mensagem</Label>
-                  <Input>
-                    <Field
-                      as='textarea'
-                      style={inputStyle}
-                      id='message'
-                      placeholder='Entre com sua mensagem'
-                      type='textarea'
-                      name='message'
-                    />
-                  </Input>
                   <Button style={inputStyle} type='submit' disabled={isSubmitting}>
-                    Enviar
+                    Salvar Alterações
                   </Button>
                 </Form>
               </>
             )
           }}
         </Formik>
-      </ContactStyled>
+      </ProfileStyled>
     </Container>
   )
 }
 
-const ContactStyled = styled.div`
+const ProfileStyled = styled.div`
   margin-top: 50px;
   width: 45%;
 `
@@ -87,4 +77,4 @@ const Button = styled.button`
   padding: 10px;
 `
 
-export default Contact
+export default Profile
