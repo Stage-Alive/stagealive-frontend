@@ -33,10 +33,10 @@ const Profile = () => {
                   <Input>
                     <Field style={inputStyle} id='text' placeholder='Entre com seu nome' type='text' name='name' />
                   </Input>
-                  <Label>Email</Label>
+                  {/* <Label>Email</Label>
                   <Input>
                     <Field style={inputStyle} id='email' placeholder='Entre com seu email' type='text' name='email' />
-                  </Input>
+                  </Input> */}
                   <Button style={inputStyle} type='submit' disabled={isSubmitting}>
                     Salvar Alterações
                   </Button>

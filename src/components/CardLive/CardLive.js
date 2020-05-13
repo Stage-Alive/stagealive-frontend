@@ -1,16 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const CardLive = () => {
+const CardLive = ({ live }) => {
   return (
     <CardLiveStyled>
       <div>
         <Image src='./live_card.png'></Image>
         <CardBlock>
           <CardInfo>
-            <CardTitle>ALOK</CardTitle>
-            <CardSubtitle>#EmCasa</CardSubtitle>
-            <CardDate>03 de maio, domigno | 21:00</CardDate>
+            <CardTitle>{live.name}</CardTitle>
+            <CardSubtitle>#hashtag</CardSubtitle>
+            <CardDate>{live.startAt}</CardDate>
           </CardInfo>
           <CardButton>
             <Button>SAIBA MAIS</Button>
@@ -42,6 +42,7 @@ const CardTitle = styled.h2`
 `
 const CardSubtitle = styled.h3`
   color: #ffffff;
+  max-width: 100%;
   font-size: 18px;
 `
 const CardDate = styled.p`
