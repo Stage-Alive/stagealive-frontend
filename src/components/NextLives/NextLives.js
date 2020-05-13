@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import CardLive from 'components/CardLive'
-const SIX_ITEMS = ['1', '2', '3', '4', '5', '6']
+import { getLives } from 'services/lives'
 
 const NextLives = ({ maxChildren = 6 }) => {
-  SIX_ITEMS.length = maxChildren
+  const [lives, setLives] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      const lives = await getLives(maxChildren)
+      console.log(lives)
+      setLives(lives)
+    }
+    fetchData()
+  }, [])
 
   return (
     <NextLivesStyled>
@@ -13,8 +22,8 @@ const NextLives = ({ maxChildren = 6 }) => {
         Próximas Lives
       </Title>
       <Cards>
-        {SIX_ITEMS.map(item => {
-          return <CardLive></CardLive>
+        {lives.map((live, index) => {
+          return <CardLive live={live} key={index}></CardLive>
         })}
       </Cards>
       <Button>Veja todas as lives</Button>
