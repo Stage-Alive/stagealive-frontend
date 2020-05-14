@@ -9,7 +9,6 @@ const NextLives = ({ maxChildren = 6 }) => {
   useEffect(() => {
     async function fetchData() {
       const lives = await getLives(maxChildren)
-      console.log(lives)
       setLives(lives)
     }
     fetchData()
@@ -18,7 +17,7 @@ const NextLives = ({ maxChildren = 6 }) => {
   return (
     <NextLivesStyled>
       <Title>
-        <Icon src='play-icon.svg'></Icon>
+        <Icon src='/play-icon.svg'></Icon>
         Próximas Lives
       </Title>
       <Cards>

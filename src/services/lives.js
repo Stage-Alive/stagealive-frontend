@@ -17,3 +17,9 @@ export const getLives = async limit => {
     return lives
   }
 }
+
+export const getLive = async id => {
+  const res = await client.get('/lives/' + id)
+  console.log(res)
+  return res.data
+}
