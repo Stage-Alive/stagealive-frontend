@@ -22,7 +22,7 @@ const Header = () => {
             <Dropdown>
               <DropdownButton>
                 Olá, {user && user.name}
-                <Icon src='chevron-down-solid.svg'></Icon>
+                <Icon src='/chevron-down-solid.svg'></Icon>
               </DropdownButton>
               <DropdownOptions>
                 <DropdownLink href='/perfil'>Meu Perfil</DropdownLink>

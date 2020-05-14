@@ -3,23 +3,29 @@ import styled from 'styled-components'
 
 const CardLive = ({ live }) => {
   return (
-    <CardLiveStyled>
-      <div>
-        <Image src='./live_card.png'></Image>
-        <CardBlock>
-          <CardInfo>
-            <CardTitle>{live.name}</CardTitle>
-            <CardSubtitle>#hashtag</CardSubtitle>
-            <CardDate>{live.startAt}</CardDate>
-          </CardInfo>
-          <CardButton>
-            <Button>SAIBA MAIS</Button>
-          </CardButton>
-        </CardBlock>
-      </div>
-    </CardLiveStyled>
+    <Link href={`/live/${live.id}`}>
+      <CardLiveStyled>
+        <div>
+          <Image src='/live_card.png'></Image>
+          <CardBlock>
+            <CardInfo>
+              <CardTitle>{live.name}</CardTitle>
+              <CardSubtitle>#hashtag</CardSubtitle>
+              <CardDate>{live.startAt}</CardDate>
+            </CardInfo>
+            <CardButton>
+              <Button>SAIBA MAIS</Button>
+            </CardButton>
+          </CardBlock>
+        </div>
+      </CardLiveStyled>
+    </Link>
   )
 }
+
+const Link = styled.a`
+  text-decoration: none;
+`
 
 const Button = styled.button`
   border: 1px solid #182131;

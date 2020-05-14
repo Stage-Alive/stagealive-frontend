@@ -1,10 +1,52 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
 
 import Container from 'components/Container'
 import NextLives from 'components/NextLives'
 
+import { subscribeToMessage, messageToServer, joinChat, leaveChat } from 'services/websocket'
+import { getLive } from 'services/lives'
+import { useUser } from 'context/user-context'
+
 const Live = () => {
+  const { id } = useParams()
+  const { user } = useUser()
+
+  const [messages, setMessage] = useState([])
+  const [chat, setChat] = useState('0')
+  const [chats, setChats] = useState([])
+  const [text, setText] = useState('')
+  const [live, setLive] = useState('')
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await getLive(id)
+      if (res.link) {
+        setLive(res.link)
+      }
+
+      if (res.chats.length > 0) {
+        joinChat(res.chats[0].id)
+        setChat(res.chats[0].id)
+        setChats(res.chats)
+      }
+    }
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    subscribeToMessage(newMessage => {
+      setMessage(messages.concat(newMessage))
+    })
+  }, [messages])
+
+  function changeChat(newChat) {
+    leaveChat(chat)
+    joinChat(newChat)
+    setChat(newChat)
+  }
+
   return (
     <>
       <Container>
@@ -14,7 +56,7 @@ const Live = () => {
               <iframe
                 width='100%'
                 height='100%'
-                src='https://www.youtube.com/embed/QxamVP2dJCA'
+                src={live}
                 frameborder='0'
                 allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
                 allowfullscreen
@@ -29,18 +71,18 @@ const Live = () => {
                 </ChatChannel>
               </ChatHeader>
               <ChatNav>
-                <ChatTab>
-                  <p>Live</p>
-                  <CloseButton>x</CloseButton>
-                </ChatTab>
-                <ChatTab selected>
-                  <p>Amigos</p>
-                  <CloseButton>x</CloseButton>
-                </ChatTab>
-                <ChatTab>
-                  <p>Alagoas</p>
-                  <CloseButton>x</CloseButton>
-                </ChatTab>
+                {chats.map((mapChat, index) => {
+                  const selected = chat === mapChat.id
+                  return (
+                    <>
+                      <ChatTab key={index} selected={selected} onClick={() => changeChat(mapChat.id)}>
+                        {/* <p>{chat.name}</p> */}
+                        <p>testando</p>
+                        <CloseButton>x</CloseButton>
+                      </ChatTab>
+                    </>
+                  )
+                })}
               </ChatNav>
               <ChatBox>
                 <ChatBoxHeader>
@@ -48,10 +90,32 @@ const Live = () => {
                   <Link>link.reduzido/aqiweuiwu</Link>
                 </ChatBoxHeader>
                 <ChatBoxContent>
-                  <ChatView></ChatView>
+                  <ChatView>
+                    <div id='messages'>
+                      <ul>
+                        {messages.length > 0 &&
+                          messages.map((message, index) => {
+                            return (
+                              <Message key={index}>
+                                <MessageName>{message.name}</MessageName>
+                                <MessageText>{message.text}</MessageText>
+                              </Message>
+                            )
+                          })}
+                      </ul>
+                    </div>
+                  </ChatView>
                   <ChatInput>
-                    {/* <Input></Input> */}
-                    <SendButton></SendButton>
+                    <Input value={text} onChange={content => setText(content.target.value)} />
+                    <SendButton
+                      onClick={() => {
+                        console.log(user.name, text, chat, user.id)
+                        messageToServer({ name: user.name, text, chat, userId: user.id })
+                        setText('')
+                      }}
+                    >
+                      <Icon src='/send-icon.svg'></Icon>
+                    </SendButton>
                   </ChatInput>
                 </ChatBoxContent>
               </ChatBox>
@@ -66,12 +130,54 @@ const Live = () => {
   )
 }
 
-const ChatInput = styled.div``
-const ChatView = styled.div``
-const Input = styled.input``
-const SendButton = styled.button``
+const Icon = styled.img`
+  padding: 5px 10px 5px 10px;
+`
+
+const Message = styled.li`
+  display: flex;
+  flex-direction: column;
+`
+
+const MessageName = styled.p`
+  font-weight: 600;
+`
+const MessageText = styled.p`
+  font-size: 14px;
+  color: #bbbbbb;
+`
+
+const ChatInput = styled.div`
+  display: flex;
+  padding: 10px;
+`
+const ChatView = styled.div`
+  padding: 10px;
+  height: 200px;
+  width: 100%;
+  color: white;
+  overflow-y: hidden;
+  &::webkit-scrollbar {
+    display: none;
+  }
+`
+const Input = styled.input`
+  color: white;
+  background-color: #151f2e;
+  padding: 10px;
+  font-size: 14px;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+`
+const SendButton = styled.button`
+  border-radius: 6px;
+  background-color: #aa528d;
+  margin-left: 5px;
+`
 const ChatBoxContent = styled.div`
   display: flex;
+  flex-direction: column;
 `
 
 const ChatBoxHeader = styled.div`

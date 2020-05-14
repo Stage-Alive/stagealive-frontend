@@ -9,7 +9,7 @@ import Profile from 'routes/Profile'
 const AuthenticatedApp = () => (
   <Switch>
     <Route path='/home' component={Home} />
-    <Route path='/live' component={Live} />
+    <Route path='/live/:id' component={Live} />
     <Route path='/perfil' component={Profile} />
     <Route path='/contato' component={Contact} />
     <Redirect to='/home' />
