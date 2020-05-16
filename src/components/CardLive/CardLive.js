@@ -7,6 +7,7 @@ const CardLive = ({ live }) => {
       <CardLiveStyled>
         <div>
           <Image src='/live_card.png'></Image>
+
           <CardBlock>
             <CardInfo>
               <CardTitle>{live.name}</CardTitle>
@@ -64,12 +65,15 @@ const CardInfo = styled.div`
 `
 const CardLiveStyled = styled.div`
   width: 300px;
+  max-height: 400px;
   margin: 20px;
   background-color: #020916;
   cursor: pointer;
   border-radius: 10px;
   &:hover {
     background-color: #ffffff;
+    ${CardInfo} {
+    }
     ${CardButton} {
       display:block;
     }
@@ -81,6 +85,7 @@ const CardLiveStyled = styled.div`
 
 const Image = styled.img`
   width: 100%;
+  border-radius: 10px;
   height: 100%;
 `
 

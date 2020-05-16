@@ -5,42 +5,37 @@ import { useParams } from 'react-router-dom'
 import Container from 'components/Container'
 import NextLives from 'components/NextLives'
 import Chat from 'components/Chat'
+import Video from 'components/Live'
 
 import { getLive } from 'services/lives'
 
 const Live = () => {
   const { id } = useParams()
 
-  const [live, setLive] = useState('https://www.youtube.com/embed/F68KkgwP5F8')
+  const [liveLink, setLiveLink] = useState('https://www.youtube.com/embed/F68KkgwP5F8')
+  const [liveName, setLiveName] = useState('v-live')
   const [chats, setChats] = useState([])
 
   useEffect(() => {
     async function fetchData() {
       const res = await getLive(id)
       if (res.link) {
-        setLive(res.link)
+        setLiveLink(res.link)
+        setLiveName(res.name)
       }
       if (res.chats.length > 0) {
         setChats(res.chats)
       }
     }
     fetchData()
-  }, [])
+  }, [id])
 
   return (
     <>
       <Container>
         <LivePage>
           <FirstSection>
-            <Video>
-              <iframe
-                width='100%'
-                height='100%'
-                src={live}
-                allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
-                allowFullScreen
-              ></iframe>
-            </Video>
+            <Video url={liveLink} title={liveName} />
             <Chat chats={chats} />
           </FirstSection>
           <SecondSection>
@@ -70,12 +65,6 @@ const LivePage = styled.div`
   width: 95%;
   justify-content: center;
   align-items: center;
-`
-const Video = styled.div`
-  background-color: #020916;
-  width: 100px;
-  height: 80vh;
-  flex: 2;
 `
 
 export default Live

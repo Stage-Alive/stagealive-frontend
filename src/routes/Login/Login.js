@@ -5,7 +5,7 @@ import { useAuth } from 'context/auth-context'
 import Container from 'components/Container'
 import FormTitle from 'components/FormTitle'
 import Label from 'components/Label'
-import Facebook from 'components/Facebook'
+// import Facebook from 'components/Facebook'
 import * as Yup from 'yup'
 
 const SignupSchema = Yup.object().shape({
@@ -25,8 +25,7 @@ const Login = () => {
           initialValues={{ email: '', password: '' }}
           validationSchema={SignupSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            const response = await login(values)
-            console.log('aaa', response)
+            await login(values)
           }}
         >
           {props => {
@@ -34,7 +33,7 @@ const Login = () => {
             return (
               <FormStyled>
                 <FormContent>
-                  <Form onSubmit={handleSubmit}>
+                  <Form autoComplete='off' onSubmit={handleSubmit}>
                     <FormTitle>Entre com sua conta</FormTitle>
                     <Label>Email</Label>
                     <Input>

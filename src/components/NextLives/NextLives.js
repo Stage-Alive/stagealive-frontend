@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import CardLive from 'components/CardLive'
 import { getLives } from 'services/lives'
 
-const NextLives = ({ maxChildren = 6 }) => {
+const NextLives = ({ title = 'Próximas Lives', maxChildren = 6 }) => {
   const [lives, setLives] = useState([])
 
   useEffect(() => {
@@ -12,23 +12,33 @@ const NextLives = ({ maxChildren = 6 }) => {
       setLives(lives)
     }
     fetchData()
-  }, [])
+  }, [maxChildren])
 
   return (
     <NextLivesStyled>
       <Title>
         <Icon src='/play-icon.svg'></Icon>
-        Próximas Lives
+        {title}
       </Title>
       <Cards>
         {lives.map((live, index) => {
           return <CardLive live={live} key={index}></CardLive>
         })}
       </Cards>
-      <Button>Veja todas as lives</Button>
+      {title === 'Lives' ? (
+        <Button>Veja mais</Button>
+      ) : (
+        <A href='/lives'>
+          <Button>Veja todas as lives</Button>
+        </A>
+      )}
     </NextLivesStyled>
   )
 }
+
+const A = styled.a`
+  text-decoration: none;
+`
 
 const Icon = styled.img`
   margin-right: 10px;

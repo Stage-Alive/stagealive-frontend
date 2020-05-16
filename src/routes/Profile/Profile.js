@@ -17,17 +17,14 @@ const Profile = () => {
         <Formik
           initialValues={{ name: user.name, email: user.email }}
           onSubmit={async (values, { setSubmitting }) => {
-            console.log(values)
-            const response = await updateUser(values, user.id)
-            console.log(response)
-            window.location.reload()
+            await updateUser(values, user.id)
           }}
         >
           {props => {
             const { isSubmitting, handleSubmit } = props
             return (
               <>
-                <Form onSubmit={handleSubmit}>
+                <Form autoComplete='off' onSubmit={handleSubmit}>
                   <FormTitle>Perfil</FormTitle>
                   <Label>Nome</Label>
                   <Input>
@@ -61,11 +58,6 @@ const FormTitle = styled.h1`
   padding-bottom: 20px;
 `
 
-const Subtitle = styled.h3`
-  font-size: 24px;
-  color: white;
-  padding-bottom: 10px;
-`
 const Button = styled.button`
   display: flex;
   justify-content: center;

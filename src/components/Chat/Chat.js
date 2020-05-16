@@ -7,7 +7,7 @@ import { subscribeToMessage, messageToServer, joinChat, leaveChat } from 'servic
 const Chat = ({ chats }) => {
   const [text, setText] = useState('')
   const [messages, setMessage] = useState([])
-  const [chat, setChat] = useState('0')
+  const [chat, setChat] = useState(0)
   const { user } = useUser()
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Chat = ({ chats }) => {
       joinChat(chats[0].id)
       setChat(chats[0].id)
     }
-  }, [])
+  }, [chats])
 
   useEffect(() => {
     subscribeToMessage(newMessage => {
@@ -40,7 +40,7 @@ const Chat = ({ chats }) => {
       </ChatHeader>
       <ChatNav>
         {chats.map((mapChat, index) => {
-          const selected = chat == index
+          const selected = chat === index
 
           return (
             <ChatTab key={index} selected={selected} onClick={() => changeChat(mapChat.id, index)}>

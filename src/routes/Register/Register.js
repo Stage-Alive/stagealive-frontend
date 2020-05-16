@@ -10,7 +10,8 @@ import * as Yup from 'yup'
 const SignupSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Required'),
   email: Yup.string().email('Email inválido').required('Campo Obrigatório'),
-  password: Yup.string().required('Campo Obrigatório')
+  password: Yup.string().required('Campo Obrigatório'),
+  terms: Yup.boolean().oneOf([true], 'Obrigatório aceitar termos e condições')
 })
 
 const Register = () => {
@@ -33,8 +34,7 @@ const Register = () => {
             }}
             validationSchema={SignupSchema}
             onSubmit={async (values, { setSubmitting }) => {
-              const response = await register(values)
-              alert(response.error)
+              await register(values)
             }}
           >
             {props => {
@@ -42,7 +42,7 @@ const Register = () => {
               return (
                 <RegisterStyled>
                   <FormContent>
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit} autoComplete='off'>
                       <Subtitle>Cadastro</Subtitle>
                       <Label>Nome</Label>
                       <Input>
@@ -83,13 +83,14 @@ const Register = () => {
                       </Input> */}
                       <Terms>
                         <TextTerm>
-                          <input type='checkbox' />
+                          <input type='checkbox' name='terms' />
                           Aceito os termos da politica de privacidade
                         </TextTerm>
-                        <ButtonTerm type='submit' disabled={isSubmitting}>
+                        <ButtonTerm onClick={handleSubmit} type='submit' disabled={isSubmitting}>
                           Cadastrar
                         </ButtonTerm>
                       </Terms>
+                      {errors.terms && touched.terms ? <Error>{errors.terms}</Error> : null}
                     </Form>
                   </FormContent>
                   <Login>

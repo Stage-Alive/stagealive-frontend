@@ -16,6 +16,7 @@ const Header = () => {
         <Search placeholder='Encontre seus show favoritos...' type='search' results='0' />
         <Nav>
           <A href='/'>HOME</A>
+          <A href='/lives'>LIVES</A>
           <A href='/contato'>CONTATO</A>
           <Span></Span>
           {user ? (

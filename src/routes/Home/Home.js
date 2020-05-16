@@ -24,16 +24,4 @@ const HomeStyled = styled.div`
   justify-content: center;
 `
 
-const Iframe = styled.iframe`
-  display: block;
-  margin: 0 auto;
-`
-
-const Title = styled.h1`
-  font-family: 'Ubuntu';
-  font-size: 2.5em;
-  font-weight: 100;
-  text-align: center;
-`
-
 export default Home

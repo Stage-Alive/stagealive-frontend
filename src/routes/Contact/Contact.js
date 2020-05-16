@@ -14,18 +14,17 @@ const Contact = () => {
       <ContactStyled>
         <Formik
           initialValues={{ name: '', email: '', message: '' }}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={async (values, actions) => {
             console.log(values)
-            const response = await createContact(values)
-            console.log(response)
-            window.location.reload()
+            await createContact(values)
+            actions.resetForm()
           }}
         >
           {props => {
             const { isSubmitting, handleSubmit } = props
             return (
               <>
-                <Form onSubmit={handleSubmit}>
+                <Form autoComplete='off' onSubmit={handleSubmit}>
                   <FormTitle>Deixe suas dúvidas e sugetões!</FormTitle>
                   <Subtitle>Informações Pessoais</Subtitle>
                   <Label>Name</Label>
