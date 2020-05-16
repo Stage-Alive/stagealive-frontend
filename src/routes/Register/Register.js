@@ -4,9 +4,14 @@ import styled from 'styled-components'
 import Input from 'components/Input'
 import Container from 'components/Container'
 import { useAuth } from 'context/auth-context'
-import FormTitle from 'components/FormTitle'
 import Label from 'components/Label'
-import Button from 'components/Button'
+import * as Yup from 'yup'
+
+const SignupSchema = Yup.object().shape({
+  name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Required'),
+  email: Yup.string().email('Email inválido').required('Campo Obrigatório'),
+  password: Yup.string().required('Campo Obrigatório')
+})
 
 const Register = () => {
   const { register } = useAuth()
@@ -20,15 +25,20 @@ const Register = () => {
         </Banner>
         <RegisterContent>
           <Formik
-            initialValues={{ email: '', password: '', name: '', userTypeId: 'd48dded5-ca2b-4bd8-b790-45674f486d0d' }}
+            initialValues={{
+              email: '',
+              password: '',
+              name: '',
+              userTypeId: '531db173-0f9a-47d8-a969-5462e4b137a0'
+            }}
+            validationSchema={SignupSchema}
             onSubmit={async (values, { setSubmitting }) => {
-              console.log(values)
               const response = await register(values)
-              console.log(response)
+              alert(response.error)
             }}
           >
             {props => {
-              const { isSubmitting, handleSubmit } = props
+              const { isSubmitting, handleSubmit, errors, touched } = props
               return (
                 <RegisterStyled>
                   <FormContent>
@@ -38,6 +48,7 @@ const Register = () => {
                       <Input>
                         <Field style={inputStyle} id='name' placeholder='Entre com seu nome' type='text' name='name' />
                       </Input>
+                      {errors.name && touched.name ? <Error>{errors.name}</Error> : null}
                       <Label>Email</Label>
                       <Input>
                         <Field
@@ -48,6 +59,7 @@ const Register = () => {
                           name='email'
                         />
                       </Input>
+                      {errors.email && touched.email ? <Error>{errors.email}</Error> : null}
                       <Label>Senha</Label>
                       <Input>
                         <Field
@@ -58,24 +70,27 @@ const Register = () => {
                           name='password'
                         />
                       </Input>
-                      <Label>Repetir senha</Label>
-                      <Input>
+                      {touched.password ? <Error>{errors.password}</Error> : null}
+                      {/* <Label>Repetir senha</Label> */}
+                      {/* <Input>
                         <Field
                           style={inputStyle}
-                          id='rewrite password'
+                          id='rewrite_password'
                           placeholder='Repita sua senha'
                           type='password'
-                          name='password'
+                          name='retyPassword'
                         />
-                      </Input>
+                      </Input> */}
+                      <Terms>
+                        <TextTerm>
+                          <input type='checkbox' />
+                          Aceito os termos da politica de privacidade
+                        </TextTerm>
+                        <ButtonTerm type='submit' disabled={isSubmitting}>
+                          Cadastrar
+                        </ButtonTerm>
+                      </Terms>
                     </Form>
-                    <Terms>
-                      <TextTerm>
-                        <input type='checkbox' />
-                        Aceito os termos da politica de privacidade
-                      </TextTerm>
-                      <ButtonTerm>Cadastrar</ButtonTerm>
-                    </Terms>
                   </FormContent>
                   <Login>
                     <Subtitle>Já possui uma conta?</Subtitle>
@@ -90,6 +105,10 @@ const Register = () => {
     </Container>
   )
 }
+
+const Error = styled.div`
+  color: red;
+`
 
 const RegisterPage = styled.div`
   display: flex;

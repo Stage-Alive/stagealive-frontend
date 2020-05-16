@@ -6,6 +6,13 @@ import Container from 'components/Container'
 import FormTitle from 'components/FormTitle'
 import Label from 'components/Label'
 import Facebook from 'components/Facebook'
+import * as Yup from 'yup'
+
+const SignupSchema = Yup.object().shape({
+  // name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Required'),
+  email: Yup.string().email('Email inválido').required('Campo Obrigatório'),
+  password: Yup.string().required('Campo Obrigatório')
+})
 
 const Login = () => {
   const { login } = useAuth()
@@ -16,14 +23,14 @@ const Login = () => {
       <LoginStyled>
         <Formik
           initialValues={{ email: '', password: '' }}
+          validationSchema={SignupSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            console.log(values)
             const response = await login(values)
-            console.log(response)
+            console.log('aaa', response)
           }}
         >
           {props => {
-            const { isSubmitting, handleSubmit } = props
+            const { isSubmitting, handleSubmit, errors, touched } = props
             return (
               <FormStyled>
                 <FormContent>
@@ -33,6 +40,7 @@ const Login = () => {
                     <Input>
                       <Field style={inputStyle} id='email' placeholder='Entre com seu email' type='text' name='email' />
                     </Input>
+                    {errors.email && touched.email ? <Error>{errors.email}</Error> : null}
                     <Label>Senha</Label>
                     <Input>
                       <Field
@@ -43,6 +51,7 @@ const Login = () => {
                         name='password'
                       />
                     </Input>
+                    {touched.password ? <Error>{errors.password}</Error> : null}
                     <Button style={inputStyle} type='submit' disabled={isSubmitting}>
                       Entrar
                     </Button>
@@ -62,6 +71,10 @@ const Login = () => {
     </Container>
   )
 }
+
+const Error = styled.div`
+  color: red;
+`
 
 const Input = styled.div`
   color: white;

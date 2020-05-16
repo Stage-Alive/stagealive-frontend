@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { subscribeToMessage, messageToServer, joinChat, leaveChat } from 'services/websocket'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { getChats } from 'services/chats'
 
-const Chat = () => {
-  const [messages, setMessage] = useState([])
+import { useUser } from 'context/user-context'
+import { subscribeToMessage, messageToServer, joinChat, leaveChat } from 'services/websocket'
+
+const Chat = ({ chats }) => {
   const [text, setText] = useState('')
-  const [name, setName] = useState('')
+  const [messages, setMessage] = useState([])
   const [chat, setChat] = useState('0')
-  const [chats, setChats] = useState([])
+  const { user } = useUser()
 
   useEffect(() => {
-    async function fetchData() {
-      const res = await getChats()
-      setChats(res)
+    if (chats.length > 0) {
+      joinChat(chats[0].id)
+      setChat(chats[0].id)
     }
-    fetchData()
   }, [])
 
   useEffect(() => {
@@ -24,118 +23,218 @@ const Chat = () => {
     })
   }, [messages])
 
-  function changeChat(newChat) {
+  function changeChat(newChat, selectedChat) {
     leaveChat(chat)
     joinChat(newChat)
-    setChat(newChat)
+    setChat(selectedChat)
   }
 
   return (
-    <Section className='row'>
-      <ChatView>
-        <Title className='text-center'>Chat</Title>
-        <Input
-          type='text'
-          value={name}
-          placeholder='Enter name...'
-          onChange={content => setName(content.target.value)}
-        />
-        <Chats>
-          {chats && chats.length
-            ? chats.map(chat => {
-                return (
-                  <Button value={chat.id} onClick={content => changeChat(content.target.value)}>
-                    {chat.id}
-                  </Button>
-                )
-              })
-            : null}
-          <p>Current chat: {chat}</p>
-        </Chats>
-        <Box className='card'>
-          <div id='messages'>
-            <ul>
-              {messages.length > 0 &&
-                messages.map((message, index) => {
-                  return <li key={index}>{`${message.name}:${message.text}`}</li>
-                })}
-            </ul>
-          </div>
-        </Box>
-        <br />
-        <Textarea
-          id='textarea'
-          value={text}
-          placeholder='Enter message...'
-          onChange={content => setText(content.target.value)}
-        ></Textarea>
-        <br />
-        <Button
-          id='send'
-          onClick={() => messageToServer({ name, text, chat, userId: '240e6fd9-85a7-4e16-9601-1a180933e107' })}
-        >
-          Send
-        </Button>
-      </ChatView>
-    </Section>
+    <ChatStyled>
+      <ChatHeader>
+        <ChatTitle>Canais de chat</ChatTitle>
+        <ChatChannel>
+          <AddChannelButton>+</AddChannelButton>
+          <AddChannelLabel>CANAIS</AddChannelLabel>
+        </ChatChannel>
+      </ChatHeader>
+      <ChatNav>
+        {chats.map((mapChat, index) => {
+          const selected = chat == index
+
+          return (
+            <ChatTab key={index} selected={selected} onClick={() => changeChat(mapChat.id, index)}>
+              <p>{mapChat.group.name}</p>
+              <CloseButton>x</CloseButton>
+            </ChatTab>
+          )
+        })}
+      </ChatNav>
+      <ChatBox>
+        <ChatBoxHeader>
+          <ChannelTitle>Bem vindo ao canal Amigos</ChannelTitle>
+          <Link>link.reduzido/aqiweuiwu</Link>
+        </ChatBoxHeader>
+        <ChatBoxContent>
+          <ChatView>
+            <div id='messages'>
+              <ul>
+                {messages.length > 0 &&
+                  messages.map((message, index) => {
+                    return (
+                      <Message key={index}>
+                        <MessageName>{message.name}</MessageName>
+                        <MessageText>{message.text}</MessageText>
+                      </Message>
+                    )
+                  })}
+              </ul>
+            </div>
+          </ChatView>
+          <ChatInput>
+            <Input
+              value={text}
+              onChange={content => setText(content.target.value)}
+              onKeyPress={event => {
+                if (event.key === 'Enter') {
+                  messageToServer({ name: user.name, text, chat, userId: user.id })
+                  setText('')
+                }
+              }}
+            />
+            <SendButton
+              onClick={() => {
+                console.log(user.name, text, chat, user.id)
+                messageToServer({ name: user.name, text, chat, userId: user.id })
+                setText('')
+              }}
+            >
+              <Icon src='/send-icon.svg'></Icon>
+            </SendButton>
+          </ChatInput>
+        </ChatBoxContent>
+      </ChatBox>
+    </ChatStyled>
   )
 }
 
-const Chats = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 10px;
+const ChatStyled = styled.div`
+  background-color: #020916;
+  width: 100px;
+  height: 100px;
+  flex: 1;
 `
 
-const Input = styled.input`
-  border: solid 0.1px #c3c3c3;
-  margin-bottom: 20px;
-  padding: 10px;
+const Icon = styled.img`
+  padding: 5px 10px 5px 10px;
 `
 
-const ChatView = styled.div`
+const Message = styled.li`
   display: flex;
   flex-direction: column;
+`
+
+const MessageName = styled.p`
+  font-weight: 600;
+`
+const MessageText = styled.p`
+  font-size: 14px;
+  color: #bbbbbb;
+`
+
+const ChatInput = styled.div`
+  display: flex;
+  padding: 10px;
+`
+const ChatView = styled.div`
+  padding: 10px;
+  height: 200px;
+  width: 100%;
+  color: white;
+  overflow: scroll;
+  overflow-y: auto;
+
+  overflow-x: hidden;
+`
+const Input = styled.input`
+  color: white;
+  background-color: #151f2e;
+  padding: 10px;
+  font-size: 14px;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+`
+const SendButton = styled.button`
+  border-radius: 6px;
+  background-color: #aa528d;
+  margin-left: 5px;
+`
+const ChatBoxContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const ChatBoxHeader = styled.div`
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+`
+
+const Link = styled.a`
+  color: #aa528d;
+  font-size: 15px;
+  text-decoration: underline;
+  margin-left: 20px;
+`
+
+const AddChannelLabel = styled.p`
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+`
+
+const AddChannelButton = styled.button`
+  display: flex;
+  justify-content: center;
+  color: white;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  align-items: center;
+  background-color: inherit;
+  padding: 2px 8px 2px 8px;
+  font-size: 20px;
+  font-weight: 600;
+`
+const ChatHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+const ChatChannel = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+const ChatBox = styled.div`
+  background-color: #1b2433;
+`
+const ChatNav = styled.nav`
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+`
+
+const ChatTab = styled.div`
+  background-color: ${props => (props.selected ? '#1b2433' : '#111722')};
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+`
+
+const ChatTitle = styled.h3`
+  color: white;
+  font-weight: 500;
   margin: 20px;
 `
 
-const Textarea = styled.textarea`
-  height: 50px;
-  width: 400px;
-  border: solid 0.1px #c3c3c3;
+const ChannelTitle = styled.h3`
+  color: white;
+  font-weight: 500;
+  padding: 20px 0 0 20px;
 `
 
-const Button = styled.button`
-  padding: 10px 20px 10px 20px;
-  border-radius: 2px;
-  margin-right: 10px;
+const CloseButton = styled.button`
+  background-color: inherit !important;
+  color: white;
+  font-size: 15px;
   margin-left: 10px;
-`
-
-const Section = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  margin-left: auto;
-  margin-right: auto;
-  width: 400px;
-  padding: 20px;
-`
-
-const Title = styled.h1`
-  font-family: 'Ubuntu';
-  font-size: 2.5em;
-  font-weight: 100;
-  display: flex;
-  padding-bottom: 20px;
-  justify-content: center;
-`
-
-const Box = styled.div`
-  height: 200px;
-  width: 400px;
-  overflow-y: scroll;
-  border: solid 0.1px #c3c3c3;
+  font-weight: 800;
 `
 
 export default Chat
