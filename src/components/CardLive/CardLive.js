@@ -6,8 +6,7 @@ const CardLive = ({ live }) => {
     <Link href={`/live/${live.id}`}>
       <CardLiveStyled>
         <div>
-          <Image src='/live_card.png'></Image>
-
+          <Image src={live.mainBanner}></Image>
           <CardBlock>
             <CardInfo>
               <CardTitle>{live.name}</CardTitle>
@@ -65,7 +64,7 @@ const CardInfo = styled.div`
 `
 const CardLiveStyled = styled.div`
   width: 300px;
-  max-height: 400px;
+  max-height: 600px;
   margin: 20px;
   background-color: #020916;
   cursor: pointer;

@@ -27,7 +27,7 @@ const Contact = () => {
                 <Form autoComplete='off' onSubmit={handleSubmit}>
                   <FormTitle>Deixe suas dúvidas e sugetões!</FormTitle>
                   <Subtitle>Informações Pessoais</Subtitle>
-                  <Label>Name</Label>
+                  <Label>Nome</Label>
                   <Input>
                     <Field style={inputStyle} id='text' placeholder='Entre com seu nome' type='text' name='name' />
                   </Input>

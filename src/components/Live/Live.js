@@ -20,7 +20,13 @@ const VideoStyled = styled.div`
   background-color: #020916;
   width: 100px;
   height: 80vh;
-  flex: 2;
+  @media (max-width: 768px) {
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+  }
 `
 
 export default Video

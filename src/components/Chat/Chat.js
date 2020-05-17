@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
+import Modal from 'components/Modal'
 import { useUser } from 'context/user-context'
 import { subscribeToMessage, messageToServer, joinChat, leaveChat } from 'services/websocket'
 
@@ -8,6 +9,7 @@ const Chat = ({ chats }) => {
   const [text, setText] = useState('')
   const [messages, setMessage] = useState([])
   const [chat, setChat] = useState(0)
+  const [modalState, setModalState] = useState(false)
   const { user } = useUser()
 
   useEffect(() => {
@@ -23,6 +25,15 @@ const Chat = ({ chats }) => {
     })
   }, [messages])
 
+  function showModal() {
+    console.log('a)')
+    setModalState(true)
+  }
+
+  function hideModal() {
+    setModalState(false)
+  }
+
   function changeChat(newChat, selectedChat) {
     leaveChat(chat)
     joinChat(newChat)
@@ -31,9 +42,10 @@ const Chat = ({ chats }) => {
 
   return (
     <ChatStyled>
+      {modalState && <Modal show={modalState} handleClose={hideModal} />}
       <ChatHeader>
         <ChatTitle>Canais de chat</ChatTitle>
-        <ChatChannel>
+        <ChatChannel onClick={showModal}>
           <AddChannelButton>+</AddChannelButton>
           <AddChannelLabel>CANAIS</AddChannelLabel>
         </ChatChannel>
@@ -89,7 +101,7 @@ const Chat = ({ chats }) => {
                 setText('')
               }}
             >
-              <Icon src='/send-icon.svg'></Icon>
+              <Icon src='/icons/send-icon.svg'></Icon>
             </SendButton>
           </ChatInput>
         </ChatBoxContent>
@@ -101,8 +113,14 @@ const Chat = ({ chats }) => {
 const ChatStyled = styled.div`
   background-color: #020916;
   width: 100px;
-  height: 100px;
+  height: 100%;
   flex: 1;
+  @media (max-width: 768px) {
+    width: 90%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 const Icon = styled.img`
@@ -128,13 +146,11 @@ const ChatInput = styled.div`
 `
 const ChatView = styled.div`
   padding: 10px;
-  height: 200px;
   width: 100%;
-  color: white;
+  max-height: 75%;
   overflow: scroll;
-  overflow-y: auto;
-
   overflow-x: hidden;
+  color: white;
 `
 const Input = styled.input`
   color: white;
@@ -153,6 +169,7 @@ const SendButton = styled.button`
 const ChatBoxContent = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `
 
 const ChatBoxHeader = styled.div`
@@ -211,10 +228,11 @@ const ChatTab = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
-  padding: 10px;
+  padding: 10px 0 10px 10px;
   align-items: center;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  font-size: 14px;
 `
 
 const ChatTitle = styled.h3`
@@ -226,7 +244,8 @@ const ChatTitle = styled.h3`
 const ChannelTitle = styled.h3`
   color: white;
   font-weight: 500;
-  padding: 20px 0 0 20px;
+  font-size: 14px;
+  padding: 10px 0 0 20px;
 `
 
 const CloseButton = styled.button`
