@@ -1,30 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Formik, Form, Field } from 'formik'
-import { createLive } from 'services/lives'
+import { createArtist } from 'services/artists'
 import Container from 'components/Container'
 import Label from 'components/Label'
 import Input from 'components/Input'
+import * as Yup from 'yup'
 
-const CreateLive = () => {
+const SignupSchema = Yup.object().shape({
+  name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Campo Obrigatório'),
+  contactEmail: Yup.string().email('Email inválido').required('Campo Obrigatório'),
+  password: Yup.string().required('Campo Obrigatório')
+})
+
+const CreateArtist = () => {
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
 
   return (
     <Container>
-      <CreateLiveStyled>
+      <CreateArtistStyled>
         <Formik
           initialValues={{
             name: '',
-            link: '',
-            description: '',
-            mainBanner: '',
-            secondaryBanner: '',
-            groupsIds: ['4488627e-115e-4f2f-8535-70adcacefd40'],
-            startAt: new Date().toISOString()
+            contactEmail: '',
+            contactPhone: ''
           }}
+          validationSchema={SignupSchema}
           onSubmit={async (values, actions) => {
             console.log(values)
-            await createLive(values)
+            await createArtist(values)
             actions.resetForm()
           }}
         >
@@ -33,33 +37,35 @@ const CreateLive = () => {
             return (
               <>
                 <Form autoComplete='off' onSubmit={handleSubmit}>
-                  <FormTitle>Formulario para criação de Lives</FormTitle>
-                  <Label>Name</Label>
+                  <FormTitle>Formulario para adição de Artista</FormTitle>
+                  <Label>Nome</Label>
                   <Input>
                     <Field
                       style={inputStyle}
                       id='text'
-                      placeholder='Entre com o nome da live'
+                      placeholder='Entre com o nome do Artista'
                       type='text'
                       name='name'
                     />
                   </Input>
-                  <Label>URL</Label>
+                  <Label>Email</Label>
                   <Input>
-                    <Field style={inputStyle} id='email' placeholder='Entre com a url' type='text' name='link' />
+                    <Field
+                      style={inputStyle}
+                      id='email'
+                      placeholder='Entre com o email'
+                      type='text'
+                      name='contactEmail'
+                    />
                   </Input>
-                  {/* <Label>Dia e Horário</Label>
-                  <Input>
-                    <Field style={inputStyle} id='text' placeholder='Entre com sua mensagem' type='text' name='date' />
-                  </Input> */}
-                  <Label>Hashtag</Label>
+                  <Label>Telefone</Label>
                   <Input>
                     <Field
                       style={inputStyle}
                       id='text'
                       placeholder='Entre com a hashtag'
-                      type='datetime-local'
-                      name='description'
+                      type='phone'
+                      name='contactPhone'
                     />
                   </Input>
                   <Label>Imagem Principal</Label>
@@ -90,12 +96,12 @@ const CreateLive = () => {
             )
           }}
         </Formik>
-      </CreateLiveStyled>
+      </CreateArtistStyled>
     </Container>
   )
 }
 
-const CreateLiveStyled = styled.div`
+const CreateArtistStyled = styled.div`
   margin-top: 50px;
   width: 45%;
 `
@@ -117,4 +123,4 @@ const Button = styled.button`
   padding: 10px;
 `
 
-export default CreateLive
+export default CreateArtist

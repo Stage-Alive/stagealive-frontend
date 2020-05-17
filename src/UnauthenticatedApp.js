@@ -4,12 +4,16 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import Login from 'routes/Login'
 import Register from 'routes/Register'
 import Contact from 'routes/Contact'
+import Lives from 'routes/Lives'
+import Home from 'routes/Home'
 
 const UnauthenticatedApp = () => (
   <Switch>
     <Route path='/login' component={Login} />
     <Route path='/cadastro' component={Register} />
     <Route path='/contato' component={Contact} />
+    <Route path='/lives' component={Lives} />
+    <Route path='/home' component={Home} />
     <Redirect to='/login' />
   </Switch>
 )

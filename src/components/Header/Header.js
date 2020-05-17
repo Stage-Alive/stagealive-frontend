@@ -10,12 +10,12 @@ const Header = () => {
   return (
     <StyledHeader>
       <HeaderContent>
-        <a href='/'>
-          <Image src='/vlive.svg' alt='Stage Alive' />
+        <a href='/home'>
+          <Image src='/icons/vlive.svg' alt='Stage Alive' />
         </a>
         <Search placeholder='Encontre seus show favoritos...' type='search' results='0' />
         <Nav>
-          <A href='/'>HOME</A>
+          <A href='/home'>HOME</A>
           <A href='/lives'>LIVES</A>
           <A href='/contato'>CONTATO</A>
           <Span></Span>
@@ -23,7 +23,7 @@ const Header = () => {
             <Dropdown>
               <DropdownButton>
                 Olá, {user && user.name}
-                <Icon src='/chevron-down-solid.svg'></Icon>
+                <Icon src='/icons/chevron-down-solid.svg'></Icon>
               </DropdownButton>
               <DropdownOptions>
                 <DropdownLink href='/perfil'>Meu Perfil</DropdownLink>

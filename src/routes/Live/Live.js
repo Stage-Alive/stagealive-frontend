@@ -50,13 +50,22 @@ const Live = () => {
 const FirstSection = styled.div`
   display: flex;
   width: 100%;
+  flex-direction: row;
   height: 80vh;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `
 const SecondSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const LivePage = styled.div`
@@ -65,6 +74,9 @@ const LivePage = styled.div`
   width: 95%;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 
 export default Live

@@ -17,7 +17,7 @@ const NextLives = ({ title = 'Próximas Lives', maxChildren = 6 }) => {
   return (
     <NextLivesStyled>
       <Title>
-        <Icon src='/play-icon.svg'></Icon>
+        <Icon src='/icons/play-icon.svg'></Icon>
         {title}
       </Title>
       <Cards>
