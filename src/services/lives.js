@@ -1,5 +1,11 @@
 import client from 'providers/fetchClient'
 
+export const createLive = async data => {
+  const res = await client.post('/lives', data)
+
+  console.log(res)
+}
+
 export const getLives = async limit => {
   const res = await client.get('/lives?limit=' + limit)
 
