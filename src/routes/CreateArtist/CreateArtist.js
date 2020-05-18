@@ -7,11 +7,11 @@ import Label from 'components/Label'
 import Input from 'components/Input'
 import * as Yup from 'yup'
 
-const CreateArtistSchema = Yup.object().shape({
-  name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Campo Obrigatório'),
-  contactEmail: Yup.string().email('Email inválido').required('Campo Obrigatório'),
-  password: Yup.string().required('Campo Obrigatório')
-})
+// const CreateArtistSchema = Yup.object().shape({
+//   name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Campo Obrigatório'),
+//   contactEmail: Yup.string().email('Email inválido').required('Campo Obrigatório'),
+//   conatctPhone: Yup.string().required('Campo Obrigatório')
+// })
 
 const CreateArtist = () => {
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
@@ -25,7 +25,7 @@ const CreateArtist = () => {
             contactEmail: '',
             contactPhone: ''
           }}
-          validationSchema={CreateArtistSchema}
+          // validationSchema={CreateArtistSchema}
           onSubmit={async (values, actions) => {
             console.log(values)
             await createArtist(values)
@@ -42,9 +42,9 @@ const CreateArtist = () => {
                   <Input>
                     <Field
                       style={inputStyle}
-                      id='text'
+                      id='name'
                       placeholder='Entre com o nome do Artista'
-                      type='name'
+                      type='text'
                       name='name'
                     />
                   </Input>
@@ -52,7 +52,7 @@ const CreateArtist = () => {
                   <Input>
                     <Field
                       style={inputStyle}
-                      id='email'
+                      id='contactEmail'
                       placeholder='Entre com o email'
                       type='text'
                       name='contactEmail'
@@ -62,9 +62,9 @@ const CreateArtist = () => {
                   <Input>
                     <Field
                       style={inputStyle}
-                      id='phone'
+                      id='contactPhone'
                       placeholder='Entre com o telefone'
-                      type='phone'
+                      type='text'
                       name='contactPhone'
                     />
                   </Input>
