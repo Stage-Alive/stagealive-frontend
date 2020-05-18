@@ -54,13 +54,11 @@ const AuthProvider = props => {
     async data => {
       try {
         const user = await authRegister(data)
-        console.log(user)
         // setToken(user.access_token)
         reload()
 
         return { user }
       } catch (error) {
-        console.log(error)
         return Promise.reject(error)
       }
     },

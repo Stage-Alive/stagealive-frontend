@@ -26,7 +26,6 @@ const Chat = ({ chats }) => {
   }, [messages])
 
   function showModal() {
-    console.log('a)')
     setModalState(true)
   }
 
@@ -96,7 +95,6 @@ const Chat = ({ chats }) => {
             />
             <SendButton
               onClick={() => {
-                console.log(user.name, text, chat, user.id)
                 messageToServer({ name: user.name, text, chat, userId: user.id })
                 setText('')
               }}
@@ -113,7 +111,6 @@ const Chat = ({ chats }) => {
 const ChatStyled = styled.div`
   background-color: #020916;
   width: 100px;
-  height: 100%;
   flex: 1;
   @media (max-width: 768px) {
     width: 90%;
@@ -147,9 +144,7 @@ const ChatInput = styled.div`
 const ChatView = styled.div`
   padding: 10px;
   width: 100%;
-  max-height: 75%;
   overflow: scroll;
-  overflow-x: hidden;
   color: white;
 `
 const Input = styled.input`

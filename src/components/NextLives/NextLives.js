@@ -56,6 +56,9 @@ const NextLivesStyled = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   width: 80%;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 
 const Cards = styled.div`

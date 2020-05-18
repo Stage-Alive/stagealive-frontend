@@ -24,12 +24,13 @@ const Login = () => {
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={SignupSchema}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={async (values, { setSubmitting, setState }) => {
             await login(values)
+            setState('Email ou senha inválidos')
           }}
         >
           {props => {
-            const { isSubmitting, handleSubmit, errors, touched } = props
+            const { isSubmitting, handleSubmit, errors, touched, status } = props
             return (
               <FormStyled>
                 <FormContent>
@@ -54,6 +55,7 @@ const Login = () => {
                     <Button style={inputStyle} type='submit' disabled={isSubmitting}>
                       Entrar
                     </Button>
+                    {status ? status : null}
                   </Form>
                 </FormContent>
                 {/* <Facebook />
