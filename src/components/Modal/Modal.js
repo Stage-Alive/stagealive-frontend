@@ -7,7 +7,7 @@ const Modal = ({ handleClose }) => {
       <ModalMain>
         <div>
           <CloseButton onClick={handleClose}>
-            <img src='/icons/close-icon.svg' />
+            <img alt='Fechar' src='/icons/close-icon.svg' />
           </CloseButton>
         </div>
         <ModalContent>

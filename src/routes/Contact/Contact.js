@@ -5,6 +5,13 @@ import { createContact } from 'services/contact'
 import Container from 'components/Container'
 import Label from 'components/Label'
 import Input from 'components/Input'
+import * as Yup from 'yup'
+
+const ContactSchema = Yup.object().shape({
+  name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Campo Obrigatório'),
+  email: Yup.string().email('Email inválido').required('Campo Obrigatório'),
+  message: Yup.string().required('Campo Obrigatório')
+})
 
 const Contact = () => {
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
@@ -14,6 +21,7 @@ const Contact = () => {
       <ContactStyled>
         <Formik
           initialValues={{ name: '', email: '', message: '' }}
+          validationSchema={ContactSchema}
           onSubmit={async (values, actions) => {
             console.log(values)
             await createContact(values)
@@ -21,7 +29,7 @@ const Contact = () => {
           }}
         >
           {props => {
-            const { isSubmitting, handleSubmit } = props
+            const { isSubmitting, handleSubmit, errors, touched } = props
             return (
               <>
                 <Form autoComplete='off' onSubmit={handleSubmit}>
@@ -31,10 +39,12 @@ const Contact = () => {
                   <Input>
                     <Field style={inputStyle} id='text' placeholder='Entre com seu nome' type='text' name='name' />
                   </Input>
+                  {errors.name && touched.name ? <Error>{errors.name}</Error> : null}
                   <Label>Email</Label>
                   <Input>
                     <Field style={inputStyle} id='email' placeholder='Entre com seu email' type='text' name='email' />
                   </Input>
+                  {errors.email && touched.email ? <Error>{errors.email}</Error> : null}
                   <Label>Mensagem</Label>
                   <Input>
                     <Field
@@ -46,6 +56,7 @@ const Contact = () => {
                       name='message'
                     />
                   </Input>
+                  {errors.message && touched.message ? <Error>{errors.message}</Error> : null}
                   <Button style={inputStyle} type='submit' disabled={isSubmitting}>
                     Enviar
                   </Button>
@@ -59,9 +70,16 @@ const Contact = () => {
   )
 }
 
+const Error = styled.div`
+  color: red;
+`
+
 const ContactStyled = styled.div`
   margin-top: 50px;
   width: 45%;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `
 
 const FormTitle = styled.h1`

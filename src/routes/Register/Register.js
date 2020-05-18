@@ -7,8 +7,8 @@ import { useAuth } from 'context/auth-context'
 import Label from 'components/Label'
 import * as Yup from 'yup'
 
-const SignupSchema = Yup.object().shape({
-  name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Required'),
+const RegisterSchema = Yup.object().shape({
+  name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Campo Obrigatório'),
   email: Yup.string().email('Email inválido').required('Campo Obrigatório'),
   password: Yup.string().required('Campo Obrigatório'),
   terms: Yup.boolean().oneOf([true], 'Obrigatório aceitar termos e condições')
@@ -32,7 +32,7 @@ const Register = () => {
               name: '',
               userTypeId: '531db173-0f9a-47d8-a969-5462e4b137a0'
             }}
-            validationSchema={SignupSchema}
+            validationSchema={RegisterSchema}
             onSubmit={async (values, { setSubmitting }) => {
               await register(values)
             }}
@@ -147,6 +147,9 @@ const RegisterStyled = styled.div`
   margin-top: 50px;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 
 const ButtonTerm = styled.button`

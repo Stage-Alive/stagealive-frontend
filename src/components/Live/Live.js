@@ -18,7 +18,7 @@ const Video = ({ url, title }) => {
 
 const VideoStyled = styled.div`
   background-color: #020916;
-  width: 100px;
+  width: 70%;
   height: 80vh;
   @media (max-width: 768px) {
     height: 100%;

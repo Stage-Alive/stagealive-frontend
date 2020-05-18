@@ -7,7 +7,7 @@ import Label from 'components/Label'
 import Input from 'components/Input'
 import * as Yup from 'yup'
 
-const SignupSchema = Yup.object().shape({
+const CreateArtistSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Campo Obrigatório'),
   contactEmail: Yup.string().email('Email inválido').required('Campo Obrigatório'),
   password: Yup.string().required('Campo Obrigatório')
@@ -25,7 +25,7 @@ const CreateArtist = () => {
             contactEmail: '',
             contactPhone: ''
           }}
-          validationSchema={SignupSchema}
+          validationSchema={CreateArtistSchema}
           onSubmit={async (values, actions) => {
             console.log(values)
             await createArtist(values)
@@ -44,7 +44,7 @@ const CreateArtist = () => {
                       style={inputStyle}
                       id='text'
                       placeholder='Entre com o nome do Artista'
-                      type='text'
+                      type='name'
                       name='name'
                     />
                   </Input>
@@ -62,33 +62,13 @@ const CreateArtist = () => {
                   <Input>
                     <Field
                       style={inputStyle}
-                      id='text'
-                      placeholder='Entre com a hashtag'
+                      id='phone'
+                      placeholder='Entre com o telefone'
                       type='phone'
                       name='contactPhone'
                     />
                   </Input>
-                  <Label>Imagem Principal</Label>
-                  <Input>
-                    <Field
-                      style={inputStyle}
-                      id='text'
-                      placeholder='Entre com sua mensagem'
-                      type='text'
-                      name='mainBanner'
-                    />
-                  </Input>
-                  <Label>Imagem Secundaria</Label>
-                  <Input>
-                    <Field
-                      style={inputStyle}
-                      id='text'
-                      placeholder='Entre com sua mensagem'
-                      type='text'
-                      name='secondaryBanner'
-                    />
-                  </Input>
-                  <Button style={inputStyle} type='submit' disabled={isSubmitting}>
+                  <Button onClick={handleSubmit} style={inputStyle} type='submit' disabled={isSubmitting}>
                     Enviar
                   </Button>
                 </Form>
@@ -104,6 +84,9 @@ const CreateArtist = () => {
 const CreateArtistStyled = styled.div`
   margin-top: 50px;
   width: 45%;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `
 
 const FormTitle = styled.h1`

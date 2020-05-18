@@ -26,7 +26,6 @@ const Chat = ({ chats }) => {
   }, [messages])
 
   function showModal() {
-    console.log('a)')
     setModalState(true)
   }
 
@@ -96,7 +95,6 @@ const Chat = ({ chats }) => {
             />
             <SendButton
               onClick={() => {
-                console.log(user.name, text, chat, user.id)
                 messageToServer({ name: user.name, text, chat, userId: user.id })
                 setText('')
               }}

@@ -1,5 +1,5 @@
-export const createArtist = async data => {
-  const res = await client.post('/artists', data)
+import client from 'providers/fetchClient'
 
-  console.log(res)
+export const createArtist = async data => {
+  await client.post('/artists', data)
 }

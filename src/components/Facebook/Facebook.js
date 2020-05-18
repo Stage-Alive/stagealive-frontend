@@ -20,9 +20,7 @@ function Facebook() {
     })
   }
 
-  const componentClicked = () => {
-    console.log('clicked')
-  }
+  const componentClicked = () => {}
 
   return (
     <FacebookLogin
