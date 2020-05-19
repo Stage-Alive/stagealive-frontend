@@ -14,6 +14,7 @@ const Live = () => {
 
   const [liveLink, setLiveLink] = useState('https://www.youtube.com/embed/F68KkgwP5F8')
   const [liveName, setLiveName] = useState('v-live')
+  const [liveId, setLiveId] = useState('')
   const [chats, setChats] = useState([])
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const Live = () => {
       if (res.link) {
         setLiveLink(res.link)
         setLiveName(res.name)
+        setLiveId(res.id)
       }
       if (res.chats.length > 0) {
         setChats(res.chats)
@@ -36,7 +38,7 @@ const Live = () => {
         <LivePage>
           <FirstSection>
             <Video url={liveLink} title={liveName} />
-            <Chat chats={chats} />
+            <Chat chats={chats} live={liveId} />
           </FirstSection>
           <SecondSection>
             <NextLives maxChildren='3' />

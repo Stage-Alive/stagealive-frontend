@@ -5,17 +5,23 @@ import Modal from 'components/Modal'
 import { useUser } from 'context/user-context'
 import { subscribeToMessage, messageToServer, joinChat, leaveChat } from 'services/websocket'
 
-const Chat = ({ chats }) => {
+const Chat = ({ chats, live }) => {
   const [text, setText] = useState('')
   const [messages, setMessage] = useState([])
-  const [chat, setChat] = useState(0)
+  const [chat, setChat] = useState({
+    chatId: '0',
+    groupId: '0'
+  })
   const [modalState, setModalState] = useState(false)
   const { user } = useUser()
 
   useEffect(() => {
     if (chats.length > 0) {
       joinChat(chats[0].id)
-      setChat(chats[0].id)
+      setChat({
+        chatId: chats[0].id,
+        groupId: chats[0].groupId
+      })
     }
   }, [chats])
 
@@ -33,15 +39,32 @@ const Chat = ({ chats }) => {
     setModalState(false)
   }
 
-  function changeChat(newChat, selectedChat) {
-    leaveChat(chat)
+  function changeChat(newChat, groupId, selectedChat) {
+    leaveChat(chat.chatId)
     joinChat(newChat)
-    setChat(selectedChat)
+    setChat({
+      chatId: newChat,
+      groupId: groupId
+    })
   }
+
+  async function createGroup(name) {
+    const res = await createGroup(name, live)
+    console.log(res)
+  }
+
+  async function enterGroup(group) {
+    const res = await enterGroup(group)
+    console.log(res)
+  }
+
+  async function leaveGroup(group) {}
 
   return (
     <ChatStyled>
-      {modalState && <Modal show={modalState} handleClose={hideModal} />}
+      {modalState && (
+        <Modal show={modalState} handleClose={hideModal} createGroup={createGroup} enterGroup={enterGroup} />
+      )}
       <ChatHeader>
         <ChatTitle>Canais de chat</ChatTitle>
         <ChatChannel onClick={showModal}>
@@ -51,10 +74,10 @@ const Chat = ({ chats }) => {
       </ChatHeader>
       <ChatNav>
         {chats.map((mapChat, index) => {
-          const selected = chat === index
+          const selected = chat.chatId === index
 
           return (
-            <ChatTab key={index} selected={selected} onClick={() => changeChat(mapChat.id, index)}>
+            <ChatTab key={index} selected={selected} onClick={() => changeChat(mapChat.id, mapChat.groupId, index)}>
               <p>{mapChat.group.name}</p>
               <CloseButton>x</CloseButton>
             </ChatTab>
@@ -64,7 +87,7 @@ const Chat = ({ chats }) => {
       <ChatBox>
         <ChatBoxHeader>
           <ChannelTitle>Bem vindo ao canal Amigos</ChannelTitle>
-          <Link>link.reduzido/aqiweuiwu</Link>
+          <Link>{chat.groupId && `link.reduzido/${chat.groupId}`}</Link>
         </ChatBoxHeader>
         <ChatBoxContent>
           <ChatView>
@@ -88,14 +111,14 @@ const Chat = ({ chats }) => {
               onChange={content => setText(content.target.value)}
               onKeyPress={event => {
                 if (event.key === 'Enter') {
-                  messageToServer({ name: user.name, text, chat, userId: user.id })
+                  messageToServer({ name: user.name, text, chat: chat.chatId, userId: user.id })
                   setText('')
                 }
               }}
             />
             <SendButton
               onClick={() => {
-                messageToServer({ name: user.name, text, chat, userId: user.id })
+                messageToServer({ name: user.name, text, chat: chat.chatId, userId: user.id })
                 setText('')
               }}
             >
@@ -144,8 +167,8 @@ const ChatInput = styled.div`
 const ChatView = styled.div`
   padding: 10px;
   width: 100%;
-  overflow: scroll;
   color: white;
+  max-heigth: calc(80vh - 200px);
 `
 const Input = styled.input`
   color: white;
@@ -165,6 +188,7 @@ const ChatBoxContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: calc(80vh - 170px);
 `
 
 const ChatBoxHeader = styled.div`

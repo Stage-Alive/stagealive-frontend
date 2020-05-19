@@ -12,7 +12,7 @@ function leaveChat(chat) {
 
 function subscribeToMessage(cb) {
   socket.on('msgToClient', message => cb(message))
-  socket.emit('subscribeToMessage', 1000)
+  // socket.emit('subscribeToMessage', 1000)
 }
 
 function messageToServer({ name, text, chat, userId }) {

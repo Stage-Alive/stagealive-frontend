@@ -25,8 +25,9 @@ const Login = () => {
           initialValues={{ email: '', password: '' }}
           validationSchema={SignupSchema}
           onSubmit={async (values, { setSubmitting, setState }) => {
-            await login(values)
-            setState('Email ou senha inválidos')
+            const res = await login(values)
+            console.log(res)
+            setState({ error: 'Email ou senha inválidos' })
           }}
         >
           {props => {
@@ -55,7 +56,7 @@ const Login = () => {
                     <Button style={inputStyle} type='submit' disabled={isSubmitting}>
                       Entrar
                     </Button>
-                    {status ? status : null}
+                    {status && status.error}
                   </Form>
                 </FormContent>
                 {/* <Facebook />

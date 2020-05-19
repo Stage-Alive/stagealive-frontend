@@ -26,10 +26,11 @@ const Contact = () => {
             console.log(values)
             await createContact(values)
             actions.resetForm()
+            actions.setStatus({ success: 'Enviado com sucesso!' })
           }}
         >
           {props => {
-            const { isSubmitting, handleSubmit, errors, touched } = props
+            const { isSubmitting, handleSubmit, errors, touched, status } = props
             return (
               <>
                 <Form autoComplete='off' onSubmit={handleSubmit}>
@@ -60,6 +61,7 @@ const Contact = () => {
                   <Button style={inputStyle} type='submit' disabled={isSubmitting}>
                     Enviar
                   </Button>
+                  {status && <Status>{status.success}</Status>}
                 </Form>
               </>
             )
@@ -69,6 +71,11 @@ const Contact = () => {
     </Container>
   )
 }
+
+const Status = styled.h4`
+  color: green;
+  padding-top: 20px;
+`
 
 const Error = styled.div`
   color: red;
