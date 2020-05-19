@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const Modal = ({ handleClose }) => {
+const Modal = ({ handleClose, createChannel, enterChannel }) => {
+  const [newChannel, setNewChannel] = useState('')
+  const [channel, setChannel] = useState('')
+
+  function handleCreateChannel() {
+    createChannel(newChannel)
+  }
+
+  function handleEnterChannel() {
+    enterChannel(channel)
+  }
+
   return (
     <ModalStyle>
       <ModalMain>
@@ -15,15 +26,29 @@ const Modal = ({ handleClose }) => {
           <ModalCreateGroup>
             <Label>Nome do canal</Label>
             <ModalInputGroup>
-              <Input id='text' placeholder='Entre com o nome do canal' type='text' name='channel-name' />
-              <Button>Criar canal</Button>
+              <Input
+                id='text'
+                placeholder='Entre com o nome do canal'
+                type='text'
+                name='channel-name'
+                value={newChannel}
+                onChange={content => setNewChannel(content.target.value)}
+              />
+              <Button onClick={handleCreateChannel}>Criar canal</Button>
             </ModalInputGroup>
           </ModalCreateGroup>
           <HR />
           <ModalCreateGroup>
             <Label>Entre no canal (URL)</Label>
             <ModalInputGroup>
-              <Input id='text' placeholder='Entre com o link do canal' type='text' name='channel-name' />
+              <Input
+                id='text'
+                placeholder='Entre com o link do canal'
+                type='text'
+                name='channel-name'
+                value={channel}
+                onChange={content => setChannel(content.target.value)}
+              />
               <Button>Criar canal</Button>
             </ModalInputGroup>
           </ModalCreateGroup>
@@ -125,7 +150,7 @@ const ModalCreateGroup = styled.div`
   width: 100%;
 `
 
-const ModalInputGroup = styled.div`
+const ModalInputGroup = styled.form`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

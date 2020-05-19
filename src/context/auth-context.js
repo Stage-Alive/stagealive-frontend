@@ -24,6 +24,7 @@ const AuthProvider = props => {
     async data => {
       try {
         const auth = await authLogin(data)
+        console.log(auth)
         setToken(auth.access_token)
         reload()
 
@@ -54,7 +55,8 @@ const AuthProvider = props => {
     async data => {
       try {
         const user = await authRegister(data)
-        // setToken(user.access_token)
+        setToken(user.data.access_token)
+        console.log(user)
         reload()
 
         return { user }

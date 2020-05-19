@@ -6,9 +6,17 @@ export const getPublicGroups = async () => {
   if (res.data) {
     return res.data.items.map(group => {
       return {
-        id: group.id,
+        id: group.group.id,
         name: group.group.name
       }
     })
   }
+}
+
+export const createGroup = async data => {
+  return client.post('/groups', data)
+}
+
+export const enterGroup = async groupId => {
+  return client.post('')
 }
