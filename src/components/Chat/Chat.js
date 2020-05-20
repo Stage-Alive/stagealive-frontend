@@ -58,7 +58,9 @@ const Chat = ({ chats, live }) => {
     console.log(res)
   }
 
-  async function leaveGroup(group) {}
+  async function leaveGroup(group) {
+    console.log('sair do grupo')
+  }
 
   return (
     <ChatStyled>
@@ -79,7 +81,7 @@ const Chat = ({ chats, live }) => {
           return (
             <ChatTab key={index} selected={selected} onClick={() => changeChat(mapChat.id, mapChat.groupId, index)}>
               <p>{mapChat.group.name}</p>
-              <CloseButton>x</CloseButton>
+              <CloseButton onClick={leaveGroup}>x</CloseButton>
             </ChatTab>
           )
         })}

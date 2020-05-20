@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Formik, Form, Field, FieldArray } from 'formik'
+import { Formik, Form, Field } from 'formik'
 import { createLive } from 'services/lives'
 import Container from 'components/Container'
 import Label from 'components/Label'
@@ -19,8 +19,7 @@ const CreateLive = () => {
       setGroups(publicGroups)
     }
     fetchData()
-    console.log(groups)
-  }, [])
+  }, [groups])
 
   useEffect(() => {
     async function fetchData() {
@@ -28,8 +27,7 @@ const CreateLive = () => {
       setArtists(artists)
     }
     fetchData()
-    console.log(artists)
-  }, [])
+  }, [artists])
 
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
 

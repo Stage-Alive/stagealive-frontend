@@ -49,7 +49,7 @@ const Modal = ({ handleClose, createChannel, enterChannel }) => {
                 value={channel}
                 onChange={content => setChannel(content.target.value)}
               />
-              <Button>Entrar no canal</Button>
+              <Button onClick={handleEnterChannel}>Entrar no canal</Button>
             </ModalInputGroup>
           </ModalCreateGroup>
         </ModalContent>

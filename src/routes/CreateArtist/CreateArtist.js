@@ -5,7 +5,7 @@ import { createArtist } from 'services/artists'
 import Container from 'components/Container'
 import Label from 'components/Label'
 import Input from 'components/Input'
-import * as Yup from 'yup'
+// import * as Yup from 'yup'
 
 // const CreateArtistSchema = Yup.object().shape({
 //   name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Campo Obrigatório'),

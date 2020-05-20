@@ -13,7 +13,7 @@ const Header = () => {
         <a href='/home'>
           <Image src='/icons/vlive.svg' alt='Stage Alive' />
         </a>
-        <Search placeholder='Encontre seus show favoritos...' type='search' results='0' />
+        {/* <Search placeholder='Encontre seus show favoritos...' type='search' results='0' /> */}
         <Nav>
           <A href='/home'>HOME</A>
           <A href='/lives'>LIVES</A>
@@ -106,14 +106,14 @@ const Nav = styled.nav`
   align-items: center;
 `
 
-const Search = styled.input`
-  background: #38404d;
-  border-radius: 30px;
-  padding: 15px;
-  width: 30%;
-  color: white;
-  font-size: 16px;
-`
+// const Search = styled.input`
+//   background: #38404d;
+//   border-radius: 30px;
+//   padding: 15px;
+//   width: 30%;
+//   color: white;
+//   font-size: 16px;
+// `
 
 const Span = styled.span`
   height: 60px;

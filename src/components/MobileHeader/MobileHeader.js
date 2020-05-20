@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useUser } from 'context/user-context'
 import { useAuth } from 'context/auth-context'
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const { user } = useUser()
   const { logout } = useAuth()
 
   return (

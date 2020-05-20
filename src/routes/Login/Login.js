@@ -5,11 +5,9 @@ import { useAuth } from 'context/auth-context'
 import Container from 'components/Container'
 import FormTitle from 'components/FormTitle'
 import Label from 'components/Label'
-import Facebook from 'components/Facebook'
 import * as Yup from 'yup'
 
 const SignupSchema = Yup.object().shape({
-  // name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Required'),
   email: Yup.string().email('Email inválido').required('Campo Obrigatório'),
   password: Yup.string().required('Campo Obrigatório')
 })
@@ -60,9 +58,9 @@ const Login = () => {
                     {status && <Status>{status.message}</Status>}
                   </Form>
                 </FormContent>
-                <FacebookButton>
-                  <Facebook />
-                </FacebookButton>
+                {/* <FacebookButton> */}
+                {/* <Facebook /> */}
+                {/* </FacebookButton> */}
               </FormStyled>
             )
           }}
@@ -76,10 +74,10 @@ const Login = () => {
   )
 }
 
-const FacebookButton = styled.div`
-  margin: 0 auto;
-  border-radius: 10px;
-`
+// const FacebookButton = styled.div`
+//   margin: 0 auto;
+//   border-radius: 10px;
+// `
 
 const Status = styled.h4`
   color: red;
