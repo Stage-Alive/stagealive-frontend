@@ -15,11 +15,11 @@ const CreateLive = () => {
   useEffect(() => {
     async function fetchData() {
       const publicGroups = await getPublicGroups()
-
+      console.log(publicGroups)
       setGroups(publicGroups)
     }
     fetchData()
-  }, [groups])
+  }, [])
 
   useEffect(() => {
     async function fetchData() {
@@ -27,7 +27,7 @@ const CreateLive = () => {
       setArtists(artists)
     }
     fetchData()
-  }, [artists])
+  }, [])
 
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
 
