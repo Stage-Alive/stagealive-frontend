@@ -9,13 +9,13 @@ const Banner = () => {
     mainBanner: '/live_card3.png'
   })
 
-  useEffect(() => {
-    async function fetchData() {
-      const lives = await getLives(3)
-      setLives(lives)
-    }
-    fetchData()
-  }, [])
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const lives = await getLives(3)
+  //     setLives(lives)
+  //   }
+  //   fetchData()
+  // }, [])
 
   return (
     <Link href={`/live/${live.id}`}>

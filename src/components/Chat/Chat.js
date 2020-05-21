@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-
+import {
+  leaveGroup as leaveGroupRequest,
+  enterGroup as enterGroupRequest,
+  createGroup as createGroupRequest
+} from 'services/groups'
 import Modal from 'components/Modal'
 import { useUser } from 'context/user-context'
-import { subscribeToMessage, messageToServer, joinChat, leaveChat } from 'services/websocket'
+import io from 'socket.io-client'
+const socket = io(process.env.REACT_APP_API_URL)
 
 const Chat = ({ chats, live }) => {
+  const [liveChats, setLiveChats] = useState(chats)
   const [text, setText] = useState('')
   const [messages, setMessage] = useState([])
   const [chat, setChat] = useState({
@@ -17,6 +23,7 @@ const Chat = ({ chats, live }) => {
 
   useEffect(() => {
     if (chats.length > 0) {
+      setLiveChats(chats)
       joinChat(chats[0].id)
       setChat({
         chatId: chats[0].id,
@@ -26,10 +33,31 @@ const Chat = ({ chats, live }) => {
   }, [chats])
 
   useEffect(() => {
-    subscribeToMessage(newMessage => {
-      setMessage(messages.concat(newMessage))
-    })
+    console.log('aaa')
+    const handleNewMessage = newMessage => setMessage([...messages, newMessage])
+    socket.on('msgToClient', handleNewMessage)
+    return () => socket.off('msgToClient', handleNewMessage)
   }, [messages])
+
+  const handleFormSubmit = () => {
+    if (text.trim()) {
+      socket.emit('msgToServer', {
+        name: user.name,
+        text,
+        chat: chat.chatId,
+        userId: user.id
+      })
+      setText('')
+    }
+  }
+
+  function joinChat(chat) {
+    socket.emit('join', chat)
+  }
+
+  function leaveChat(chat) {
+    socket.emit('leave', chat)
+  }
 
   function showModal() {
     setModalState(true)
@@ -49,17 +77,23 @@ const Chat = ({ chats, live }) => {
   }
 
   async function createGroup(name) {
-    const res = await createGroup(name, live)
-    console.log(res)
+    await createGroupRequest({
+      name,
+      liveId: live
+    })
   }
 
   async function enterGroup(group) {
-    const res = await enterGroup(group)
-    console.log(res)
+    await enterGroupRequest(group)
   }
 
-  async function leaveGroup(group) {
-    console.log('sair do grupo')
+  async function leaveGroup(event) {
+    const newChats = liveChats.filter(chat => {
+      return chat.groupId !== event.target.value.toString()
+    })
+    console.log(liveChats)
+    setLiveChats(newChats)
+    await leaveGroupRequest(event.target.value)
   }
 
   return (
@@ -75,13 +109,15 @@ const Chat = ({ chats, live }) => {
         </ChatChannel>
       </ChatHeader>
       <ChatNav>
-        {chats.map((mapChat, index) => {
-          const selected = chat.chatId === index
+        {liveChats.map((mapChat, index) => {
+          const selected = chat.chatId === mapChat.id
 
           return (
             <ChatTab key={index} selected={selected} onClick={() => changeChat(mapChat.id, mapChat.groupId, index)}>
               <p>{mapChat.group.name}</p>
-              <CloseButton onClick={leaveGroup}>x</CloseButton>
+              <CloseButton value={mapChat.groupId} onClick={value => leaveGroup(value)}>
+                x
+              </CloseButton>
             </ChatTab>
           )
         })}
@@ -113,17 +149,11 @@ const Chat = ({ chats, live }) => {
               onChange={content => setText(content.target.value)}
               onKeyPress={event => {
                 if (event.key === 'Enter') {
-                  messageToServer({ name: user.name, text, chat: chat.chatId, userId: user.id })
-                  setText('')
+                  handleFormSubmit()
                 }
               }}
             />
-            <SendButton
-              onClick={() => {
-                messageToServer({ name: user.name, text, chat: chat.chatId, userId: user.id })
-                setText('')
-              }}
-            >
+            <SendButton onClick={handleFormSubmit}>
               <Icon src='/icons/send-icon.svg'></Icon>
             </SendButton>
           </ChatInput>
@@ -170,6 +200,11 @@ const ChatView = styled.div`
   padding: 10px;
   width: 100%;
   color: white;
+  overflow: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   max-heigth: calc(80vh - 200px);
 `
 const Input = styled.input`
@@ -196,6 +231,9 @@ const ChatBoxContent = styled.div`
 const ChatBoxHeader = styled.div`
   border-bottom: 2px solid black;
   padding-bottom: 10px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const Link = styled.a`
@@ -226,6 +264,9 @@ const AddChannelButton = styled.button`
 const ChatHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 const ChatChannel = styled.div`
   display: flex;

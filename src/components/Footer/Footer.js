@@ -15,9 +15,9 @@ const Footer = () => {
             <strong>Suas LIVES nas redes socias</strong>
           </Paragraph>
           <Icons>
-            <a href='https://facebook.com'>
+            {/* <a href='https://facebook.com'>
               <FontAwesomeIcon size='2x' icon={faFacebook} style={{ marginRight: '40px', color: 'rgb(72, 99, 160)' }} />
-            </a>
+            </a> */}
             <a href='https://instagram.com'>
               <FontAwesomeIcon
                 size='2x'
@@ -25,9 +25,9 @@ const Footer = () => {
                 style={{ marginRight: '40px', color: 'rgb(170, 82, 141)' }}
               />
             </a>
-            <a href='https://youtube.com'>
+            {/* <a href='https://youtube.com'>
               <FontAwesomeIcon size='2x' icon={faYoutube} style={{ marginRight: '40px', color: 'rgb(231, 68,67)' }} />
-            </a>
+            </a> */}
           </Icons>
         </Social>
         <Contact>
@@ -50,6 +50,9 @@ const StyledFooter = styled.footer`
   color: white;
   text-align: center;
   height: 180px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const FooterContent = styled.div`
@@ -71,6 +74,10 @@ const Paragraph = styled.div`
 const Icons = styled.div`
   margin-top: 20px;
   display: flex;
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+  }
 `
 
 const Contact = styled.div`

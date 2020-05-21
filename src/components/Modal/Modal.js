@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const Modal = ({ handleClose, createChannel, enterChannel }) => {
-  const [newChannel, setNewChannel] = useState('')
-  const [channel, setChannel] = useState('')
+const Modal = ({ handleClose, createGroup, enterGroup }) => {
+  const [name, setName] = useState('')
+  const [group, setGroup] = useState('')
 
-  function handleCreateChannel() {
-    createChannel(newChannel)
+  function handleCreateGroup(event, name) {
+    event.preventDefault()
+    createGroup(name)
   }
 
-  function handleEnterChannel() {
-    enterChannel(channel)
+  function handleEnterGroup(event, group) {
+    event.preventDefault()
+    enterGroup(group)
   }
 
   return (
@@ -31,10 +33,10 @@ const Modal = ({ handleClose, createChannel, enterChannel }) => {
                 placeholder='Entre com o nome do canal'
                 type='text'
                 name='channel-name'
-                value={newChannel}
-                onChange={content => setNewChannel(content.target.value)}
+                value={name}
+                onChange={content => setName(content.target.value)}
               />
-              <Button onClick={handleCreateChannel}>Criar canal</Button>
+              <Button onClick={event => handleCreateGroup(event, name)}>Criar canal</Button>
             </ModalInputGroup>
           </ModalCreateGroup>
           <HR />
@@ -46,10 +48,10 @@ const Modal = ({ handleClose, createChannel, enterChannel }) => {
                 placeholder='Entre com o link do canal'
                 type='text'
                 name='channel-name'
-                value={channel}
-                onChange={content => setChannel(content.target.value)}
+                value={group}
+                onChange={content => setGroup(content.target.value)}
               />
-              <Button onClick={handleEnterChannel}>Entrar no canal</Button>
+              <Button onClick={event => handleEnterGroup(event, group)}>Entrar no canal</Button>
             </ModalInputGroup>
           </ModalCreateGroup>
         </ModalContent>
