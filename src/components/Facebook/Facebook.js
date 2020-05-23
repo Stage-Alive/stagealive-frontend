@@ -1,6 +1,7 @@
 import React from 'react'
 import FacebookLogin from 'react-facebook-login'
 import { useAuth } from 'context/auth-context'
+import './facebook.css'
 
 function Facebook() {
   const { facebookLogin } = useAuth()
@@ -20,7 +21,9 @@ function Facebook() {
     })
   }
 
-  const componentClicked = () => {}
+  const componentClicked = () => {
+    console.log('click')
+  }
 
   return (
     <FacebookLogin
@@ -29,6 +32,10 @@ function Facebook() {
       fields='name,email,picture'
       onClick={componentClicked}
       callback={responseFacebook}
+      textButton='Entre com o facebook'
+      size='metro'
+      cssClass='button'
+      icon={<img className='icon' src='/icons/facebook-icon.svg' />}
     />
   )
 }

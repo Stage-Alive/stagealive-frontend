@@ -6,6 +6,7 @@ import Container from 'components/Container'
 import FormTitle from 'components/FormTitle'
 import Label from 'components/Label'
 import * as Yup from 'yup'
+import Facebook from 'components/Facebook'
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email('Email inválido').required('Campo Obrigatório'),
@@ -59,7 +60,7 @@ const Login = () => {
                   </Form>
                 </FormContent>
                 {/* <FacebookButton> */}
-                {/* <Facebook /> */}
+                <Facebook />
                 {/* </FacebookButton> */}
               </FormStyled>
             )
