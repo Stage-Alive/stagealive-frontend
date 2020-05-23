@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
+import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import {
   leaveGroup as leaveGroupRequest,
@@ -20,6 +21,7 @@ const Chat = ({ chats, live }) => {
   })
   const [modalState, setModalState] = useState(false)
   const { user } = useUser()
+  const myRef = useRef(null)
 
   useEffect(() => {
     if (chats.length > 0) {
@@ -33,9 +35,14 @@ const Chat = ({ chats, live }) => {
   }, [chats])
 
   useEffect(() => {
-    console.log('aaa')
     const handleNewMessage = newMessage => setMessage([...messages, newMessage])
     socket.on('msgToClient', handleNewMessage)
+    if (myRef.current) {
+      console.log(myRef.current)
+      let node = ReactDOM.findDOMNode(myRef.current)
+      console.log(node)
+      node.scrollIntoView({ block: 'end', behavior: 'auto' })
+    }
     return () => socket.off('msgToClient', handleNewMessage)
   }, [messages])
 
@@ -81,6 +88,7 @@ const Chat = ({ chats, live }) => {
       name,
       liveId: live
     })
+    window.location.reload()
   }
 
   async function enterGroup(group) {
@@ -125,16 +133,16 @@ const Chat = ({ chats, live }) => {
       <ChatBox>
         <ChatBoxHeader>
           <ChannelTitle>Bem vindo ao canal Amigos</ChannelTitle>
-          <Link>{chat.groupId && `link.reduzido/${chat.groupId}`}</Link>
+          <Link>{chat.groupId && 'AASFC8'}</Link>
         </ChatBoxHeader>
         <ChatBoxContent>
           <ChatView>
-            <div id='messages'>
-              <ul>
+            <div>
+              <ul id='messages'>
                 {messages.length > 0 &&
                   messages.map((message, index) => {
                     return (
-                      <Message key={index}>
+                      <Message ref={myRef} key={index}>
                         <MessageName>{message.name}</MessageName>
                         <MessageText>{message.text}</MessageText>
                       </Message>
@@ -200,7 +208,7 @@ const ChatView = styled.div`
   padding: 10px;
   width: 100%;
   color: white;
-  overflow: scroll;
+  overflow-y: scroll;
   overflow-x: hidden;
   &::-webkit-scrollbar {
     display: none;

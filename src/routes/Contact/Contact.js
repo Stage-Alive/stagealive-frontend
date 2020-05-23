@@ -9,8 +9,8 @@ import * as Yup from 'yup'
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Campo Obrigatório'),
-  email: Yup.string().email('Email inválido').required('Campo Obrigatório'),
-  message: Yup.string().required('Campo Obrigatório')
+  email: Yup.string().email('Email inválido').optional('Campo Obrigatório'),
+  message: Yup.string().optional('Campo Obrigatório')
 })
 
 const Contact = () => {
@@ -23,7 +23,6 @@ const Contact = () => {
           initialValues={{ name: '', email: '', message: '' }}
           validationSchema={ContactSchema}
           onSubmit={async (values, actions) => {
-            console.log(values)
             await createContact(values)
             actions.resetForm()
             actions.setStatus({ success: 'Enviado com sucesso!' })
