@@ -99,7 +99,6 @@ const Chat = ({ chats, live }) => {
     const newChats = liveChats.filter(chat => {
       return chat.groupId !== event.target.value.toString()
     })
-    console.log(liveChats)
     setLiveChats(newChats)
     await leaveGroupRequest(event.target.value)
   }
@@ -122,7 +121,7 @@ const Chat = ({ chats, live }) => {
 
           return (
             <ChatTab key={index} selected={selected} onClick={() => changeChat(mapChat.id, mapChat.groupId, index)}>
-              <p>{mapChat.group.name}</p>
+              <ChatName>{mapChat.group.name}</ChatName>
               <CloseButton value={mapChat.groupId} onClick={value => leaveGroup(value)}>
                 x
               </CloseButton>
@@ -183,6 +182,12 @@ const ChatStyled = styled.div`
   }
 `
 
+const ChatName = styled.p`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
 const Icon = styled.img`
   padding: 5px 10px 5px 10px;
 `
@@ -213,7 +218,6 @@ const ChatView = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  max-heigth: calc(80vh - 200px);
 `
 const Input = styled.input`
   color: white;
@@ -229,11 +233,15 @@ const SendButton = styled.button`
   background-color: #aa528d;
   margin-left: 5px;
 `
+// TODO: revmove magic numbers
 const ChatBoxContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: calc(80vh - 170px);
+  height: calc(80vh - 168px);
+  @media (max-width: 768px) {
+    height: 46vh;
+  }
 `
 
 const ChatBoxHeader = styled.div`
@@ -288,8 +296,8 @@ const ChatBox = styled.div`
 const ChatNav = styled.nav`
   display: flex;
   color: white;
-  justify-content: space-between;
   width: 100%;
+  max-width: 100%;
   cursor: pointer;
 `
 
@@ -297,12 +305,12 @@ const ChatTab = styled.div`
   background-color: ${props => (props.selected ? '#1b2433' : '#111722')};
   width: 100%;
   display: flex;
-  justify-content: space-around;
-  padding: 10px 0 10px 10px;
-  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   font-size: 14px;
+  max-height: 50px;
 `
 
 const ChatTitle = styled.h3`

@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import Container from 'components/Container'
 import NextLives from 'components/NextLives'
 import Chat from 'components/Chat'
-import Video from 'components/Live'
+import Video from 'components/Video'
 
 import { getLive } from 'services/lives'
 
@@ -53,7 +53,7 @@ const FirstSection = styled.div`
   display: flex;
   width: 100%;
   flex-direction: row;
-  height: 80vh;
+  height: calc(100vh-80px);
   @media (max-width: 768px) {
     flex-direction: column;
     justify-content: center;
