@@ -15,8 +15,10 @@ const Profile = () => {
     <Container>
       <ProfileStyled>
         <Formik
-          initialValues={{ name: user.name, email: user.email }}
+          initialValues={{ name: user.name }}
           onSubmit={async (values, { setSubmitting }) => {
+            console.log(values.birthdate)
+            values.birthdate = values.birthdate ? new Date(values.birthdate).toISOString() : null
             await updateUser(values, user.id)
           }}
         >
@@ -30,10 +32,7 @@ const Profile = () => {
                   <Input>
                     <Field style={inputStyle} id='text' placeholder='Entre com seu nome' type='text' name='name' />
                   </Input>
-                  {/* <Label>Email</Label>
-                  <Input>
-                    <Field style={inputStyle} id='email' placeholder='Entre com seu email' type='text' name='email' />
-                  </Input> */}
+
                   <Button style={inputStyle} type='submit' disabled={isSubmitting}>
                     Salvar Alterações
                   </Button>

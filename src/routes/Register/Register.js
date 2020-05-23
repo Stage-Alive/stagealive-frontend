@@ -30,11 +30,14 @@ const Register = () => {
               email: '',
               password: '',
               name: '',
-              userTypeId: '531db173-0f9a-47d8-a969-5462e4b137a0'
+              userTypeId: '531db173-0f9a-47d8-a969-5462e4b137a0',
+              terms: false
             }}
             validationSchema={RegisterSchema}
             onSubmit={async (values, { setSubmitting }) => {
-              await register(values)
+              delete values.terms
+              const res = await register(values)
+              console.log(res)
             }}
           >
             {props => {
@@ -83,7 +86,7 @@ const Register = () => {
                       </Input> */}
                       <Terms>
                         <TextTerm>
-                          <input type='checkbox' name='terms' />
+                          <Field type='checkbox' name='terms' />
                           Aceito os termos da politica de privacidade
                         </TextTerm>
                         <ButtonTerm onClick={handleSubmit} type='submit' disabled={isSubmitting}>

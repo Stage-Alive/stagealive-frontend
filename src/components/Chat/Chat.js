@@ -273,7 +273,7 @@ const AddChannelButton = styled.button`
   border-radius: 10px;
   align-items: center;
   background-color: inherit;
-  padding: 2px 8px 2px 8px;
+  padding: 0 8px;
   font-size: 20px;
   font-weight: 600;
 `

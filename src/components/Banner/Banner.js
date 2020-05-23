@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { getLives } from 'services/lives'
+// import { getLives } from 'services/lives'
 
 const Banner = () => {
-  const [lives, setLives] = useState([])
-  const [live, setLive] = useState({
-    id: '1',
-    mainBanner: '/live_card3.png'
-  })
+  // const [lives, setLives] = useState([])
+  // const [live, setLive] = useState({
+  //   id: '1',
+  //   mainBanner: '/live_card3.png'
+  // })
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -18,10 +18,10 @@ const Banner = () => {
   // }, [])
 
   return (
-    <Link href={`/live/${live.id}`}>
+    <Link href={'/lives'}>
       <BannerStyled>
         <BannerContent>
-          <Image src={live.mainBanner}></Image>
+          <Image src='/live_card3.png'></Image>
           <BannerInfo>
             <div>
               <Title>ALOK</Title>
