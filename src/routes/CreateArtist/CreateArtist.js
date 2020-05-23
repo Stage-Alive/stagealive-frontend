@@ -5,13 +5,13 @@ import { createArtist } from 'services/artists'
 import Container from 'components/Container'
 import Label from 'components/Label'
 import Input from 'components/Input'
-// import * as Yup from 'yup'
+import * as Yup from 'yup'
 
-// const CreateArtistSchema = Yup.object().shape({
-//   name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Campo Obrigatório'),
-//   contactEmail: Yup.string().email('Email inválido').required('Campo Obrigatório'),
-//   conatctPhone: Yup.string().required('Campo Obrigatório')
-// })
+const CreateArtistSchema = Yup.object().shape({
+  name: Yup.string().min(2, 'Nome muito pequeno').max(70, 'Nome muito grande').required('Campo Obrigatório'),
+  contactEmail: Yup.string().email('Email inválido').optional(),
+  conatctPhone: Yup.string().optional()
+})
 
 const CreateArtist = () => {
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
@@ -25,15 +25,18 @@ const CreateArtist = () => {
             contactEmail: '',
             contactPhone: ''
           }}
-          // validationSchema={CreateArtistSchema}
+          validationSchema={CreateArtistSchema}
           onSubmit={async (values, actions) => {
-            console.log(values)
+            // TODO: should be a better way to do this
+            values.contactEmail = values.contactEmail.lenght ? values.contactEmail.lenght : null
+            values.contactPhone = values.contactPhone.lenght ? values.contactPhone.lenght : null
             await createArtist(values)
             actions.resetForm()
+            actions.setStatus({ success: 'Enviado com sucesso!' })
           }}
         >
           {props => {
-            const { isSubmitting, handleSubmit } = props
+            const { isSubmitting, handleSubmit, errors, touched, status } = props
             return (
               <>
                 <Form autoComplete='off' onSubmit={handleSubmit}>
@@ -48,6 +51,8 @@ const CreateArtist = () => {
                       name='name'
                     />
                   </Input>
+                  {errors.name && touched.name ? <Error>{errors.name}</Error> : null}
+
                   <Label>Email</Label>
                   <Input>
                     <Field
@@ -71,6 +76,7 @@ const CreateArtist = () => {
                   <Button onClick={handleSubmit} style={inputStyle} type='submit' disabled={isSubmitting}>
                     Enviar
                   </Button>
+                  {status && <Status>{status.success}</Status>}
                 </Form>
               </>
             )
@@ -80,6 +86,15 @@ const CreateArtist = () => {
     </Container>
   )
 }
+
+const Status = styled.h4`
+  color: green;
+  padding-top: 20px;
+`
+
+const Error = styled.div`
+  color: red;
+`
 
 const CreateArtistStyled = styled.div`
   margin-top: 50px;

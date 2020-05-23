@@ -15,26 +15,37 @@ const NextLives = ({ title = 'Próximas Lives', maxChildren = 6 }) => {
   }, [maxChildren])
 
   return (
-    <NextLivesStyled>
-      <Title>
-        <Icon src='/icons/play-icon.svg'></Icon>
-        {title}
-      </Title>
-      <Cards>
-        {lives.map((live, index) => {
-          return <CardLive live={live} key={index}></CardLive>
-        })}
-      </Cards>
-      {title === 'Lives' ? (
-        <Button>Veja mais</Button>
-      ) : (
-        <A href='/lives'>
-          <Button>Veja todas as lives</Button>
-        </A>
-      )}
-    </NextLivesStyled>
+    <div>
+      <TitleStyled>
+        <Title>
+          <Icon src='/icons/play-icon.svg'></Icon>
+          {title}
+        </Title>
+      </TitleStyled>
+      <NextLivesStyled>
+        <Cards>
+          {lives.map((live, index) => {
+            return <CardLive live={live} key={index}></CardLive>
+          })}
+        </Cards>
+        {title === 'Lives' ? (
+          <Button>Veja mais</Button>
+        ) : (
+          <A href='/lives'>
+            <Button>Veja todas as lives</Button>
+          </A>
+        )}
+      </NextLivesStyled>
+    </div>
   )
 }
+
+const TitleStyled = styled.div`
+  display: flex;
+  margin-top: 40px;
+  align-items: center;
+  justify-content: flex-start;
+`
 
 const A = styled.a`
   text-decoration: none;
@@ -47,18 +58,18 @@ const Icon = styled.img`
 const Title = styled.h1`
   font-size: 30px;
   color: #ffffff;
-  margin: 30px 0 0 30px;
+  display: flex;
+  justify-content: flex-start !important;
+  align-items: flex-start;
 `
 
 const NextLivesStyled = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: flex-start;
-  width: 80%;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+  width: 100%;
 `
 
 const Cards = styled.div`
