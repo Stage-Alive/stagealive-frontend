@@ -82,7 +82,7 @@ const BurguerIcon = styled.div`
 const DropdownOptions = styled.div`
   display: none;
   margin-left: -20px;
-  margin-top: 24px;
+  margin-top: 5px;
   width: 100%;
   position: absolute;
   background-color: #f9f9f9;
@@ -130,7 +130,7 @@ const DropdownLink = styled.a`
 
 const StyledHeader = styled.header`
   background: #182131;
-  height: 90px;
+  height: 60px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -146,9 +146,7 @@ const HeaderContent = styled.div`
 `
 
 const Image = styled.img`
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 20px;
+  width: 50px;
 `
 
 export default Header

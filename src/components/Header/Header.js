@@ -51,7 +51,7 @@ const DropdownOptions = styled.div`
   z-index: 1;
 `
 const DropdownButton = styled.button`
-  padding: 35px 20px 35px 20px;
+  padding: 30px 20px;
   text-decoration: none;
   font-weight: 600;
   font-size: 14px;
@@ -63,7 +63,7 @@ const DropdownButton = styled.button`
 `
 
 const Dropdown = styled.div`
-  max-height: 90px;
+  max-height: 80px;
   float: left;
   overflow: hidden;
   color: white;
@@ -116,14 +116,14 @@ const Nav = styled.nav`
 // `
 
 const Span = styled.span`
-  height: 60px;
+  height: 50px;
   border: 0.5px solid #707070;
   opacity: 1;
 `
 
 const StyledHeader = styled.header`
   background: #182131;
-  height: 90px;
+  height: 80px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -139,7 +139,7 @@ const HeaderContent = styled.div`
 `
 
 const A = styled.a`
-  padding: 35px 20px 35px 20px;
+  padding: 30px 20px;
   color: inherit;
   text-decoration: none;
   font-weight: 600;
@@ -153,6 +153,7 @@ const Image = styled.img`
   display: flex;
   justify-content: flex-start;
   margin-left: 20px;
+  width: 60px;
 `
 
 const LoginLink = styled.a`

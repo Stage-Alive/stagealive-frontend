@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import CardLive from 'components/CardLive'
 import { getLives } from 'services/lives'
 
-const NextLives = ({ title = 'Próximas Lives', maxChildren = 6 }) => {
+const NextLives = ({ title = 'Próximas Lives', maxChildren = 6, linkButton = true }) => {
   const [lives, setLives] = useState([])
 
   useEffect(() => {
@@ -28,13 +28,15 @@ const NextLives = ({ title = 'Próximas Lives', maxChildren = 6 }) => {
             return <CardLive live={live} key={index}></CardLive>
           })}
         </Cards>
-        {title === 'Lives' ? (
-          <Button>Veja mais</Button>
-        ) : (
-          <A href='/lives'>
-            <Button>Veja todas as lives</Button>
-          </A>
-        )}
+        {linkButton ? (
+          title === 'Lives' ? (
+            <Button>Veja mais</Button>
+          ) : (
+            <A href='/lives'>
+              <Button>Veja todas as lives</Button>
+            </A>
+          )
+        ) : null}
       </NextLivesStyled>
     </div>
   )
@@ -52,12 +54,15 @@ const A = styled.a`
 `
 
 const Icon = styled.img`
+  width: 25px;
   margin-right: 10px;
+  margin-top: 10px;
 `
 
-const Title = styled.h1`
+const Title = styled.p`
   font-size: 30px;
   color: #ffffff;
+  font-weight: 600;
   display: flex;
   justify-content: flex-start !important;
   align-items: flex-start;

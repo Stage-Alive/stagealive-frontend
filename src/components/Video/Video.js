@@ -21,7 +21,8 @@ const VideoStyled = styled.div`
   width: 70%;
   height: 80vh;
   @media (max-width: 768px) {
-    height: 100%;
+    min-height: 20vh;
+    height: 40vh;
     flex-direction: column;
     justify-content: center;
     width: 100%;

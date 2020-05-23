@@ -7,12 +7,14 @@ const Lives = () => {
   return (
     <Container>
       <LivesStyled>
-        <NextLives title='Lives' />
+        <NextLives title='Lives' linkButton={false} />
       </LivesStyled>
     </Container>
   )
 }
 
-const LivesStyled = styled.div``
+const LivesStyled = styled.div`
+  width: 80%;
+`
 
 export default Lives
