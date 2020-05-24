@@ -9,15 +9,14 @@ function Facebook() {
   // TO DO: Remove email and password from json, they shouldn't be sent.
 
   const responseFacebook = async response => {
+    console.log(response)
     await facebookLogin({
-      email: 'teste@gmail.com',
-      password: 'teste123',
       profile: {
-        displayName: response.name,
+        name: response.name,
         email: response.email,
-        id: response.id
+        facebookId: response.id
       },
-      access_token: response.access_token
+      accessToken: response.access_token
     })
   }
 
@@ -28,7 +27,7 @@ function Facebook() {
   return (
     <FacebookLogin
       appId='1472202059626414'
-      autoLoad={true}
+      autoLoad={false}
       fields='name,email,picture'
       onClick={componentClicked}
       callback={responseFacebook}
