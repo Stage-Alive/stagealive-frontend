@@ -24,7 +24,6 @@ const AuthProvider = props => {
     async data => {
       try {
         const auth = await authLogin(data)
-        console.log(auth)
         setToken(auth.access_token)
         reload()
 

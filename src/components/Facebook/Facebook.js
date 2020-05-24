@@ -11,11 +11,9 @@ function Facebook() {
   const responseFacebook = async response => {
     console.log(response)
     await facebookLogin({
-      profile: {
-        name: response.name,
-        email: response.email,
-        facebookId: response.id
-      },
+      name: response.name,
+      email: response.email,
+      facebookId: response.id,
       accessToken: response.access_token
     })
   }
