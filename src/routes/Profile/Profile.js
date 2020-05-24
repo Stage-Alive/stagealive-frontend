@@ -49,6 +49,9 @@ const Profile = () => {
 const ProfileStyled = styled.div`
   margin-top: 50px;
   width: 45%;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `
 
 const FormTitle = styled.h1`

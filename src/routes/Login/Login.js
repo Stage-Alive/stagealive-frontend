@@ -15,7 +15,7 @@ const SignupSchema = Yup.object().shape({
 
 const Login = () => {
   const { login } = useAuth()
-  const inputStyle = { fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
+  const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
 
   return (
     <Container>

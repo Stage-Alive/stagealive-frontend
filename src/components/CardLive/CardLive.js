@@ -65,7 +65,7 @@ const CardInfo = styled.div`
 const CardLiveStyled = styled.div`
   width: 300px;
   max-height: 600px;
-  margin: 20px;
+  margin: 20px 40px 20px 0;
   background-color: #020916;
   cursor: pointer;
   border-radius: 10px;
