@@ -1,0 +1,200 @@
+options:
+  docker: true
+
+pipelines:
+  branches:
+
+    '{feature/*,sprint*}':    
+    - step:
+        name: "[DEV - Build]"
+        image: node:13.8-alpine
+        script:          
+          
+          - export REACT_APP_SSO_URL=$REACT_APP_SSO_URL_QA
+          - export REACT_APP_API_URL=$REACT_APP_API_URL_QA
+          - export REACT_APP_API_LEXAPPENDIX_URL=$REACT_APP_API_LEXAPPENDIX_URL_QA
+          - export REACT_APP_NODE_ENV=$REACT_APP_NODE_ENV_QA
+          - export REACT_APP_X_API_KEY=$REACT_APP_X_API_KEY_QA          
+          - export REACT_APP_LOGOUT_SSO_URL=$REACT_APP_LOGOUT_SSO_URL_QA
+
+          # Install build packages we want
+          - apk add -Uuv git less zip build-base bash gettext curl && rm -rf /var/cache/apk/*
+          
+          # Install awscli
+          - apk -v --update add python py-pip groff mailcap && pip install --upgrade awscli==1.14.5 s3cmd==2.0.1 python-magic &&  apk -v --purge del py-pip && rm /var/cache/apk/*
+
+          # Never remove THE LINE BELOW / Permitir cópia de arquivos com caracteres especiais no nome
+          - export LC_ALL=pt_BR.UTF-8
+
+          # Angular Build Process
+          - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+          
+          - yarn install
+          - yarn build --prod
+
+          - aws s3 ls s3://qa.aulaaovivo.conexia.com.br
+
+    - step:
+            name: "[QA] Deployment S3"
+            image: node:13.8-alpine
+            trigger: manual
+            script:
+            - export REACT_APP_SSO_URL=$REACT_APP_SSO_URL_QA
+            - export REACT_APP_API_URL=$REACT_APP_API_URL_QA
+            - export REACT_APP_API_LEXAPPENDIX_URL=$REACT_APP_API_LEXAPPENDIX_URL_QA
+            - export REACT_APP_NODE_ENV=$REACT_APP_NODE_ENV_QA
+            - export REACT_APP_X_API_KEY=$REACT_APP_X_API_KEY_QA
+            - export REACT_APP_LOGOUT_SSO_URL=$REACT_APP_LOGOUT_SSO_URL_QA
+
+            # Install build packages we want
+            - apk add -Uuv git less zip build-base bash gettext curl && rm -rf /var/cache/apk/*
+          
+            # Install awscli
+            - apk -v --update add python py-pip groff mailcap && pip install --upgrade awscli==1.14.5 s3cmd==2.0.1 python-magic &&  apk -v --purge del py-pip && rm /var/cache/apk/*
+
+            # Never remove THE LINE BELOW / Permitir cópia de arquivos com caracteres especiais no nome
+            - export LC_ALL=pt_BR.UTF-8
+
+            # Angular Build Process
+            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+            
+            - yarn install
+            - yarn build --prod
+            # - yarn run ng build -- --configuration=$NG_ENV_QA --prod
+            
+            - aws s3 sync ./build s3://qa.aulaaovivo.conexia.com.br/ --delete --only-show-errors
+
+            # Run Invalidation on CloudFront
+            - aws configure set preview.cloudfront true
+            - aws configure set preview.create-invalidation true
+            - aws cloudfront create-invalidation --distribution-id ENIK49JWJ4285 --invalidation-batch "{\"Paths\":{\"Quantity\":1,\"Items\":[\"/*\"]},\"CallerReference\":\"qa-$BITBUCKET_BUILD_NUMBER\"}"
+
+
+    '{develop,fix*,hotfix*}':
+    - step:
+        name: "[Develop - Build]"
+        image: node:13.8-alpine
+        script:          
+
+            - export REACT_APP_SSO_URL=$REACT_APP_SSO_URL_QA
+            - export REACT_APP_API_URL=$REACT_APP_API_URL_QA
+            - export REACT_APP_API_LEXAPPENDIX_URL=$REACT_APP_API_LEXAPPENDIX_URL_QA
+            - export REACT_APP_NODE_ENV=$REACT_APP_NODE_ENV_QA
+            - export REACT_APP_X_API_KEY=$REACT_APP_X_API_KEY_QA
+            - export REACT_APP_LOGOUT_SSO_URL=$REACT_APP_LOGOUT_SSO_URL_QA
+
+            # Install build packages we want
+            - apk add -Uuv git less zip build-base bash gettext curl && rm -rf /var/cache/apk/*
+          
+            # Install awscli
+            - apk -v --update add python py-pip groff mailcap && pip install --upgrade awscli==1.14.5 s3cmd==2.0.1 python-magic &&  apk -v --purge del py-pip && rm /var/cache/apk/*
+
+            # Never remove THE LINE BELOW / Permitir cópia de arquivos com caracteres especiais no nome
+            - export LC_ALL=pt_BR.UTF-8
+
+            # Angular Build Process
+            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+            
+            - yarn install
+            - yarn build --prod
+
+    - step:
+            name: "[QA] Deployment S3"
+            image: node:13.8-alpine
+            trigger: manual
+            script:
+
+            - export REACT_APP_SSO_URL=$REACT_APP_SSO_URL_QA
+            - export REACT_APP_API_URL=$REACT_APP_API_URL_QA
+            - export REACT_APP_API_LEXAPPENDIX_URL=$REACT_APP_API_LEXAPPENDIX_URL_QA
+            - export REACT_APP_NODE_ENV=$REACT_APP_NODE_ENV_QA
+            - export REACT_APP_X_API_KEY=$REACT_APP_X_API_KEY_QA
+            - export REACT_APP_LOGOUT_SSO_URL=$REACT_APP_LOGOUT_SSO_URL_QA
+
+            # Install build packages we want
+            - apk add -Uuv git less zip build-base bash gettext curl && rm -rf /var/cache/apk/*
+          
+            # Install awscli
+            - apk -v --update add python py-pip groff mailcap && pip install --upgrade awscli==1.14.5 s3cmd==2.0.1 python-magic &&  apk -v --purge del py-pip && rm /var/cache/apk/*
+
+            # Never remove THE LINE BELOW / Permitir cópia de arquivos com caracteres especiais no nome
+            - export LC_ALL=pt_BR.UTF-8
+
+            # Angular Build Process
+            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+            
+            - yarn install
+            - yarn build --prod
+            
+            - aws s3 sync ./build s3://qa.aulaaovivo.conexia.com.br/ --delete --only-show-errors
+
+            # Run Invalidation on CloudFront
+            - aws configure set preview.cloudfront true
+            - aws configure set preview.create-invalidation true
+            - aws cloudfront create-invalidation --distribution-id ENIK49JWJ4285 --invalidation-batch "{\"Paths\":{\"Quantity\":1,\"Items\":[\"/*\"]},\"CallerReference\":\"qa-$BITBUCKET_BUILD_NUMBER\"}"
+
+
+    '{master}':    
+    - step:
+        name: "[Prod - Build]"
+        image: node:13.8-alpine
+        script:
+
+          - export REACT_APP_SSO_URL=$REACT_APP_SSO_URL_PROD
+          - export REACT_APP_API_URL=$REACT_APP_API_URL_PROD
+          - export REACT_APP_API_LEXAPPENDIX_URL=$REACT_APP_API_LEXAPPENDIX_URL_PROD
+          #- export REACT_APP_NODE_ENV=$REACT_APP_NODE_ENV_PROD
+          - export REACT_APP_X_API_KEY=$REACT_APP_X_API_KEY_PROD
+          - export REACT_APP_LOGOUT_SSO_URL=$REACT_APP_LOGOUT_SSO_URL_PROD
+
+          # Install build packages we want
+          - apk add -Uuv git less zip build-base bash gettext curl && rm -rf /var/cache/apk/*
+          
+          # Install awscli
+          - apk -v --update add python py-pip groff mailcap && pip install --upgrade awscli==1.14.5 s3cmd==2.0.1 python-magic &&  apk -v --purge del py-pip && rm /var/cache/apk/*
+
+          # Never remove THE LINE BELOW / Permitir cópia de arquivos com caracteres especiais no nome
+          - export LC_ALL=pt_BR.UTF-8
+
+          # Angular Build Process
+          - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+          
+          - yarn install
+          - yarn build --prod
+
+          - aws s3 ls s3://aulaaovivo.conexia.com.br/
+
+    - step:
+        name: "[Prod] Deployment S3"
+        image: node:13.8-alpine
+        trigger: manual
+        script:
+  
+            - export REACT_APP_SSO_URL=$REACT_APP_SSO_URL_PROD
+            - export REACT_APP_API_URL=$REACT_APP_API_URL_PROD
+            - export REACT_APP_API_LEXAPPENDIX_URL=$REACT_APP_API_LEXAPPENDIX_URL_PROD
+            #- export REACT_APP_NODE_ENV=$REACT_APP_NODE_ENV_PROD
+            - export REACT_APP_X_API_KEY=$REACT_APP_X_API_KEY_PROD
+            - export REACT_APP_LOGOUT_SSO_URL=$REACT_APP_LOGOUT_SSO_URL_PROD
+
+            # Install build packages we want
+            - apk add -Uuv git less zip build-base bash gettext curl && rm -rf /var/cache/apk/*
+          
+            # Install awscli
+            - apk -v --update add python py-pip groff mailcap && pip install --upgrade awscli==1.14.5 s3cmd==2.0.1 python-magic &&  apk -v --purge del py-pip && rm /var/cache/apk/*
+
+            # Never remove THE LINE BELOW / Permitir cópia de arquivos com caracteres especiais no nome
+            - export LC_ALL=pt_BR.UTF-8
+
+            # Angular Build Process
+            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+            
+            - yarn install
+            - yarn build --prod
+
+            - aws s3 sync ./build s3://aulaaovivo.conexia.com.br/ --delete --only-show-errors
+
+            # Run Invalidation on CloudFront
+            - aws configure set preview.cloudfront true
+            - aws configure set preview.create-invalidation true
+            - aws cloudfront create-invalidation --distribution-id E1V1E6WIK96JAQ --invalidation-batch "{\"Paths\":{\"Quantity\":1,\"Items\":[\"/*\"]},\"CallerReference\":\"prod-$BITBUCKET_BUILD_NUMBER\"}"
