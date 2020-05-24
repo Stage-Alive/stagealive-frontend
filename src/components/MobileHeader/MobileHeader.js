@@ -120,6 +120,7 @@ const DropdownLink = styled.a`
   padding: 10px;
   font-weight: 600;
   font-size: 14px;
+  margin-right: -30px;
   &:hover {
     background-color: #38404d;
   }
