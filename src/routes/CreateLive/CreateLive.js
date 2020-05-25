@@ -15,7 +15,6 @@ const CreateLive = () => {
   useEffect(() => {
     async function fetchData() {
       const publicGroups = await getPublicGroups()
-      console.log(publicGroups)
       setGroups(publicGroups)
     }
     fetchData()
@@ -46,7 +45,6 @@ const CreateLive = () => {
             startAt: new Date().toISOString()
           }}
           onSubmit={async (values, actions) => {
-            console.log(values)
             await createLive(values)
             actions.resetForm()
           }}

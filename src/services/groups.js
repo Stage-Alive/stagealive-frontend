@@ -4,7 +4,6 @@ export const getPublicGroups = async () => {
   const res = await client.get('/publicgroups')
   if (res.data) {
     return res.data.items.map(group => {
-      console.log(group)
       return {
         id: group.group.id,
         name: group.group.name

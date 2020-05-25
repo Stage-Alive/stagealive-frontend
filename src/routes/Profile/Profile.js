@@ -17,8 +17,6 @@ const Profile = () => {
         <Formik
           initialValues={{ name: user.name }}
           onSubmit={async (values, { setSubmitting }) => {
-            console.log(values.birthdate)
-            values.birthdate = values.birthdate ? new Date(values.birthdate).toISOString() : null
             await updateUser(values, user.id)
           }}
         >

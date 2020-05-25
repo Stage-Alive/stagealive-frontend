@@ -9,7 +9,6 @@ function Facebook() {
   // TO DO: Remove email and password from json, they shouldn't be sent.
 
   const responseFacebook = async response => {
-    console.log(response)
     await facebookLogin({
       name: response.name,
       email: response.email,
@@ -32,7 +31,7 @@ function Facebook() {
       textButton='Entre com o facebook'
       size='metro'
       cssClass='button'
-      icon={<img className='icon' src='/icons/facebook-icon.svg' />}
+      icon={<img alt='facebook' className='icon' src='/icons/facebook-icon.svg' />}
     />
   )
 }
