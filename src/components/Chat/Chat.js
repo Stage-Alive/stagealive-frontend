@@ -9,6 +9,8 @@ import {
 import Modal from 'components/Modal'
 import { useUser } from 'context/user-context'
 import io from 'socket.io-client'
+import { getChat } from 'services/chats'
+
 const socket = io(process.env.REACT_APP_API_URL)
 
 const Chat = ({ chats, live }) => {
@@ -25,6 +27,13 @@ const Chat = ({ chats, live }) => {
 
   useEffect(() => {
     if (chats.length > 0) {
+      async function fetchData() {
+        const res = await getChat(chats[0].id)
+        if (res) {
+          setMessage(res)
+        }
+      }
+      fetchData()
       setLiveChats(chats)
       joinChat(chats[0].id)
       setChat({
@@ -38,9 +47,7 @@ const Chat = ({ chats, live }) => {
     const handleNewMessage = newMessage => setMessage([...messages, newMessage])
     socket.on('msgToClient', handleNewMessage)
     if (myRef.current) {
-      console.log(myRef.current)
       let node = ReactDOM.findDOMNode(myRef.current)
-      console.log(node)
       node.scrollIntoView({ block: 'end', behavior: 'auto' })
     }
     return () => socket.off('msgToClient', handleNewMessage)
@@ -74,13 +81,19 @@ const Chat = ({ chats, live }) => {
     setModalState(false)
   }
 
-  function changeChat(newChat, groupId, selectedChat) {
+  async function changeChat(newChat, groupId) {
     leaveChat(chat.chatId)
     joinChat(newChat)
     setChat({
       chatId: newChat,
       groupId: groupId
     })
+    const res = await getChat(newChat)
+    if (res) {
+      setMessage(res)
+    }
+    // TO DO: this should be a debounce
+    setTimeout(function () {}, 1000)
   }
 
   async function createGroup(name) {
