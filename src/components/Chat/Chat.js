@@ -22,8 +22,11 @@ const Chat = ({ chats, live }) => {
     groupId: '0'
   })
   const [modalState, setModalState] = useState(false)
+  const [copyInviteSuccess, setCopyInviteSuccess] = useState('')
+
   const { user } = useUser()
   const myRef = useRef(null)
+  const inviteRef = useRef(null)
 
   useEffect(() => {
     if (chats.length > 0) {
@@ -81,6 +84,14 @@ const Chat = ({ chats, live }) => {
     setModalState(false)
   }
 
+  function copyToClipboard(event) {
+    const element = inviteRef.current
+    element.select()
+    window.document.execCommand('copy')
+    event.target.focus()
+    setCopyInviteSuccess('Convite Copiado!')
+  }
+
   async function changeChat(newChat, groupId) {
     leaveChat(chat.chatId)
     joinChat(newChat)
@@ -106,6 +117,7 @@ const Chat = ({ chats, live }) => {
 
   async function enterGroup(group) {
     await enterGroupRequest(group)
+    window.location.reload()
   }
 
   async function leaveGroup(event) {
@@ -145,7 +157,13 @@ const Chat = ({ chats, live }) => {
       <ChatBox>
         <ChatBoxHeader>
           <ChannelTitle>Bem vindo ao canal Amigos</ChannelTitle>
-          <Link>{chat.groupId && 'AASFC8'}</Link>
+          <Invite onClick={copyToClipboard}>
+            <CopyIcon src='/icons/copy-regular.svg' />
+            <form>
+              <InviteValue valu='testing' ref={inviteRef} />
+            </form>
+            {chat.groupId && (copyInviteSuccess || 'Clique e copie o convide para esse canal')}
+          </Invite>
         </ChatBoxHeader>
         <ChatBoxContent>
           <ChatView>
@@ -246,12 +264,12 @@ const SendButton = styled.button`
   background-color: #aa528d;
   margin-left: 5px;
 `
-// TODO: revmove magic numbers
+// TODO: remove magic numbers
 const ChatBoxContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: calc(80vh - 168px);
+  height: calc(80vh - 174px);
   @media (max-width: 768px) {
     height: 46vh;
   }
@@ -265,11 +283,15 @@ const ChatBoxHeader = styled.div`
   }
 `
 
-const Link = styled.a`
-  color: #aa528d;
+const Invite = styled.button`
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+  color: #fff;
   font-size: 15px;
-  text-decoration: underline;
   margin-left: 20px;
+  cursor: pointer;
+  background-color: inherit;
 `
 
 const AddChannelLabel = styled.p`
@@ -345,6 +367,17 @@ const CloseButton = styled.button`
   font-size: 15px;
   margin-left: 10px;
   font-weight: 800;
+`
+
+const CopyIcon = styled.img`
+  width: 20px;
+  filter: invert();
+  opacity: 0.7;
+  margin-right: 5px;
+`
+
+const InviteValue = styled.textarea`
+  display: none;
 `
 
 export default Chat
