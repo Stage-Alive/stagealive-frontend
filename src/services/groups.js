@@ -17,7 +17,7 @@ export const createGroup = async data => {
 }
 
 export const enterGroup = async groupId => {
-  return client.post('/groups/' + groupId + '/subscribe')
+  return client.put('/groups/' + groupId + '/subscribe')
 }
 
 export const leaveGroup = async groupId => {
