@@ -6,16 +6,28 @@ import Container from 'components/Container'
 import NextLives from 'components/NextLives'
 import Chat from 'components/Chat'
 import Video from 'components/Video'
-
+import { enterGroup as enterGroupRequest } from 'services/groups'
 import { getLive } from 'services/lives'
 
-const Live = () => {
+const Live = props => {
   const { id } = useParams()
+  const query = new URLSearchParams(props.location.search)
+  const groupQuery = query.get('group')
 
   const [liveLink, setLiveLink] = useState('https://www.youtube.com/embed/F68KkgwP5F8')
   const [liveName, setLiveName] = useState('v-live')
   const [liveId, setLiveId] = useState('')
   const [chats, setChats] = useState([])
+
+  useEffect(() => {
+    if (groupQuery) {
+      async function enterGroupByQuery() {
+        const res = await enterGroupRequest(groupQuery)
+        console.log(res)
+      }
+      enterGroupByQuery()
+    }
+  }, [])
 
   useEffect(() => {
     async function fetchData() {

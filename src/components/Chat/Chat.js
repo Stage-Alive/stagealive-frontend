@@ -12,6 +12,7 @@ import io from 'socket.io-client'
 import { getChat } from 'services/chats'
 
 const socket = io(process.env.REACT_APP_API_URL)
+const URL = process.env.REACT_APP_URL
 
 const Chat = ({ chats, live }) => {
   const [liveChats, setLiveChats] = useState(chats)
@@ -84,11 +85,8 @@ const Chat = ({ chats, live }) => {
     setModalState(false)
   }
 
-  function copyToClipboard(event) {
-    const element = inviteRef.current
-    element.select()
-    window.document.execCommand('copy')
-    event.target.focus()
+  function copyToClipboard() {
+    navigator.clipboard.writeText(inviteRef.current.value)
     setCopyInviteSuccess('Convite Copiado!')
   }
 
@@ -116,7 +114,8 @@ const Chat = ({ chats, live }) => {
   }
 
   async function enterGroup(group) {
-    await enterGroupRequest(group)
+    const groupId = group.split('group=')
+    await enterGroupRequest(groupId[1])
     window.location.reload()
   }
 
@@ -159,9 +158,7 @@ const Chat = ({ chats, live }) => {
           <ChannelTitle>Bem vindo ao canal Amigos</ChannelTitle>
           <Invite onClick={copyToClipboard}>
             <CopyIcon src='/icons/copy-regular.svg' />
-            <form>
-              <InviteValue valu='testing' ref={inviteRef} />
-            </form>
+            <InviteValue value={`${URL}/live/${live}?group=${chat.groupId}`} ref={inviteRef} />
             {chat.groupId && (copyInviteSuccess || 'Clique e copie o convide para esse canal')}
           </Invite>
         </ChatBoxHeader>

@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+
 import { Formik, Form, Field } from 'formik'
 import styled from 'styled-components'
 import { useAuth } from 'context/auth-context'
@@ -13,9 +15,16 @@ const SignupSchema = Yup.object().shape({
   password: Yup.string().required('Campo Obrigatório')
 })
 
-const Login = () => {
+const Login = props => {
   const { login } = useAuth()
+
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
+
+  useEffect(() => {
+    return () => {
+      console.log(props.path)
+    }
+  })
 
   return (
     <Container>

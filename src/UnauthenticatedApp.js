@@ -8,16 +8,17 @@ import Lives from 'routes/Lives'
 import Home from 'routes/Home'
 import ResetPassword from 'routes/ResetPassword'
 
-const UnauthenticatedApp = () => (
-  <Switch>
-    <Route path='/login' component={Login} />
-    <Route path='/cadastro' component={Register} />
-    <Route path='/contato' component={Contact} />
-    <Route path='/lives' component={Lives} />
-    <Route path='/reset-password' component={ResetPassword} />
-    <Route path='/home' component={Home} />
-    <Redirect to='/login' />
-  </Switch>
-)
-
+const UnauthenticatedApp = () => {
+  return (
+    <Switch>
+      <Route path='/login' component={Login} />
+      <Route path='/cadastro' component={Register} />
+      <Route path='/contato' component={Contact} />
+      <Route path='/lives' component={Lives} />
+      <Route path='/reset-password' component={ResetPassword} />
+      <Route path='/home' component={Home} />
+      <Redirect to='/login' />
+    </Switch>
+  )
+}
 export default UnauthenticatedApp
