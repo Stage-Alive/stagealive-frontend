@@ -29,7 +29,6 @@ button, a {
 
 const App = () => {
   const { user } = useUser()
-
   useEffect(() => {
     loadAuthenticatedApp()
   }, [])
