@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 
 import Container from 'components/Container'
 import NextLives from 'components/NextLives'
@@ -9,10 +9,14 @@ import Video from 'components/Video'
 import { enterGroup as enterGroupRequest } from 'services/groups'
 import { getLive } from 'services/lives'
 
-const Live = props => {
+const Live = () => {
   const { id } = useParams()
-  const query = new URLSearchParams(props.location.search)
-  const groupQuery = query.get('group')
+  let groupId = false
+  const location = useLocation()
+  if (location.pathname.includes('group')) {
+    const locationSplit = location.pathname.split('/')
+    groupId = locationSplit[locationSplit.length - 1]
+  }
 
   const [liveLink, setLiveLink] = useState('https://www.youtube.com/embed/F68KkgwP5F8')
   const [liveName, setLiveName] = useState('v-live')
@@ -20,14 +24,15 @@ const Live = props => {
   const [chats, setChats] = useState([])
 
   useEffect(() => {
-    if (groupQuery) {
+    if (groupId) {
+      console.log(groupId)
       async function enterGroupByQuery() {
-        const res = await enterGroupRequest(groupQuery)
+        const res = await enterGroupRequest(groupId)
         console.log(res)
       }
       enterGroupByQuery()
     }
-  }, [])
+  }, [groupId])
 
   useEffect(() => {
     async function fetchData() {

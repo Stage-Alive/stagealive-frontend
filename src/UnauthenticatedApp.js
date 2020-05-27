@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom'
 
 import Login from 'routes/Login'
 import Register from 'routes/Register'
@@ -9,6 +9,13 @@ import Home from 'routes/Home'
 import ResetPassword from 'routes/ResetPassword'
 
 const UnauthenticatedApp = () => {
+  const location = useLocation()
+  console.log(location)
+  if (location.pathname.includes('live/')) {
+    console.log(location.pathname)
+    window.localStorage.setItem('live', location.pathname)
+  }
+
   return (
     <Switch>
       <Route path='/login' component={Login} />

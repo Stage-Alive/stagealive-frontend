@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from 'react'
-import { BrowserRouter as Router, useHistory, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 import { useUser } from 'context/user-context'
 import Loader from 'components/Loader'

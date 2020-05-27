@@ -46,10 +46,8 @@ const Button = styled.button`
 `
 
 const BannerInfo = styled.div`
-  background: #182131 0% 0% no-repeat padding-box;
   display: flex;
   flex-direction: column;
-  align-items: center !important;
   justify-content: space-between;
   margin: 0 auto;
 `
@@ -57,23 +55,22 @@ const BannerInfo = styled.div`
 const BannerContent = styled.div`
   display: flex;
   flex-direction: row;
-  background: #182131 0% 0% no-repeat padding-box;
+  background: #182131;
+  border-radius: 20px;
 `
 
 const Image = styled.img`
   max-width: 400px;
   max-height: 400px;
-  border-radius: 10px;
-  height: 100%;
 `
 const BannerStyled = styled.div`
-  width: 70%;
+  width: 100%;
   max-width: 700px;
-  display: block;
   margin: 20px auto 0 auto;
   max-height: 600px;
   background-color: #020916;
   cursor: pointer;
+  border-radius: 20px;
 `
 const Title = styled.h1`
   color: #ffffff;

@@ -15,14 +15,19 @@ const SignupSchema = Yup.object().shape({
   password: Yup.string().required('Campo Obrigatório')
 })
 
-const Login = props => {
+const Login = () => {
   const { login } = useAuth()
+  const history = useHistory()
 
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
 
   useEffect(() => {
     return () => {
-      console.log(props.path)
+      const redirect = window.localStorage.getItem('live')
+      console.log(redirect)
+      if (redirect) {
+        history.push(redirect)
+      }
     }
   })
 

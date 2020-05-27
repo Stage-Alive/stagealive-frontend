@@ -102,14 +102,6 @@ const Button = styled.button`
   width: 100%;
 `
 
-const Subtitle = styled.h3`
-  font-size: 30px;
-  margin-top: 60px;
-  color: white;
-  padding-left: 30px;
-  padding-bottom: 10px;
-`
-
 const FormContent = styled.div`
   width: 80%;
   margin: 0 auto;
