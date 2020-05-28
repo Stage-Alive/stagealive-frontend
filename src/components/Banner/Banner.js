@@ -1,86 +1,79 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-// import { getLives } from 'services/lives'
+import { LeftArrow, RightArrow } from './components/arrows'
+import bannerdata from './bannerdata'
+import Slider from './components/slide'
 
 const Banner = () => {
-  // const [lives, setLives] = useState([])
-  // const [live, setLive] = useState({
-  //   id: '1',
-  //   mainBanner: '/live_card3.png'
-  // })
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [length, setLength] = useState(0)
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const lives = await getLives(3)
-  //     setLives(lives)
-  //   }
-  //   fetchData()
-  // }, [])
+  useEffect(() => {
+    setLength(bannerdata.length)
+  }, [])
+
+  function goToPrevSlide() {
+    if (activeIndex < 1) {
+      setActiveIndex(length - 1)
+    } else {
+      setActiveIndex(activeIndex - 1)
+    }
+  }
+
+  function goToNextSlide() {
+    if (activeIndex === length - 1) {
+      setActiveIndex(0)
+    } else {
+      setActiveIndex(activeIndex + 1)
+    }
+  }
 
   return (
-    <Link href={'/lives'}>
+    <Carrousel>
+      {/* <LeftArrow goToPrevSlide={goToPrevSlide} /> */}
       <BannerStyled>
-        <BannerContent>
-          <Image src='/live_card3.png'></Image>
-          <BannerInfo>
-            <div>
-              <Title>ALOK</Title>
-              <Subtitle>#FiqueEmCasa</Subtitle>
-            </div>
-            <Button>Assistir</Button>
-          </BannerInfo>
-        </BannerContent>
+        <Slider activeIndex={activeIndex} bannerdata={bannerdata} />
+        <Dots>
+          {bannerdata.map((_, index) => (
+            <Dot key={index} active={activeIndex === index ? true : false} onClick={() => setActiveIndex(index)}></Dot>
+          ))}
+        </Dots>
       </BannerStyled>
-    </Link>
+      {/* <RightArrow goToNextSlide={goToNextSlide} /> */}
+    </Carrousel>
   )
 }
 
-const Link = styled.a`
-  text-decoration: none;
-`
-
-const Button = styled.button`
-  padding: 10px 40px;
-  margin-bottom: 80px;
-  border-radius: 10px;
-`
-
-const BannerInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 0 auto;
-`
-
-const BannerContent = styled.div`
+const Dots = styled.div`
   display: flex;
   flex-direction: row;
-  background: #182131;
-  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+`
+const Dot = styled.span`
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 10px 5px;
+
+  background-color: ${props => (props.active ? '#fff' : '#182131')};
+  border-radius: 50%;
+  transition: background-color 0.6s ease;
 `
 
-const Image = styled.img`
-  max-width: 400px;
-  max-height: 400px;
+const Carrousel = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `
+
 const BannerStyled = styled.div`
   width: 100%;
-  max-width: 700px;
+  max-width: 800px;
   margin: 20px auto 0 auto;
   max-height: 600px;
   background-color: #020916;
   cursor: pointer;
-  border-radius: 20px;
-`
-const Title = styled.h1`
-  color: #ffffff;
-  font: Bold 60px/82px Open Sans;
-  margin-top: 80px;
-`
-const Subtitle = styled.h2`
-  color: #ffffff;
-  max-width: 100%;
-  font-size: 18px;
 `
 
 export default Banner

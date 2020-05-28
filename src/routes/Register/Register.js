@@ -34,14 +34,17 @@ const Register = () => {
               terms: false
             }}
             validationSchema={RegisterSchema}
-            onSubmit={async (values, { setSubmitting }) => {
+            onSubmit={async (values, actions) => {
               delete values.terms
               const res = await register(values)
-              console.log(res)
+              console.log('aaa', res)
+              if (res.error) {
+                actions.setStatus({ message: 'Não conseguimos realizar seu cadastro' })
+              }
             }}
           >
             {props => {
-              const { isSubmitting, handleSubmit, errors, touched } = props
+              const { isSubmitting, handleSubmit, errors, touched, status } = props
               return (
                 <RegisterStyled>
                   <FormContent>
@@ -92,6 +95,7 @@ const Register = () => {
                         <ButtonTerm onClick={handleSubmit} type='submit' disabled={isSubmitting}>
                           Cadastrar
                         </ButtonTerm>
+                        {status && <Status>{status.message}</Status>}
                       </Terms>
                       {errors.terms && touched.terms ? <Error>{errors.terms}</Error> : null}
                     </Form>
@@ -110,6 +114,10 @@ const Register = () => {
   )
 }
 
+const Status = styled.h4`
+  color: red;
+  padding-top: 20px;
+`
 const Error = styled.div`
   color: red;
 `
