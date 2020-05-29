@@ -51,7 +51,7 @@ const Live = () => {
 
   return (
     <>
-      <Container>
+      <Container displayFooter={false}>
         <LivePage>
           <FirstSection>
             <Video url={liveLink} title={liveName} />

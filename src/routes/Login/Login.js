@@ -24,8 +24,8 @@ const Login = () => {
   useEffect(() => {
     return () => {
       const redirect = window.localStorage.getItem('live')
-      console.log(redirect)
       if (redirect) {
+        window.localStorage.removeItem('live')
         history.push(redirect)
       }
     }

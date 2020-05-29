@@ -6,9 +6,9 @@ import { faYoutube, faFacebook, faInstagram } from '@fortawesome/free-brands-svg
 
 library.add(faYoutube, faFacebook, faInstagram)
 
-const Footer = () => {
+const Footer = ({ displayFooter = true }) => {
   return (
-    <StyledFooter>
+    <StyledFooter displayFooter={displayFooter}>
       <FooterContent>
         <Social>
           <Paragraph>
@@ -51,7 +51,7 @@ const StyledFooter = styled.footer`
   text-align: center;
   height: 180px;
   @media (max-width: 768px) {
-    display: none;
+    display: ${props => (props.displayFooter ? 'block' : 'none')};
   }
 `
 
