@@ -31,6 +31,7 @@ function Facebook() {
       textButton='Entre com o facebook'
       size='metro'
       cssClass='button'
+      isMobile={false}
       icon={<img alt='facebook' className='icon' src='/icons/facebook-icon.svg' />}
     />
   )
