@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import useWindowDimensions from 'hooks/window-dimensions'
 
 const Slider = ({ activeIndex, bannerdata }) => {
+  const { width } = useWindowDimensions()
   return (
     <BannerStyled>
       {bannerdata.map((banner, index) => {

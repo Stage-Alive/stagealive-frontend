@@ -6,8 +6,6 @@ import './facebook.css'
 function Facebook() {
   const { facebookLogin } = useAuth()
 
-  // TO DO: Remove email and password from json, they shouldn't be sent.
-
   const responseFacebook = async response => {
     await facebookLogin({
       name: response.name,
@@ -31,6 +29,7 @@ function Facebook() {
       textButton='Entre com o facebook'
       size='metro'
       cssClass='button'
+      isMobile={false}
       icon={<img alt='facebook' className='icon' src='/icons/facebook-icon.svg' />}
     />
   )

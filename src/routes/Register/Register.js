@@ -136,6 +136,9 @@ const Banner = styled.div`
   width: 100%;
   justify-content: center;
   background: url(${props => props.imgUrl});
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const BannerTitle = styled.h1`
@@ -185,9 +188,11 @@ const FormContent = styled.div`
 const Login = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
   align-items: center;
   justify-content: flex-start;
+  @media (max-width: 768px) {
+    margin-top: 100px;
+  }
 `
 
 const A = styled.a`

@@ -13,7 +13,7 @@ const ContainerComponent = ({ children, ...props }) => {
     <Container {...props}>
       {width < 756 ? <MobileHeader /> : <Header />}
       <Section>{children}</Section>
-      <Footer />
+      <Footer {...props} />
     </Container>
   )
 }

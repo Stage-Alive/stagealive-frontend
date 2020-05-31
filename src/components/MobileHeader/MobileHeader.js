@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useAuth } from 'context/auth-context'
+import { useUser } from 'context/user-context'
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { logout } = useAuth()
+  const { user } = useUser()
 
   return (
     <StyledHeader>
@@ -21,8 +23,17 @@ const Header = () => {
             <DropdownLink href='/'>HOME</DropdownLink>
             <DropdownLink href='/lives'>LIVES</DropdownLink>
             <DropdownLink href='/contato'>CONTATO</DropdownLink>
-            <DropdownLink href='/perfil'>MEU PERFIL</DropdownLink>
-            <DropdownLink onClick={logout}>SAIR</DropdownLink>
+            {user ? (
+              <>
+                <DropdownLink href='/perfil'>MEU PERFIL</DropdownLink>
+                <DropdownLink onClick={logout}>SAIR</DropdownLink>
+              </>
+            ) : (
+              <>
+                <DropdownLink href='/cadastro'>CADASTRO</DropdownLink>
+                <DropdownLink href='/login'>ENTRAR</DropdownLink>
+              </>
+            )}
           </DropdownOptions>
         </Dropdown>
         <a href='/home'>

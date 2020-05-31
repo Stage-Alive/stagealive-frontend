@@ -24,8 +24,8 @@ const Login = () => {
   useEffect(() => {
     return () => {
       const redirect = window.localStorage.getItem('live')
-      console.log(redirect)
       if (redirect) {
+        window.localStorage.removeItem('live')
         history.push(redirect)
       }
     }
@@ -73,9 +73,7 @@ const Login = () => {
                     {status && <Status>{status.message}</Status>}
                   </Form>
                 </FormContent>
-                {/* <FacebookButton> */}
                 <Facebook />
-                {/* </FacebookButton> */}
               </FormStyled>
             )
           }}
@@ -89,14 +87,9 @@ const Login = () => {
   )
 }
 
-// const FacebookButton = styled.div`
-//   margin: 0 auto;
-//   border-radius: 10px;
-// `
-
 const Status = styled.h4`
   color: red;
-  padding-top: 20px;
+  padding-bottom: 20px;
 `
 
 const Error = styled.h4`
