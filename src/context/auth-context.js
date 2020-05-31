@@ -54,14 +54,15 @@ const AuthProvider = props => {
     async data => {
       try {
         const user = await authRegister(data)
-        console.log(user)
+        console.log('aidsoasiodasidasidbfdsliuoadsnkpgbsdojgpiashngoasjdipok')
+        console.log(user.json())
 
         setToken(user.data.access_token)
         reload()
 
         return { user }
       } catch (error) {
-        return Promise.reject(error)
+        return { error: 'Não conseguimos realizar seu cadastro' }
       }
     },
     [reload]

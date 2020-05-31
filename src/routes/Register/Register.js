@@ -37,9 +37,8 @@ const Register = () => {
             onSubmit={async (values, actions) => {
               delete values.terms
               const res = await register(values)
-              console.log('aaa', res)
               if (res.error) {
-                actions.setStatus({ message: 'Não conseguimos realizar seu cadastro' })
+                actions.setStatus({ message: 'Não conseguimos realizar seu cadastro, tente com outro email' })
               }
             }}
           >
@@ -85,8 +84,9 @@ const Register = () => {
                           placeholder='Repita sua senha'
                           type='password'
                           name='retyPassword'
-                        />
-                      </Input> */}
+                          />
+                        </Input> */}
+                      {status && <Status>{status.message}</Status>}
                       <Terms>
                         <TextTerm>
                           <Field type='checkbox' name='terms' />
@@ -95,7 +95,6 @@ const Register = () => {
                         <ButtonTerm onClick={handleSubmit} type='submit' disabled={isSubmitting}>
                           Cadastrar
                         </ButtonTerm>
-                        {status && <Status>{status.message}</Status>}
                       </Terms>
                       {errors.terms && touched.terms ? <Error>{errors.terms}</Error> : null}
                     </Form>

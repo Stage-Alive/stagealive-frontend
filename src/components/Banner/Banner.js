@@ -30,7 +30,7 @@ const Banner = () => {
 
   return (
     <Carrousel>
-      <LeftArrow goToPrevSlide={goToPrevSlide} />
+      {/* <LeftArrow goToPrevSlide={goToPrevSlide} /> */}
       <BannerStyled>
         <Slider activeIndex={activeIndex} bannerdata={bannerdata} onTouchMove={goToNextSlide} />
         <Dots>
@@ -39,7 +39,7 @@ const Banner = () => {
           ))}
         </Dots>
       </BannerStyled>
-      <RightArrow goToNextSlide={goToNextSlide} />
+      {/* <RightArrow goToNextSlide={goToNextSlide} /> */}
     </Carrousel>
   )
 }
