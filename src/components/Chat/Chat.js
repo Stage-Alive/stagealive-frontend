@@ -313,8 +313,7 @@ const ChatHeader = styled.div`
   display: flex;
   justify-content: space-between;
   @media (max-width: 768px) {
-    display: none;
-  }
+
 `
 const ChatChannel = styled.div`
   display: flex;
