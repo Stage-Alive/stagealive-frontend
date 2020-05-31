@@ -12,6 +12,13 @@ const Banner = () => {
     setLength(bannerdata.length)
   }, [])
 
+  useEffect(() => {
+    const interval = setInterval(goToNextSlide, 3000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [activeIndex])
+
   function goToPrevSlide() {
     if (activeIndex < 1) {
       setActiveIndex(length - 1)
@@ -32,7 +39,7 @@ const Banner = () => {
     <Carrousel>
       {/* <LeftArrow goToPrevSlide={goToPrevSlide} /> */}
       <BannerStyled>
-        <Slider activeIndex={activeIndex} bannerdata={bannerdata} onTouchMove={goToNextSlide} />
+        <Slider activeIndex={activeIndex} bannerdata={bannerdata} onTouchStart={goToNextSlide} />
         <Dots>
           {bannerdata.map((_, index) => (
             <Dot key={index} active={activeIndex === index ? true : false} onClick={() => setActiveIndex(index)}></Dot>

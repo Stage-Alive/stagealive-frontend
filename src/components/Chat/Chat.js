@@ -158,8 +158,8 @@ const Chat = ({ chats, live }) => {
           <ChannelTitle>Bem vindo ao canal Amigos</ChannelTitle>
           <Invite onClick={copyToClipboard}>
             <CopyIcon src='/icons/copy-regular.svg' />
-            <InviteValue value={`${URL}/live/${live}?group=${chat.groupId}`} ref={inviteRef} />
-            {chat.groupId && (copyInviteSuccess || 'Clique e copie o convide para esse canal')}
+            <InviteValue value={`${URL}/live/${live}group/${chat.groupId}`} ref={inviteRef} />
+            {chat.groupId && (copyInviteSuccess || 'Clique e copie o convite para esse canal')}
           </Invite>
         </ChatBoxHeader>
         <ChatBoxContent>
@@ -203,7 +203,8 @@ const ChatStyled = styled.div`
   width: 100px;
   flex: 1;
   @media (max-width: 768px) {
-    width: 90%;
+    width: 100%;
+    height: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -276,7 +277,7 @@ const ChatBoxHeader = styled.div`
   border-bottom: 2px solid black;
   padding-bottom: 10px;
   @media (max-width: 768px) {
-    display: none;
+    // display: none;
   }
 `
 
@@ -295,6 +296,9 @@ const AddChannelLabel = styled.p`
   color: white;
   font-size: 10px;
   font-weight: 600;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const AddChannelButton = styled.button`
@@ -308,12 +312,17 @@ const AddChannelButton = styled.button`
   padding: 0 8px;
   font-size: 20px;
   font-weight: 600;
+  @media (max-width: 768px) {
+    font-size: 30px;
+    border: none;
+  }
 `
 const ChatHeader = styled.div`
   display: flex;
   justify-content: space-between;
   @media (max-width: 768px) {
-
+    font-size: 12px;
+  }
 `
 const ChatChannel = styled.div`
   display: flex;
@@ -355,6 +364,9 @@ const ChannelTitle = styled.h3`
   font-weight: 500;
   font-size: 14px;
   padding: 10px 0 0 20px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const CloseButton = styled.button`
