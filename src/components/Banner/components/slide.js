@@ -1,25 +1,33 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import useWindowDimensions from 'hooks/window-dimensions'
 
 const Slider = ({ activeIndex, bannerdata }) => {
   const { width } = useWindowDimensions()
+  const isMobile = width < 768
+
   return (
     <BannerStyled>
       {bannerdata.map((banner, index) => {
         return (
-          <>
-            <BannerContent key={index} active={activeIndex === index ? true : false}>
-              <Image src={banner.file}></Image>
-              <BannerInfo>
-                <div>
-                  <Title>{banner.title}</Title>
-                  <Subtitle>{banner.hashtag}</Subtitle>
-                </div>
-                <Button>Assistir</Button>
-              </BannerInfo>
-            </BannerContent>
-          </>
+          <Fragment key={index}>
+            {isMobile ? (
+              <BannerContent key={index} active={activeIndex === index ? true : false}>
+                <Image src={banner.file}></Image>
+              </BannerContent>
+            ) : (
+              <BannerContent key={index} active={activeIndex === index ? true : false}>
+                <Image src={banner.file}></Image>
+                <BannerInfo>
+                  <div>
+                    <Title>{banner.title}</Title>
+                    <Subtitle>{banner.hashtag}</Subtitle>
+                  </div>
+                  <Button>Assistir</Button>
+                </BannerInfo>
+              </BannerContent>
+            )}
+          </Fragment>
         )
       })}
     </BannerStyled>
@@ -47,11 +55,11 @@ const BannerContent = styled.div`
 `
 
 const Image = styled.img`
+  display: flex;
   max-width: 400px;
   max-height: 400px;
 `
 const BannerStyled = styled.div`
-  width: 100%;
   margin: 20px auto 0 auto;
   background-color: #020916;
   cursor: pointer;

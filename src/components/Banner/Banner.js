@@ -32,7 +32,7 @@ const Banner = () => {
     <Carrousel>
       <LeftArrow goToPrevSlide={goToPrevSlide} />
       <BannerStyled>
-        <Slider activeIndex={activeIndex} bannerdata={bannerdata} />
+        <Slider activeIndex={activeIndex} bannerdata={bannerdata} onTouchMove={goToNextSlide} />
         <Dots>
           {bannerdata.map((_, index) => (
             <Dot key={index} active={activeIndex === index ? true : false} onClick={() => setActiveIndex(index)}></Dot>
@@ -74,6 +74,9 @@ const BannerStyled = styled.div`
   max-height: 600px;
   background-color: #020916;
   cursor: pointer;
+  @media (max-width: 768px) {
+    width: inherit;
+  }
 `
 
 export default Banner
