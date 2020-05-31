@@ -12,6 +12,13 @@ const Banner = () => {
     setLength(bannerdata.length)
   }, [])
 
+  useEffect(() => {
+    const interval = setInterval(goToNextSlide, 3000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [activeIndex])
+
   function goToPrevSlide() {
     if (activeIndex < 1) {
       setActiveIndex(length - 1)
@@ -30,16 +37,16 @@ const Banner = () => {
 
   return (
     <Carrousel>
-      <LeftArrow goToPrevSlide={goToPrevSlide} />
+      {/* <LeftArrow goToPrevSlide={goToPrevSlide} /> */}
       <BannerStyled>
-        <Slider activeIndex={activeIndex} bannerdata={bannerdata} />
+        <Slider activeIndex={activeIndex} bannerdata={bannerdata} onTouchStart={goToNextSlide} />
         <Dots>
           {bannerdata.map((_, index) => (
             <Dot key={index} active={activeIndex === index ? true : false} onClick={() => setActiveIndex(index)}></Dot>
           ))}
         </Dots>
       </BannerStyled>
-      <RightArrow goToNextSlide={goToNextSlide} />
+      {/* <RightArrow goToNextSlide={goToNextSlide} /> */}
     </Carrousel>
   )
 }
@@ -74,6 +81,9 @@ const BannerStyled = styled.div`
   max-height: 600px;
   background-color: #020916;
   cursor: pointer;
+  @media (max-width: 768px) {
+    width: inherit;
+  }
 `
 
 export default Banner

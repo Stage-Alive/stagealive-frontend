@@ -12,7 +12,7 @@ const ContainerComponent = ({ children, ...props }) => {
   return (
     <Container {...props}>
       {width < 756 ? <MobileHeader /> : <Header />}
-      <Section>{children}</Section>
+      <Section {...props}>{children}</Section>
       <Footer {...props} />
     </Container>
   )

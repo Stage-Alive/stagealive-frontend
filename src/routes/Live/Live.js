@@ -66,6 +66,17 @@ const Live = () => {
   )
 }
 
+const LivePage = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+
 const FirstSection = styled.div`
   display: flex;
   width: 100%;
@@ -84,17 +95,6 @@ const SecondSection = styled.div`
   width: 100%;
   @media (max-width: 768px) {
     display: none;
-  }
-`
-
-const LivePage = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 95%;
-  justify-content: center;
-  align-items: center;
-  @media (max-width: 768px) {
-    width: 100%;
   }
 `
 
