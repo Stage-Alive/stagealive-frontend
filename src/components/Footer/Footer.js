@@ -15,9 +15,6 @@ const Footer = ({ displayFooter = true }) => {
             <strong>Suas LIVES nas redes socias</strong>
           </Paragraph>
           <Icons>
-            {/* <a href='https://facebook.com'>
-              <FontAwesomeIcon size='2x' icon={faFacebook} style={{ marginRight: '40px', color: 'rgb(72, 99, 160)' }} />
-            </a> */}
             <a href='https://instagram.com'>
               <FontAwesomeIcon
                 size='2x'
@@ -25,19 +22,16 @@ const Footer = ({ displayFooter = true }) => {
                 style={{ marginRight: '40px', color: 'rgb(170, 82, 141)' }}
               />
             </a>
-            {/* <a href='https://youtube.com'>
-              <FontAwesomeIcon size='2x' icon={faYoutube} style={{ marginRight: '40px', color: 'rgb(231, 68,67)' }} />
-            </a> */}
           </Icons>
         </Social>
         <Contact>
           <Paragraph>
             <strong>Divulgue sua live aqui!</strong>
           </Paragraph>
-          <Paragraph>contato@teste.com</Paragraph>
+          <Paragraph>contato@vlive.com.br</Paragraph>
         </Contact>
       </FooterContent>
-      <Paragraph>Empresa X, todos os direitos reservados - 2020</Paragraph>
+      <Paragraph>Vlive, todos os direitos reservados - 2020</Paragraph>
     </StyledFooter>
   )
 }

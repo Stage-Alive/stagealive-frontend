@@ -8,7 +8,7 @@ const Video = ({ url, title }) => {
         title={title}
         width='100%'
         height='100%'
-        src={url}
+        src={`${url}?playsinline=1`}
         allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
         allowFullScreen
       ></iframe>
