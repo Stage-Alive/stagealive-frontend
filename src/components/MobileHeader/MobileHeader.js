@@ -20,7 +20,7 @@ const Header = () => {
             </BurguerIcon>
           </DropdownButton>
           <DropdownOptions>
-            <DropdownLink href='/'>HOME</DropdownLink>
+            <DropdownLink href='/home'>HOME</DropdownLink>
             <DropdownLink href='/lives'>LIVES</DropdownLink>
             <DropdownLink href='/contato'>CONTATO</DropdownLink>
             {user ? (
