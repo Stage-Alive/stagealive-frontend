@@ -91,9 +91,9 @@ const Register = () => {
                         <TextTerm>
                           <Field type='checkbox' name='terms' />
                           Aceito os{' '}
-                          <A href='https://vliveprod.s3-sa-east-1.amazonaws.com/Pol%C3%ADtica+de+Privacidade.pdf'>
+                          <Link href='https://vliveprod.s3-sa-east-1.amazonaws.com/Pol%C3%ADtica+de+Privacidade.pdf'>
                             termos da politica de privacidade
-                          </A>
+                          </Link>
                         </TextTerm>
                         <ButtonTerm onClick={handleSubmit} type='submit' disabled={isSubmitting}>
                           Cadastrar
@@ -124,7 +124,7 @@ const Error = styled.div`
   color: red;
 `
 
-const A = styled.a`
+const Link = styled.a`
   color: #fff;
 `
 

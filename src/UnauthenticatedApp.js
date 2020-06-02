@@ -19,6 +19,7 @@ const UnauthenticatedApp = () => {
   return (
     <Switch>
       <Route path='/login' component={Login} />
+      <Route path='/' component={Home} />
       <Route path='/cadastro' component={Register} />
       <Route path='/contato' component={Contact} />
       <Route path='/lives' component={Lives} />
