@@ -81,6 +81,8 @@ const BannerStyled = styled.div`
   max-height: 600px;
   background-color: #020916;
   cursor: pointer;
+  outiline: none;
+  -webkit-tap-highlight-color: transparent;
   @media (max-width: 768px) {
     width: inherit;
   }
