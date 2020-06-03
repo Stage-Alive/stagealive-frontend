@@ -36,10 +36,10 @@ const Banner = () => {
   }
 
   return (
-    <Carrousel>
+    <Carrousel onTouchStart={goToNextSlide}>
       {/* <LeftArrow goToPrevSlide={goToPrevSlide} /> */}
       <BannerStyled>
-        <Slider activeIndex={activeIndex} bannerdata={bannerdata} onTouchStart={goToNextSlide} />
+        <Slider activeIndex={activeIndex} bannerdata={bannerdata} />
         <Dots>
           {bannerdata.map((_, index) => (
             <Dot key={index} active={activeIndex === index ? true : false} onClick={() => setActiveIndex(index)}></Dot>
