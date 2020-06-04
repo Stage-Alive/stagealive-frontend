@@ -219,6 +219,9 @@ const ChatName = styled.p`
 
 const Icon = styled.img`
   padding: 5px 10px 5px 10px;
+  @supports (-webkit-touch-callout: none) {
+    padding: 10px;
+  }
 `
 
 const Message = styled.li`
@@ -230,7 +233,7 @@ const MessageName = styled.p`
   font-weight: 600;
 `
 const MessageText = styled.p`
-  font-size: 14px;
+  font-size: 16px;
   color: #bbbbbb;
 `
 
@@ -239,7 +242,7 @@ const ChatInput = styled.div`
   padding: 10px;
 `
 const ChatView = styled.div`
-  padding: 10px;
+  padding: 0 10px;
   width: 100%;
   color: white;
   overflow-y: scroll;
@@ -252,10 +255,13 @@ const Input = styled.input`
   color: white;
   background-color: #151f2e;
   padding: 10px;
-  font-size: 14px;
+  font-size: 16px;
   width: 100%;
   border-radius: 6px;
   cursor: pointer;
+  @supports (-webkit-touch-callout: none) {
+    padding: 20px;
+  }
 `
 const SendButton = styled.button`
   border-radius: 6px;
@@ -276,9 +282,6 @@ const ChatBoxContent = styled.div`
 const ChatBoxHeader = styled.div`
   border-bottom: 2px solid black;
   padding-bottom: 10px;
-  @media (max-width: 768px) {
-    // display: none;
-  }
 `
 
 const Invite = styled.button`
@@ -372,7 +375,7 @@ const ChannelTitle = styled.h3`
 const CloseButton = styled.button`
   background-color: inherit !important;
   color: white;
-  font-size: 15px;
+  font-size: 16px;
   margin-left: 10px;
   font-weight: 800;
 `
