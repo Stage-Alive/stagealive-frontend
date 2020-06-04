@@ -217,12 +217,7 @@ const ChatName = styled.p`
   text-overflow: ellipsis;
 `
 
-const Icon = styled.img`
-  padding: 5px 10px 5px 10px;
-  @supports (-webkit-touch-callout: none) {
-    padding: 10px;
-  }
-`
+const Icon = styled.img``
 
 const Message = styled.li`
   display: flex;
@@ -267,6 +262,7 @@ const SendButton = styled.button`
   border-radius: 6px;
   background-color: #aa528d;
   margin-left: 5px;
+  padding: 20px 10px;
 `
 // TODO: remove magic numbers
 const ChatBoxContent = styled.div`
@@ -275,7 +271,8 @@ const ChatBoxContent = styled.div`
   justify-content: space-between;
   height: calc(80vh - 174px);
   @media (max-width: 768px) {
-    height: 46vh;
+    height: 38vh;
+    padding-bottom: 20px;
   }
 `
 
