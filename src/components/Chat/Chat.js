@@ -158,7 +158,7 @@ const Chat = ({ chats, live }) => {
           <ChannelTitle>Bem vindo ao canal Amigos</ChannelTitle>
           <Invite onClick={copyToClipboard}>
             <CopyIcon src='/icons/copy-regular.svg' />
-            <InviteValue value={`${URL}/live/${live}group/${chat.groupId}`} ref={inviteRef} />
+            <InviteValue value={`${URL}/live/${live}/group/${chat.groupId}`} ref={inviteRef} />
             {chat.groupId && (copyInviteSuccess || 'Clique e copie o convite para esse canal')}
           </Invite>
         </ChatBoxHeader>
