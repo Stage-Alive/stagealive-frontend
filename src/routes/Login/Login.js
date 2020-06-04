@@ -66,6 +66,9 @@ const Login = () => {
                         name='password'
                       />
                     </Input>
+                    <Link href='/forget-password'>
+                      <P>Esqueceu sua conta?</P>
+                    </Link>
                     {touched.password ? <Error>{errors.password}</Error> : null}
                     <Button style={inputStyle} type='submit' disabled={isSubmitting}>
                       Entrar
@@ -86,6 +89,13 @@ const Login = () => {
     </Container>
   )
 }
+
+const Link = styled.a``
+
+const P = styled.p`
+  color: white;
+  margin-left 
+`
 
 const Status = styled.h4`
   color: red;

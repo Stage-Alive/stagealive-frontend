@@ -7,24 +7,24 @@ import Contact from 'routes/Contact'
 import Lives from 'routes/Lives'
 import Home from 'routes/Home'
 import ResetPassword from 'routes/ResetPassword'
+import ForgetPassword from 'routes/ForgetPassword'
 
 const UnauthenticatedApp = () => {
   const location = useLocation()
-  console.log(location)
   if (location.pathname.includes('live/')) {
-    console.log(location.pathname)
     window.localStorage.setItem('live', location.pathname)
   }
 
   return (
     <Switch>
       <Route path='/login' component={Login} />
-      <Route path='/' component={Home} />
       <Route path='/cadastro' component={Register} />
       <Route path='/contato' component={Contact} />
       <Route path='/lives' component={Lives} />
       <Route path='/reset-password' component={ResetPassword} />
+      <Route path='/forget-password' component={ForgetPassword} />
       <Route path='/home' component={Home} />
+      <Route path='/' component={Home} />
       <Redirect to='/login' />
     </Switch>
   )
