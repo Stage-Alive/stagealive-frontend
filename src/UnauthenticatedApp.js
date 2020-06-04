@@ -13,6 +13,7 @@ const UnauthenticatedApp = () => {
   const location = useLocation()
   if (location.pathname.includes('live/')) {
     window.localStorage.setItem('live', location.pathname)
+    window.location.href = '/login'
   }
 
   return (
