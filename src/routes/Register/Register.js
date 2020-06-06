@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Formik, Form, Field } from 'formik'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import Input from 'components/Input'
 import Container from 'components/Container'
@@ -16,7 +17,19 @@ const RegisterSchema = Yup.object().shape({
 
 const Register = () => {
   const { register } = useAuth()
+  const history = useHistory()
+
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
+
+  useEffect(() => {
+    return () => {
+      const redirect = window.localStorage.getItem('live')
+      if (redirect) {
+        window.localStorage.removeItem('live')
+        history.push(redirect)
+      }
+    }
+  })
 
   return (
     <Container>

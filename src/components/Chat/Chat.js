@@ -101,6 +101,7 @@ const Chat = ({ chats, live }) => {
     if (res) {
       setMessage(res)
     }
+    setCopyInviteSuccess(false)
     // TO DO: this should be a debounce
     setTimeout(function () {}, 1000)
   }
