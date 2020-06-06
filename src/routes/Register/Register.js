@@ -30,7 +30,6 @@ const Register = () => {
               email: '',
               password: '',
               name: '',
-              userTypeId: '531db173-0f9a-47d8-a969-5462e4b137a0',
               terms: false
             }}
             validationSchema={RegisterSchema}

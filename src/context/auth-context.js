@@ -54,8 +54,6 @@ const AuthProvider = props => {
     async data => {
       try {
         const user = await authRegister(data)
-        console.log('aidsoasiodasidasidbfdsliuoadsnkpgbsdojgpiashngoasjdipok')
-        console.log(user.json())
 
         setToken(user.data.access_token)
         reload()
