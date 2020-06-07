@@ -287,6 +287,8 @@ const Invite = styled.button`
   align-items: center;
   padding-top: 5px;
   color: #fff;
+  color: #aa528d;
+
   font-size: 15px;
   margin-left: 20px;
   cursor: pointer;
@@ -380,7 +382,6 @@ const CloseButton = styled.button`
 
 const CopyIcon = styled.img`
   width: 20px;
-  filter: invert();
   opacity: 0.7;
   margin-right: 5px;
 `
