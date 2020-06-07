@@ -14,8 +14,8 @@ import { getChat } from 'services/chats'
 const socket = io(process.env.REACT_APP_API_URL)
 const URL = process.env.REACT_APP_URL
 
-const Chat = ({ chats, live }) => {
-  const [liveChats, setLiveChats] = useState(chats)
+const Chat = ({ groups, live }) => {
+  const [liveGroups, setLiveGroups] = useState(groups)
   const [text, setText] = useState('')
   const [messages, setMessage] = useState([])
   const [chat, setChat] = useState({
@@ -30,22 +30,22 @@ const Chat = ({ chats, live }) => {
   const inviteRef = useRef(null)
 
   useEffect(() => {
-    if (chats.length > 0) {
+    if (groups.length > 0) {
       async function fetchData() {
-        const res = await getChat(chats[0].id)
+        const res = await getChat(groups[0].chats[0].id)
         if (res) {
           setMessage(res)
         }
       }
       fetchData()
-      setLiveChats(chats)
-      joinChat(chats[0].id)
+      setLiveGroups(groups)
+      joinChat(groups[0].chats[0].id)
       setChat({
-        chatId: chats[0].id,
-        groupId: chats[0].groupId
+        chatId: groups[0].chats[0].id,
+        groupId: groups[0].id
       })
     }
-  }, [chats])
+  }, [groups])
 
   useEffect(() => {
     const handleNewMessage = newMessage => setMessage([...messages, newMessage])
@@ -121,10 +121,10 @@ const Chat = ({ chats, live }) => {
   }
 
   async function leaveGroup(event) {
-    const newChats = liveChats.filter(chat => {
-      return chat.groupId !== event.target.value.toString()
+    const newGroups = liveGroups.filter(group => {
+      return group.id !== event.target.value.toString()
     })
-    setLiveChats(newChats)
+    setLiveGroups(newGroups)
     await leaveGroupRequest(event.target.value)
   }
 
@@ -141,13 +141,17 @@ const Chat = ({ chats, live }) => {
         </ChatChannel>
       </ChatHeader>
       <ChatNav>
-        {liveChats.map((mapChat, index) => {
-          const selected = chat.chatId === mapChat.id
+        {liveGroups.map((mapGroup, index) => {
+          const selected = chat.chatId === mapGroup.chats[0].id
 
           return (
-            <ChatTab key={index} selected={selected} onClick={() => changeChat(mapChat.id, mapChat.groupId, index)}>
-              <ChatName>{mapChat.group.name}</ChatName>
-              <CloseButton value={mapChat.groupId} onClick={value => leaveGroup(value)}>
+            <ChatTab
+              key={index}
+              selected={selected}
+              onClick={() => changeChat(mapGroup.chats[0].id, mapGroup.id, index)}
+            >
+              <ChatName>{mapGroup.name}</ChatName>
+              <CloseButton value={mapGroup.id} onClick={value => leaveGroup(value)}>
                 x
               </CloseButton>
             </ChatTab>
