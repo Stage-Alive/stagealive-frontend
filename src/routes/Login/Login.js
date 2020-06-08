@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 
 import { Formik, Form, Field } from 'formik'
 import styled from 'styled-components'
@@ -17,7 +16,6 @@ const SignupSchema = Yup.object().shape({
 
 const Login = () => {
   const { login } = useAuth()
-  const history = useHistory()
 
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
 
@@ -26,7 +24,7 @@ const Login = () => {
       const redirect = window.localStorage.getItem('live')
       if (redirect) {
         window.localStorage.removeItem('live')
-        history.push(redirect)
+        window.location.href = redirect
       }
     }
   })

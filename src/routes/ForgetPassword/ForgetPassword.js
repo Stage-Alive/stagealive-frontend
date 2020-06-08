@@ -12,8 +12,6 @@ const SignupSchema = Yup.object().shape({
 
 const ForgetPassword = props => {
   const inputStyle = { width: '100%', fontSize: '24px', color: 'white', backgroundColor: '#151f2e' }
-  const params = new URLSearchParams(props.location.search)
-  const token = params.get('token')
 
   return (
     <Container>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { LeftArrow, RightArrow } from './components/arrows'
 import bannerdata from './bannerdata'
 import Slider from './components/slide'
 
@@ -19,13 +18,13 @@ const Banner = () => {
     }
   }, [activeIndex])
 
-  function goToPrevSlide() {
-    if (activeIndex < 1) {
-      setActiveIndex(length - 1)
-    } else {
-      setActiveIndex(activeIndex - 1)
-    }
-  }
+  // function goToPrevSlide() {
+  //   if (activeIndex < 1) {
+  //     setActiveIndex(length - 1)
+  //   } else {
+  //     setActiveIndex(activeIndex - 1)
+  //   }
+  // }
 
   function goToNextSlide() {
     if (activeIndex === length - 1) {
@@ -37,7 +36,6 @@ const Banner = () => {
 
   return (
     <Carrousel onTouchStart={goToNextSlide}>
-      {/* <LeftArrow goToPrevSlide={goToPrevSlide} /> */}
       <BannerStyled>
         <Slider activeIndex={activeIndex} bannerdata={bannerdata} />
         <Dots>
@@ -46,7 +44,6 @@ const Banner = () => {
           ))}
         </Dots>
       </BannerStyled>
-      {/* <RightArrow goToNextSlide={goToNextSlide} /> */}
     </Carrousel>
   )
 }
