@@ -10,6 +10,7 @@ import Modal from 'components/Modal'
 import { useUser } from 'context/user-context'
 import io from 'socket.io-client'
 import { getChat } from 'services/chats'
+import Loading from 'components/Loading'
 
 const socket = io(process.env.REACT_APP_API_URL)
 const URL = process.env.REACT_APP_URL
@@ -24,6 +25,7 @@ const Chat = ({ groups, live }) => {
   })
   const [modalState, setModalState] = useState(false)
   const [copyInviteSuccess, setCopyInviteSuccess] = useState('')
+  const [loading, setLoading] = useState(true)
 
   const { user } = useUser()
   const myRef = useRef(null)
@@ -34,6 +36,7 @@ const Chat = ({ groups, live }) => {
       async function fetchData() {
         const res = await getChat(groups[0].chats[0].id)
         if (res) {
+          setLoading(false)
           setMessage(res)
         }
       }
@@ -99,6 +102,7 @@ const Chat = ({ groups, live }) => {
     })
     const res = await getChat(newChat)
     if (res) {
+      setLoading(false)
       setMessage(res)
     }
     setCopyInviteSuccess(false)
@@ -148,7 +152,10 @@ const Chat = ({ groups, live }) => {
             <ChatTab
               key={index}
               selected={selected}
-              onClick={() => changeChat(mapGroup.chats[0].id, mapGroup.id, index)}
+              onClick={async () => {
+                setInterval(1000)
+                changeChat(mapGroup.chats[0].id, mapGroup.id, index)
+              }}
             >
               <ChatName>{mapGroup.name}</ChatName>
               <CloseButton value={mapGroup.id} onClick={value => leaveGroup(value)}>
@@ -167,22 +174,26 @@ const Chat = ({ groups, live }) => {
             {chat.groupId && (copyInviteSuccess || 'Clique e copie o convite para esse canal')}
           </Invite>
         </ChatBoxHeader>
-        <ChatBoxContent>
-          <ChatView>
-            <div>
-              <ul id='messages'>
-                {messages.length > 0 &&
-                  messages.map((message, index) => {
-                    return (
-                      <Message ref={myRef} key={index}>
-                        <MessageName>{message.name}</MessageName>
-                        <MessageText>{message.text}</MessageText>
-                      </Message>
-                    )
-                  })}
-              </ul>
-            </div>
-          </ChatView>
+        <ChatBoxContent loading={loading}>
+          {loading ? (
+            <Loading />
+          ) : (
+            <ChatView>
+              <div>
+                <ul id='messages'>
+                  {messages.length > 0 &&
+                    messages.map((message, index) => {
+                      return (
+                        <Message ref={myRef} key={index}>
+                          <MessageName>{message.name}</MessageName>
+                          <MessageText>{message.text}</MessageText>
+                        </Message>
+                      )
+                    })}
+                </ul>
+              </div>
+            </ChatView>
+          )}
           <ChatInput>
             <Input
               value={text}
