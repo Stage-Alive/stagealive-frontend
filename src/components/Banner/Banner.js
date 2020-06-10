@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import bannerdata from './bannerdata'
 import Slider from './components/slide'
+import { getLives } from 'services/lives'
 
 const Banner = () => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [length, setLength] = useState(0)
+  const [lives, setLives] = useState([])
 
   useEffect(() => {
-    setLength(bannerdata.length)
+    async function fetchData() {
+      const lives = await getLives(6, true) // highlight flag
+      setLives(lives)
+      setLength(lives.length)
+      console.log(lives)
+    }
+    fetchData()
   }, [])
 
   useEffect(() => {
@@ -37,9 +44,9 @@ const Banner = () => {
   return (
     <Carrousel onTouchStart={goToNextSlide}>
       <BannerStyled>
-        <Slider activeIndex={activeIndex} bannerdata={bannerdata} />
+        <Slider activeIndex={activeIndex} bannerdata={lives} />
         <Dots>
-          {bannerdata.map((_, index) => (
+          {lives.map((_, index) => (
             <Dot key={index} active={activeIndex === index ? true : false} onClick={() => setActiveIndex(index)}></Dot>
           ))}
         </Dots>

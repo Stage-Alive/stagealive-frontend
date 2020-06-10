@@ -13,15 +13,15 @@ const Slider = ({ activeIndex, bannerdata }) => {
           <Fragment key={index}>
             {isMobile ? (
               <BannerContent key={index} active={activeIndex === index ? true : false}>
-                <Image src={banner.file}></Image>
+                <Image src={banner.mainBanner}></Image>
               </BannerContent>
             ) : (
               <BannerContent key={index} active={activeIndex === index ? true : false}>
-                <Image src={banner.file}></Image>
+                <Image src={banner.mainBanner}></Image>
                 <BannerInfo>
                   <div>
                     <Title>{banner.title}</Title>
-                    <Subtitle>{banner.hashtag}</Subtitle>
+                    <Subtitle>{banner.description}</Subtitle>
                   </div>
                   <Button>Assistir</Button>
                 </BannerInfo>

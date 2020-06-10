@@ -4,8 +4,9 @@ export const createLive = async data => {
   await client.post('/lives', data)
 }
 
-export const getLives = async limit => {
-  const res = await client.get('/lives?limit=' + limit)
+export const getLives = async (limit, highlight = false) => {
+  const url = `/lives?limit=${limit}&highlight=${highlight ? 'true' : 'false'}`
+  const res = await client.get(url)
 
   if (res.data) {
     const lives = res.data.items.map(live => {
