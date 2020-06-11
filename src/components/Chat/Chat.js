@@ -42,7 +42,9 @@ const Chat = ({ groups, live }) => {
       }
       fetchData()
       setLiveGroups(groups)
-      joinChat(groups[0].chats[0].id)
+
+      groups.map(group => joinChat(group.chats[0].id))
+
       setChat({
         chatId: groups[0].chats[0].id,
         groupId: groups[0].id
@@ -51,6 +53,7 @@ const Chat = ({ groups, live }) => {
   }, [groups])
 
   useEffect(() => {
+    console.log(newMessage)
     const handleNewMessage = newMessage => setMessage([...messages, newMessage])
     socket.on('msgToClient', handleNewMessage)
     if (myRef.current) {
@@ -94,8 +97,8 @@ const Chat = ({ groups, live }) => {
   }
 
   async function changeChat(newChat, groupId) {
-    leaveChat(chat.chatId)
-    joinChat(newChat)
+    // leaveChat(chat.chatId)
+    // joinChat(newChat)
     setChat({
       chatId: newChat,
       groupId: groupId
