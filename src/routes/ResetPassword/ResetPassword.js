@@ -25,7 +25,7 @@ const ResetPassword = props => {
           onSubmit={async (values, actions) => {
             await resetPassword({
               password: values.password,
-              token
+              rememberToken: token
             })
           }}
         >

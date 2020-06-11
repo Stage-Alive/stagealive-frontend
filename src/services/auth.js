@@ -10,6 +10,6 @@ export const updateUser = (data, id) => client.patch(`users/${id}`, data)
 
 export const facebookLogin = data => client.post('/auth/facebook', data)
 
-export const resetPassword = data => client.post('/auth/reset-password', data)
+export const resetPassword = data => client.post('/auth/reset', data)
 
 export const forgetPassword = data => client.post('/auth/forget', data)
