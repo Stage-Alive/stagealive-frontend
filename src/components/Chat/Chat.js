@@ -19,6 +19,7 @@ const Chat = ({ groups, live }) => {
   const [liveGroups, setLiveGroups] = useState(groups)
   const [text, setText] = useState('')
   const [messages, setMessage] = useState([])
+  const [notifications, setNotifications] = useState([])
   const [chat, setChat] = useState({
     chatId: '0',
     groupId: '0'
@@ -42,7 +43,9 @@ const Chat = ({ groups, live }) => {
       }
       fetchData()
       setLiveGroups(groups)
-      joinChat(groups[0].chats[0].id)
+
+      groups.map(group => joinChat(group.chats[0].id))
+
       setChat({
         chatId: groups[0].chats[0].id,
         groupId: groups[0].id
@@ -51,14 +54,20 @@ const Chat = ({ groups, live }) => {
   }, [groups])
 
   useEffect(() => {
-    const handleNewMessage = newMessage => setMessage([...messages, newMessage])
+    const handleNewMessage = newMessage => {
+      if (newMessage.chat === chat.chatId) {
+        return setMessage([...messages, newMessage])
+      } else {
+        setNotifications([...notifications, newMessage.chat])
+      }
+    }
     socket.on('msgToClient', handleNewMessage)
     if (myRef.current) {
       let node = ReactDOM.findDOMNode(myRef.current)
       node.scrollIntoView({ block: 'end', behavior: 'auto' })
     }
     return () => socket.off('msgToClient', handleNewMessage)
-  }, [messages])
+  }, [messages, notifications])
 
   const handleFormSubmit = () => {
     if (text.trim()) {
@@ -94,8 +103,10 @@ const Chat = ({ groups, live }) => {
   }
 
   async function changeChat(newChat, groupId) {
-    leaveChat(chat.chatId)
-    joinChat(newChat)
+    // leaveChat(chat.chatId)
+    // joinChat(newChat)
+    const setChatRead = notifications.filter(notification => notification !== newChat)
+    setNotifications(setChatRead)
     setChat({
       chatId: newChat,
       groupId: groupId
@@ -147,7 +158,6 @@ const Chat = ({ groups, live }) => {
       <ChatNav>
         {liveGroups.map((mapGroup, index) => {
           const selected = chat.chatId === mapGroup.chats[0].id
-
           return (
             <ChatTab
               key={index}
@@ -157,6 +167,7 @@ const Chat = ({ groups, live }) => {
                 changeChat(mapGroup.chats[0].id, mapGroup.id, index)
               }}
             >
+              {notifications.includes(mapGroup.chats[0].id) && <ChatAlert />}
               <ChatName>{mapGroup.name}</ChatName>
               <CloseButton value={mapGroup.id} onClick={value => leaveGroup(value)}>
                 x
@@ -369,6 +380,14 @@ const ChatTab = styled.div`
   border-top-right-radius: 5px;
   font-size: 14px;
   max-height: 50px;
+`
+
+const ChatAlert = styled.div`
+  height: 6px;
+  width: 6px;
+  border: 3px solid;
+  border-radius: 200px;
+  color: #aa528d;
 `
 
 const ChatTitle = styled.h3`
