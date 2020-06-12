@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import useWindowDimensions from 'hooks/window-dimensions'
 
@@ -10,7 +10,7 @@ const Slider = ({ activeIndex, bannerdata }) => {
     <BannerStyled>
       {bannerdata.map((banner, index) => {
         return (
-          <Fragment key={index}>
+          <A href={`/live/${banner.id}`} key={index}>
             {isMobile ? (
               <BannerContent key={index} active={activeIndex === index ? true : false}>
                 <Image src={banner.mainBanner}></Image>
@@ -20,24 +20,32 @@ const Slider = ({ activeIndex, bannerdata }) => {
                 <Image src={banner.mainBanner}></Image>
                 <BannerInfo>
                   <div>
-                    <Title>{banner.title}</Title>
+                    <Title>{banner.name}</Title>
                     <Subtitle>{banner.description}</Subtitle>
                   </div>
-                  <Button>Assistir</Button>
+                  <Button>
+                    <A href={`/live/${banner.id}`}>Assistir</A>
+                  </Button>
                 </BannerInfo>
               </BannerContent>
             )}
-          </Fragment>
+          </A>
         )
       })}
     </BannerStyled>
   )
 }
 
+const A = styled.a`
+  text-decoration: none;
+`
+
 const Button = styled.button`
   padding: 10px 40px;
   margin-bottom: 80px;
   border-radius: 6px;
+  text-decoration: none;
+  color: white;
 `
 
 const BannerInfo = styled.div`
