@@ -18,17 +18,15 @@ const Live = () => {
     groupId = locationSplit[locationSplit.length - 1]
   }
 
-  const [liveLink, setLiveLink] = useState('https://www.youtube.com/embed/F68KkgwP5F8')
+  const [liveLink, setLiveLink] = useState('')
   const [liveName, setLiveName] = useState('v-live')
   const [liveId, setLiveId] = useState('')
   const [groups, setGroups] = useState([])
 
   useEffect(() => {
     if (groupId) {
-      console.log(groupId)
       async function enterGroupByQuery() {
         const res = await enterGroupRequest(groupId)
-        console.log(res)
       }
       enterGroupByQuery()
     }
