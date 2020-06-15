@@ -4,8 +4,8 @@ export const createLive = async data => {
   await client.post('/lives', data)
 }
 
-export const getLives = async (limit, highlight = false) => {
-  const url = `/lives?limit=${limit}&highlight=${highlight ? 'true' : 'false'}`
+export const getLives = async (limit, highlighted = false) => {
+  const url = `/lives?limit=${limit}&highlighted=${highlighted ? 'true' : 'false'}`
   const res = await client.get(url)
 
   if (res.data) {

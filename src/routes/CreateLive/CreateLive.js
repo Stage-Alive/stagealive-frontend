@@ -41,7 +41,7 @@ const CreateLive = () => {
             mainBanner: '',
             groupsIds: [],
             artistsIds: [],
-            highlight: false,
+            highlighted: false,
             startAt: new Date().toISOString()
           }}
           onSubmit={async (values, actions) => {
@@ -103,9 +103,9 @@ const CreateLive = () => {
                       name='mainBanner'
                     />
                   </Input>
-                  <Label>Highlight</Label>
+                  <Label>Highlighted</Label>
                   <Input>
-                    <Field style={inputStyle} id='highlight' type='checkbox' name='highlight' />
+                    <Field style={inputStyle} id='highlighted' type='checkbox' name='highlighted' />
                   </Input>
                   <Label>Grupos Publicos</Label>
                   <Input>
