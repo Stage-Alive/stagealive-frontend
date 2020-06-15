@@ -39,9 +39,9 @@ const CreateLive = () => {
             link: '',
             description: '',
             mainBanner: '',
-            secondaryBanner: '',
             groupsIds: [],
             artistsIds: [],
+            highlight: false,
             startAt: new Date().toISOString()
           }}
           onSubmit={async (values, actions) => {
@@ -79,8 +79,18 @@ const CreateLive = () => {
                       style={inputStyle}
                       id='hashtag'
                       placeholder='Entre com a hashtag'
+                      type='text'
+                      name='hashtag'
+                    />
+                  </Input>
+                  <Label>Data e Hora</Label>
+                  <Input>
+                    <Field
+                      style={inputStyle}
+                      id='startAt'
+                      placeholder='Entre com a data e hora'
                       type='datetime-local'
-                      name='description'
+                      name='startAt'
                     />
                   </Input>
                   <Label>Imagem Principal</Label>
@@ -93,15 +103,9 @@ const CreateLive = () => {
                       name='mainBanner'
                     />
                   </Input>
-                  <Label>Imagem Secundaria</Label>
+                  <Label>Highlight</Label>
                   <Input>
-                    <Field
-                      style={inputStyle}
-                      id='secondaryBanner'
-                      placeholder='Entre com sua mensagem'
-                      type='text'
-                      name='secondaryBanner'
-                    />
+                    <Field style={inputStyle} id='highlight' type='checkbox' name='highlight' />
                   </Input>
                   <Label>Grupos Publicos</Label>
                   <Input>

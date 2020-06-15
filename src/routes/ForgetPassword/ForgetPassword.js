@@ -100,6 +100,7 @@ const FormStyled = styled.div`
 const ForgetPasswordStyled = styled.div`
   min-height: 100%;
   margin-top: 50px;
+  min-width: 400px;
 `
 
 export default ForgetPassword
