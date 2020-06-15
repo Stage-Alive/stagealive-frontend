@@ -98,7 +98,7 @@ const Error = styled.div`
 
 const CreateArtistStyled = styled.div`
   margin-top: 50px;
-  width: 45%;
+  width: 80%;
   @media (max-width: 768px) {
     width: 80%;
   }

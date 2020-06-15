@@ -45,6 +45,8 @@ const CreateLive = () => {
             startAt: new Date().toISOString()
           }}
           onSubmit={async (values, actions) => {
+            const date = new Date(values.startAt)
+            values.startAt = date.toISOString()
             await createLive(values)
             actions.resetForm()
           }}
@@ -77,10 +79,10 @@ const CreateLive = () => {
                   <Input>
                     <Field
                       style={inputStyle}
-                      id='hashtag'
+                      id='description'
                       placeholder='Entre com a hashtag'
                       type='text'
-                      name='hashtag'
+                      name='description'
                     />
                   </Input>
                   <Label>Data e Hora</Label>
@@ -164,7 +166,7 @@ const CreateLive = () => {
 
 const CreateLiveStyled = styled.div`
   margin-top: 50px;
-  width: 45%;
+  width: 80%;
 `
 
 const FormTitle = styled.h1`

@@ -8,8 +8,13 @@ const Loader = ({ children = 'Carregando' }) => (
 )
 
 const LoaderStyle = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin-top: -10px;
+  margin-left: -10px;
+  color: #020916;
   background-color: #020916;
-  height: 100vh;
 `
 
 const LoadingStyled = styled.div`
