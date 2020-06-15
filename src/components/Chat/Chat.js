@@ -163,7 +163,7 @@ const Chat = ({ groups, live }) => {
               key={index}
               selected={selected}
               onClick={async () => {
-                setInterval(1000)
+                setLoading(true)
                 changeChat(mapGroup.chats[0].id, mapGroup.id, index)
               }}
             >

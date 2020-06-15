@@ -13,15 +13,16 @@ const Banner = () => {
       const lives = await getLives(6, true) // highlight flag
       setLives(lives)
       setLength(lives.length)
-      console.log(lives)
     }
     fetchData()
   }, [])
 
   useEffect(() => {
-    const interval = setInterval(goToNextSlide, 3000)
-    return () => {
-      clearInterval(interval)
+    if (length > 0) {
+      const interval = setInterval(goToNextSlide, 3000)
+      return () => {
+        clearInterval(interval)
+      }
     }
   }, [activeIndex])
 
