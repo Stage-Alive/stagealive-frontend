@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { toDateTimeString } from 'helpers/formatters'
 
 const CardLive = ({ live }) => {
   return (
@@ -10,8 +11,8 @@ const CardLive = ({ live }) => {
           <CardBlock>
             <CardInfo>
               <CardTitle>{live.name}</CardTitle>
-              <CardSubtitle>#hashtag</CardSubtitle>
-              <CardDate>{live.startAt}</CardDate>
+              <CardSubtitle>{live.description}</CardSubtitle>
+              <CardDate>{toDateTimeString(live.startAt)}</CardDate>
             </CardInfo>
             <CardButton>
               <Button>SAIBA MAIS</Button>

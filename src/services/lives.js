@@ -14,9 +14,9 @@ export const getLives = async (limit, highlighted = false) => {
         id: live.id,
         name: live.name,
         startAt: live.startAt,
-        secondaryBanner: live.secondaryBanner,
         mainBanner: live.mainBanner,
-        link: live.link
+        link: live.link,
+        description: live.description
       }
     })
     return lives
