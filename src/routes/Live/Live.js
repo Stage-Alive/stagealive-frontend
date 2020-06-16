@@ -52,7 +52,7 @@ const Live = () => {
       <Container displayFooter={false}>
         <LivePage>
           <FirstSection>
-            <Video url={liveLink} title={liveName} />
+            {liveLink && <Video url={liveLink} title={liveName} />}
             <Chat groups={groups} live={liveId} />
           </FirstSection>
           <SecondSection>
