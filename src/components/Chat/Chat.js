@@ -56,7 +56,7 @@ const Chat = ({ groups, live }) => {
   useEffect(() => {
     const handleNewMessage = newMessage => {
       if (newMessage.chat === chat.chatId) {
-        return setMessage([...messages, newMessage])
+        return messages.length ? setMessage([...messages, newMessage]) : setMessage([newMessage])
       } else {
         setNotifications([...notifications, newMessage.chat])
       }
@@ -70,6 +70,7 @@ const Chat = ({ groups, live }) => {
   }, [messages, notifications])
 
   const handleFormSubmit = () => {
+    joinChat(chat.chatId)
     if (text.trim()) {
       socket.emit('msgToServer', {
         name: user.name,
