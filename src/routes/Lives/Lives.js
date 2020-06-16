@@ -7,7 +7,7 @@ const Lives = () => {
   return (
     <Container>
       <LivesStyled>
-        <NextLives title='Lives' linkButton={false} />
+        <NextLives title='Lives' linkButton={false} maxChildren={10000} />
       </LivesStyled>
     </Container>
   )
