@@ -22,7 +22,8 @@ const Chat = ({ groups, live }) => {
   const [notifications, setNotifications] = useState([])
   const [chat, setChat] = useState({
     chatId: '0',
-    groupId: '0'
+    groupId: '0',
+    name: ''
   })
   const [modalState, setModalState] = useState(false)
   const [copyInviteSuccess, setCopyInviteSuccess] = useState('')
@@ -48,7 +49,8 @@ const Chat = ({ groups, live }) => {
 
       setChat({
         chatId: groups[0].chats[0].id,
-        groupId: groups[0].id
+        groupId: groups[0].id,
+        name: groups[0].name
       })
     }
   }, [groups])
@@ -103,14 +105,15 @@ const Chat = ({ groups, live }) => {
     setCopyInviteSuccess('Convite Copiado!')
   }
 
-  async function changeChat(newChat, groupId) {
+  async function changeChat(newChat, groupId, name) {
     // leaveChat(chat.chatId)
     // joinChat(newChat)
     const setChatRead = notifications.filter(notification => notification !== newChat)
     setNotifications(setChatRead)
     setChat({
       chatId: newChat,
-      groupId: groupId
+      groupId: groupId,
+      name
     })
     const res = await getChat(newChat)
     if (res) {
@@ -165,7 +168,7 @@ const Chat = ({ groups, live }) => {
               selected={selected}
               onClick={async () => {
                 setLoading(true)
-                changeChat(mapGroup.chats[0].id, mapGroup.id, index)
+                changeChat(mapGroup.chats[0].id, mapGroup.id, mapGroup.name)
               }}
             >
               {notifications.includes(mapGroup.chats[0].id) && <ChatAlert />}
@@ -179,7 +182,7 @@ const Chat = ({ groups, live }) => {
       </ChatNav>
       <ChatBox>
         <ChatBoxHeader>
-          <ChannelTitle>Bem vindo ao canal Amigos</ChannelTitle>
+          <ChannelTitle>{`Bem vindo ao canal ${chat.name}`}</ChannelTitle>
           <Invite onClick={copyToClipboard}>
             <CopyIcon src='/icons/copy-regular.svg' />
             <InviteValue value={`${URL}/live/${live}/group/${chat.groupId}`} ref={inviteRef} onChange={() => {}} />

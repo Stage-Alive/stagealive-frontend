@@ -17,6 +17,7 @@
     "react-async": "^10.0.0",
     "react-dom": "^16.13.1",
     "react-facebook-login": "^4.1.1",
+    "react-ga": "^3.0.0",
     "react-helmet": "^6.0.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.4.1",

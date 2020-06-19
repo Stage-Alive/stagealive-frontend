@@ -4,6 +4,7 @@ import { createGlobalStyle } from 'styled-components'
 import { useUser } from 'context/user-context'
 import Loader from 'components/Loader'
 import Theme from 'theme'
+import GA from 'services/google-analytics'
 
 const loadAuthenticatedApp = () => import('./AuthenticatedApp')
 const AuthenticatedApp = lazy(loadAuthenticatedApp)
@@ -37,7 +38,10 @@ const App = () => {
     <Theme>
       <GlobalStyle />
       <Suspense fallback={<Loader />}>
-        <Router>{user ? <AuthenticatedApp /> : <UnauthenticatedApp />}</Router>
+        <Router>
+          {GA.init() && <GA.RouteTracker />}
+          {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+        </Router>
       </Suspense>
     </Theme>
   )

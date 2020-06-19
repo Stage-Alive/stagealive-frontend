@@ -15,7 +15,7 @@ const Footer = ({ displayFooter = true }) => {
             <strong>Suas LIVES nas redes socias</strong>
           </Paragraph>
           <Icons>
-            <a href='https://instagram.com'>
+            <a href='https://www.instagram.com/vlive.com.br/'>
               <FontAwesomeIcon
                 size='2x'
                 icon={faInstagram}
