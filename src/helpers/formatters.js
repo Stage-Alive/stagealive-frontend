@@ -37,10 +37,9 @@ export function toDateTimeString(date) {
   const d = new Date(date)
   const day = d.getDate()
   const year = d.getFullYear()
-  const month = d.getMonth()
+  const month = d.getMonth() + 1
   const hours = d.getHours()
   const minutes = d.getMinutes()
-  console.log(d)
-
+  
   return `${zeroPadding(day, 2)} de ${toMonthString(month)} | ${zeroPadding(hours, 2)}:${zeroPadding(minutes, 2)}`
 }
