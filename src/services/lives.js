@@ -5,7 +5,7 @@ export const createLive = async data => {
 }
 
 export const getLives = async (limit, highlighted = false) => {
-  const url = `/lives?limit=${limit}&${highlighted ? 'highlighted=1' : ''}`
+  const url = `/lives?${highlighted ? 'highlighted=1' : ''}`
   const res = await client.get(url)
 
   if (res.data) {
