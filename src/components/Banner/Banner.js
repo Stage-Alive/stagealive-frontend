@@ -10,7 +10,7 @@ const Banner = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const lives = await getLives(6, true) // highlight flag
+      const lives = await getLives(null, true) // highlight flag
       setLives(lives)
       setLength(lives.length)
     }
